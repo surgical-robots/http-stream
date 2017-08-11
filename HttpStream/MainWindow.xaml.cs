@@ -1,9 +1,11 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -16,6 +18,8 @@ using Emgu.CV.Structure;
 
 using DirectShowLib;
 
+using SharpFFmpeg;
+
 namespace HttpStream
 {
     /// <summary>
@@ -25,87 +29,19 @@ namespace HttpStream
     {
         VideoCapture capture;
         bool isRunning = false;
-        FilterGraph encoder = new FilterGraph();
-        IGraphBuilder graphBuilder;
-        IMediaControl mediaControl;
-        IBaseFilter theDevice = null;
-        IBaseFilter theCompressor = null;
+
+        IntPtr codec;
+        IntPtr c;
+        IntPtr frame;
+        IntPtr pkt;
 
         public MainWindow()
         {
             InitializeComponent();
             DataContext = this;
-            
+
             DeviceNames = new ObservableCollection<string>();
             GetVideoDevices();
-        }
-
-        void InitGraph()
-        {
-            //Create the Graph
-            graphBuilder = (IGraphBuilder)new FilterGraph();
-
-            //Create the Capture Graph Builder
-            ICaptureGraphBuilder2 captureGraphBuilder = null;
-            captureGraphBuilder = (ICaptureGraphBuilder2)new CaptureGraphBuilder2();
-
-            //Create the media control for controlling the graph
-            mediaControl = (IMediaControl)this.graphBuilder;
-
-            // Attach the filter graph to the capture graph
-            int hr = captureGraphBuilder.SetFiltergraph(this.graphBuilder);
-            DsError.ThrowExceptionForHR(hr);
-
-            //Add the Video input device to the graph
-            hr = graphBuilder.AddFilter(theDevice, "source filter");
-            DsError.ThrowExceptionForHR(hr);
-
-            //Add the Video compressor filter to the graph
-            hr = graphBuilder.AddFilter(theCompressor, "compressor filter");
-            DsError.ThrowExceptionForHR(hr);
-
-            //Create the file writer part of the graph. SetOutputFileName does this for us, and returns the mux and sink
-            IBaseFilter mux;
-            IFileSinkFilter sink;
-            //hr = captureGraphBuilder.SetOutputFileName(MediaSubType.Avi, textBox1.Text, out mux, out sink);
-            DsError.ThrowExceptionForHR(hr);
-
-
-            //Render any preview pin of the device
-            hr = captureGraphBuilder.RenderStream(PinCategory.Preview, MediaType.Video, theDevice, null, null);
-            DsError.ThrowExceptionForHR(hr);
-
-            //Connect the device and compressor to the mux to render the capture part of the graph
-            //hr = captureGraphBuilder.RenderStream(PinCategory.Capture, MediaType.Video, theDevice, theCompressor, mux);
-            DsError.ThrowExceptionForHR(hr);
-
-//#if DEBUG
-//            m_rot = new DsROTEntry(graphBuilder);
-//#endif
-
-            //get the video window from the graph
-            IVideoWindow videoWindow = null;
-            videoWindow = (IVideoWindow)graphBuilder;
-
-            ////Set the owener of the videoWindow to an IntPtr of some sort (the Handle of any control - could be a form / button etc.)
-            //hr = videoWindow.put_Owner(panel1.Handle);
-            //DsError.ThrowExceptionForHR(hr);
-
-            ////Set the style of the video window
-            //hr = videoWindow.put_WindowStyle(WindowStyle.Child | WindowStyle.ClipChildren);
-            //DsError.ThrowExceptionForHR(hr);
-
-            //// Position video window in client rect of main application window
-            //hr = videoWindow.SetWindowPosition(0, 0, panel1.Width, panel1.Height);
-            //DsError.ThrowExceptionForHR(hr);
-
-            //// Make the video window visible
-            //hr = videoWindow.put_Visible(OABool.True);
-            //DsError.ThrowExceptionForHR(hr);
-
-            //Marshal.ReleaseComObject(mux);
-            //Marshal.ReleaseComObject(sink);
-            //Marshal.ReleaseComObject(captureGraphBuilder);
         }
 
         void GetVideoDevices()
@@ -119,10 +55,19 @@ namespace HttpStream
             }
         }
 
-        private void ProcessFrame(object sender, System.EventArgs e)
+        void InitEncoder()
         {
-            Mat frame = capture.QueryFrame();
-            Image<Bgr, byte> img = frame.ToImage<Bgr, byte>();
+            FFmpeg.avcodec_register_all();
+
+            codec = FFmpeg.avcodec_find_encoder(FFmpeg.CodecID.CODEC_ID_MPEG4);
+            c = FFmpeg.avcodec_alloc_context3(codec);
+            pkt = FFmpeg.av_packet_alloc();
+
+            FFmpeg.avcodec_open2(c, codec, IntPtr.Zero);
+
+            frame = FFmpeg.av_frame_alloc();
+
+            FFmpeg.av_frame_get_buffer(frame, 32);
         }
 
         //public ObservableCollection<string> DeviceNames { get; set; }
