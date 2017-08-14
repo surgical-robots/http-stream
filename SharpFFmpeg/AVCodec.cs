@@ -15,7 +15,7 @@ namespace SharpFFmpeg
         /// <param name="output_rate"></param>
         /// <param name="input_rate"></param>
         /// <returns>ReSampleContext pointer</returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr audio_resample_init(int output_channels, int input_channels,
                                                     int output_rate, int input_rate);
 
@@ -26,14 +26,14 @@ namespace SharpFFmpeg
         /// <param name="output"></param>
         /// <param name="intput"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int audio_resample(IntPtr pResampleContext, IntPtr output, IntPtr intput, int nb_samples);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pResampleContext"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void audio_resample_close(IntPtr pResampleContext);
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace SharpFFmpeg
         /// <param name="linear"></param>
         /// <param name="cutoff"></param>
         /// <returns>AVResampleContext pointer</returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr av_resample_init(int out_rate, int in_rate, int filter_length, int log2_phase_count, int linear, double cutoff);
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace SharpFFmpeg
         /// <param name="src_size"></param>
         /// <param name="udpate_ctx"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_resample(IntPtr pAVResampleContext, IntPtr dst, IntPtr src, IntPtr consumed, int src_size, int udpate_ctx);
 
         /// <summary>
@@ -68,14 +68,14 @@ namespace SharpFFmpeg
         /// <param name="pAVResampleContext"></param>
         /// <param name="sample_delta"></param>
         /// <param name="compensation_distance"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_resample_compensate(IntPtr pAVResampleContext, int sample_delta, int compensation_distance);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVResampleContext"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_resample_close(IntPtr pAVResampleContext);
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace SharpFFmpeg
         /// <param name="input_width"></param>
         /// <param name="input_height"></param>
         /// <returns>ImgReSampleContext pointer</returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr img_resample_init(int output_width, int output_height,
                                       int input_width, int input_height);
 
@@ -106,7 +106,7 @@ namespace SharpFFmpeg
         /// <param name="padleft"></param>
         /// <param name="padright"></param>
         /// <returns>ImgReSampleContext pointer</returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr img_resample_full_init(int owidth, int oheight,
                                       int iwidth, int iheight,
                                       int topBand, int bottomBand,
@@ -120,14 +120,14 @@ namespace SharpFFmpeg
         /// <param name="pImgReSampleContext"></param>
         /// <param name="p_output_AVPicture"></param>
         /// <param name="p_input_AVPicture"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void img_resample(IntPtr pImgReSampleContext, IntPtr p_output_AVPicture, IntPtr p_input_AVPicture);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pImgReSampleContext"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void ImgReSampleContext(IntPtr pImgReSampleContext);
 
         /// <summary>
@@ -138,14 +138,14 @@ namespace SharpFFmpeg
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>        
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avpicture_alloc(IntPtr pAVPicture, int pix_fmt, int width, int height);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVPicture"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void avpicture_free(IntPtr pAVPicture);
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace SharpFFmpeg
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avpicture_fill(IntPtr pAVPicture, IntPtr ptr, int pix_fmt, int width, int height);
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace SharpFFmpeg
         /// <param name="dest"></param>
         /// <param name="dest_size"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avpicture_layout(IntPtr p_src_AVPicture, int pix_fmt, int width, int height,
                                            IntPtr dest, int dest_size);
 
@@ -181,7 +181,7 @@ namespace SharpFFmpeg
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avpicture_get_size(int pix_fmt, int width, int height);
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace SharpFFmpeg
         /// <param name="pix_fmt"></param>
         /// <param name="h_shift"></param>
         /// <param name="v_shift"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void avcodec_get_chroma_sub_sample(int pix_fmt, IntPtr h_shift, IntPtr v_shift);
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="pix_fmt"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern String avcodec_get_pix_fmt_name(int pix_fmt);
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace SharpFFmpeg
         /// <param name="pAVCodecContext"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void avcodec_set_dimensions(AVCodecContext pAVCodecContext, int width, int height);
 
         /// <summary>
@@ -215,16 +215,16 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern PixelFormat avcodec_get_pix_fmt([MarshalAs(UnmanagedType.LPStr)]String name);
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern AVPixelFormat avcodec_get_pix_fmt([MarshalAs(UnmanagedType.LPStr)]String name);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern uint avcodec_pix_fmt_to_codec_tag(PixelFormat p);
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern uint avcodec_pix_fmt_to_codec_tag(AVPixelFormat p);
 
         /// <summary>
         /// 
@@ -233,7 +233,7 @@ namespace SharpFFmpeg
         /// <param name="src_pix_fmt"></param>
         /// <param name="has_alpha"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avcodec_get_pix_fmt_loss(int dst_pix_fmt, int src_pix_fmt, int has_alpha);
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace SharpFFmpeg
         /// <param name="has_alpha"></param>
         /// <param name="loss_ptr"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avcodec_find_best_pix_fmt(int pix_fmt_mask, int src_pix_fmt, int has_alpha, IntPtr loss_ptr);
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace SharpFFmpeg
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int img_get_alpha_info(IntPtr pAVPicture, int pix_fmt, int width, int height);
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace SharpFFmpeg
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int img_convert(IntPtr p_dst_AVPicture, int dst_pix_fmt,
                             IntPtr p_src_AVPicture, int pix_fmt, int width, int height);
 
@@ -281,7 +281,7 @@ namespace SharpFFmpeg
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avpicture_deinterlace(IntPtr p_dst_AVPicture, IntPtr p_src_AVPicture,
                             int pix_fmt, int width, int height);
 
@@ -289,28 +289,28 @@ namespace SharpFFmpeg
         /// 
         /// </summary>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern uint avcodec_version();
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern uint avcodec_build();
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern uint avcodec_init();
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVCodec"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void register_avcodec(IntPtr pAVCodec);
 
         /// <summary>
@@ -318,15 +318,15 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="id"></param>
         /// <returns>AVCodec pointer</returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern IntPtr avcodec_find_encoder(CodecID id);
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern AVCodec avcodec_find_encoder(AVCodecID id);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="mame"></param>
         /// <returns>AVCodec pointer</returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr avcodec_find_encoder_by_name(
                     [MarshalAs(UnmanagedType.LPStr)]String mame);
 
@@ -335,15 +335,15 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="id"></param>
         /// <returns>AVCodec pointer</returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern IntPtr avcodec_find_decoder(CodecID id);
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern IntPtr avcodec_find_decoder(AVCodecID id);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="mame"></param>
         /// <returns>AVCodec pointer</returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr avcodec_find_decoder_by_name(
                     [MarshalAs(UnmanagedType.LPStr)]String mame);
 
@@ -354,7 +354,7 @@ namespace SharpFFmpeg
         /// <param name="buf_size"></param>
         /// <param name="pAVCodeContext"></param>
         /// <param name="encode"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void avcodec_string(
                     [MarshalAs(UnmanagedType.LPStr)]String mam, int buf_size,
                     IntPtr pAVCodeContext, int encode);
@@ -363,28 +363,28 @@ namespace SharpFFmpeg
         /// 
         /// </summary>
         /// <param name="pAVCodecContext"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avcodec_get_context_defaults3(AVCodecContext pAVCodecContext);
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns>AVCodecContext pointer</returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern AVCodecContext avcodec_alloc_context3(AVCodecContext pAVCodec);
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern AVCodecContext avcodec_alloc_context3(AVCodec pAVCodec);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVFrame"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void avcodec_get_frame_defaults(IntPtr pAVFrame);
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern void avcodec_get_frame_defaults(AVFrame pAVFrame);
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns>AVFrame pointer</returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr avcodec_alloc_frame();
 
         /// <summary>
@@ -393,24 +393,24 @@ namespace SharpFFmpeg
         /// <param name="pAVCodecContext"></param>
         /// <param name="pAVFrame"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_default_get_buffer2(AVCodecContext pAVCodecContext, IntPtr pAVFrame);
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern int avcodec_default_get_buffer2(AVCodecContext pAVCodecContext, AVFrame pAVFrame);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVCodecContext"></param>
         /// <param name="pAVFrame"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void avcodec_default_release_buffer(AVCodecContext pAVCodecContext, IntPtr pAVFrame);
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern void avcodec_default_release_buffer(AVCodecContext pAVCodecContext, AVFrame pAVFrame);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVCodecContext"></param>
         /// <param name="pAVFrame"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void avcodec_default_reget_buffer(AVCodecContext pAVCodecContext, IntPtr pAVFrame);
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern void avcodec_default_reget_buffer(AVCodecContext pAVCodecContext, AVFrame pAVFrame);
 
         /// <summary>
         /// 
@@ -418,7 +418,7 @@ namespace SharpFFmpeg
         /// <param name="pAVCodecContext"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void avcodec_align_dimensions(AVCodecContext pAVCodecContext, ref int width, ref int height);
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace SharpFFmpeg
         /// <param name="av_log_ctx"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avcodec_check_dimensions(IntPtr av_log_ctx, ref uint width, ref uint height);
 
         /// <summary>
@@ -436,8 +436,8 @@ namespace SharpFFmpeg
         /// <param name="pAVCodecContext"></param>
         /// <param name="fmt"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern PixelFormat avcodec_default_get_format(AVCodecContext pAVCodecContext, ref PixelFormat fmt);
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern AVPixelFormat avcodec_default_get_format(AVCodecContext pAVCodecContext, ref AVPixelFormat fmt);
 
         /// <summary>
         /// 
@@ -445,14 +445,14 @@ namespace SharpFFmpeg
         /// <param name="pAVCodecContext"></param>
         /// <param name="thread_count"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avcodec_thread_init(AVCodecContext pAVCodecContext, int thread_count);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVCodecContext"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void avcodec_thread_free(AVCodecContext pAVCodecContext);
 
         /// <summary>
@@ -464,7 +464,7 @@ namespace SharpFFmpeg
         /// <param name="ret"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avcodec_thread_execute(AVCodecContext pAVCodecContext,
                                 [MarshalAs(UnmanagedType.FunctionPtr)]FuncCallback func,
                                 [MarshalAs(UnmanagedType.LPArray)]IntPtr[] arg, ref int ret, int count);
@@ -478,7 +478,7 @@ namespace SharpFFmpeg
         /// <param name="ret"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avcodec_default_execute(AVCodecContext pAVCodecContext,
                                [MarshalAs(UnmanagedType.FunctionPtr)]FuncCallback func,
                                [MarshalAs(UnmanagedType.LPArray)]IntPtr[] arg, ref int ret, int count);
@@ -489,8 +489,8 @@ namespace SharpFFmpeg
         /// <param name="pAVCodecContext"></param>
         /// <param name="pAVCodec"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_open2(AVCodecContext pAVCodecContext, IntPtr pAVCodec, IntPtr pAVDictionary);
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern int avcodec_open2(AVCodecContext pAVCodecContext, AVCodec pAVCodec, IntPtr pAVDictionary);
 
         /// <summary>
         /// 
@@ -501,7 +501,7 @@ namespace SharpFFmpeg
         /// <param name="buf"></param>
         /// <param name="buf_size"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avcodec_decode_audio4(AVCodecContext pAVCodecContext,
                                             IntPtr samples, out int frame_size_ptr,
                                             IntPtr buf, int buf_size);
@@ -515,8 +515,8 @@ namespace SharpFFmpeg
         /// <param name="buf"></param>
         /// <param name="buf_size"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_decode_video2(AVCodecContext pAVCodecContext, IntPtr pAVFrame,
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern int avcodec_decode_video2(AVCodecContext pAVCodecContext, AVFrame pAVFrame,
                                             ref int got_picture_ptr, IntPtr buf, int buf_size);
 
         /// <summary>
@@ -528,7 +528,7 @@ namespace SharpFFmpeg
         /// <param name="buf"></param>
         /// <param name="buf_size"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avcodec_decode_subtitle2(AVCodecContext pAVCodecContext, IntPtr pAVSubtitle,
                                            ref int got_sub_ptr, IntPtr buf, int buf_size);
 
@@ -541,7 +541,7 @@ namespace SharpFFmpeg
         /// <param name="buf"></param>
         /// <param name="buf_size"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avcodec_parse_frame(AVCodecContext pAVCodecContext,
                                             [MarshalAs(UnmanagedType.LPArray)]IntPtr[] pdata,
                                             IntPtr data_size_ptr, IntPtr buf, int buf_size);
@@ -555,7 +555,7 @@ namespace SharpFFmpeg
         /// <param name="buf_size"></param>
         /// <param name="pAVSubtitle"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avcodec_encode_subtitle(AVCodecContext pAVCodecContext, IntPtr buf, int buf_size,
                                             IntPtr pAVSubtitle);
 
@@ -564,27 +564,27 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="pAVCodecContext"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avcodec_close(AVCodecContext pAVCodecContext);
 
         /// <summary>
         /// 
         /// </summary>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void avcodec_register_all();
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVCodecContext"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void avcodec_flush_buffers(AVCodecContext pAVCodecContext);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVCodecContext"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void avcodec_default_free_buffers(AVCodecContext pAVCodecContext);
 
         /// <summary>
@@ -592,7 +592,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="pict_type"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern byte av_get_pict_type_char(int pict_type);
 
         /// <summary>
@@ -600,14 +600,14 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="codec_id"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int av_get_bits_per_sample(CodecID codec_id);
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern int av_get_bits_per_sample(AVCodecID codec_id);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVcodecParser"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_register_codec_parser(IntPtr pAVcodecParser);
 
         /// <summary>
@@ -615,7 +615,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="codec_id"></param>
         /// <returns>AVCodecParserContext pointer</returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr av_parser_init(int codec_id);
 
         /// <summary>
@@ -630,7 +630,7 @@ namespace SharpFFmpeg
         /// <param name="pts"></param>
         /// <param name="dts"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_parser_parse2(IntPtr pAVCodecParserContext,
                                                 AVCodecContext pAVCodecContext,
                             [MarshalAs(UnmanagedType.LPArray)]IntPtr[] poutbuf, ref int poutbuf_size,
@@ -647,7 +647,7 @@ namespace SharpFFmpeg
         /// <param name="buf_size"></param>
         /// <param name="keyframe"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_parser_change(IntPtr pAVCodecParserContext,
                                                 AVCodecContext pAVCodecContext,
                             [MarshalAs(UnmanagedType.LPArray)]IntPtr[] poutbuf, ref int poutbuf_size,
@@ -657,14 +657,14 @@ namespace SharpFFmpeg
         /// 
         /// </summary>
         /// <param name="pAVCodecParserContext"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_parser_close(IntPtr pAVCodecParserContext);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVBitStreamFilter"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_register_bitstream_filter(IntPtr pAVBitStreamFilter);
 
         /// <summary>
@@ -672,7 +672,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="name"></param>
         /// <returns>AVBitStreamFilterContext pointer</returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr av_bitstream_filter_init([MarshalAs(UnmanagedType.LPStr)]
                                         String name);
 
@@ -688,7 +688,7 @@ namespace SharpFFmpeg
         /// <param name="buf_size"></param>
         /// <param name="keyframe"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_bitstream_filter_filter(IntPtr pAVBitStreamFilterContext,
                                         AVCodecContext pAVCodecContext,
                                         [MarshalAs(UnmanagedType.LPStr)]String args,
@@ -699,14 +699,14 @@ namespace SharpFFmpeg
         /// 
         /// </summary>
         /// <param name="pAVBitStreamFilterContext"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_bitstream_filter_close(IntPtr pAVBitStreamFilterContext);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="size"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_mallocz(uint size);
 
         /// <summary>
@@ -714,14 +714,14 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr av_strdup([MarshalAs(UnmanagedType.LPStr)]String s);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="ptr"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_freep(IntPtr ptr);
 
         /// <summary>
@@ -730,20 +730,20 @@ namespace SharpFFmpeg
         /// <param name="ptr"></param>
         /// <param name="size"></param>
         /// <param name="min_size"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_fast_realloc(IntPtr ptr, ref uint size, ref uint min_size);
 
         /// <summary>
         /// 
         /// </summary>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_free_static();
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="size"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_mallocz_static(uint size);
 
         /// <summary>
@@ -751,7 +751,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="ptr"></param>
         /// <param name="size"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_realloc_static(IntPtr ptr, uint size);
 
         /// <summary>
@@ -762,7 +762,7 @@ namespace SharpFFmpeg
         /// <param name="pix_fmt"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void img_copy(IntPtr pAVPicture, IntPtr p_src_AVPicture,
                             int pix_fmt, int width, int height);
 
@@ -775,7 +775,7 @@ namespace SharpFFmpeg
         /// <param name="top_band"></param>
         /// <param name="left_band"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int img_crop(IntPtr p_dst_pAVPicture, IntPtr p_src_pAVPicture,
                             int pix_fmt, int top_band, int left_band);
 
@@ -793,24 +793,24 @@ namespace SharpFFmpeg
         /// <param name="padright"></param>
         /// <param name="color"></param>
         /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int img_pad(IntPtr p_dst_pAVPicture, IntPtr p_src_pAVPicture,
                             int height, int width, int pix_fmt, int padtop, int padbottom,
                             int padleft, int padright, ref int color);
 
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_send_frame(AVCodecContext pAVCodecContext, IntPtr pAVFrame);
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern int avcodec_send_frame(AVCodecContext pAVCodecContext, AVFrame pAVFrame);
 
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int avcodec_receive_packet(AVCodecContext pAVCodecContext, AVPacket pAVPacket);
 
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern IntPtr av_packet_alloc();
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern AVPacket av_packet_alloc();
 
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void avcodec_free_context([In, Out] AVCodecContext pAVCodecContext);
 
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_packet_free([In,Out] AVPacket pAVPacket);
 
         // *********************************************************************************
@@ -1154,202 +1154,503 @@ namespace SharpFFmpeg
         // Enums
         // *********************************************************************************
 
-        public enum CodecID
+        /**
+         * Identify the syntax and semantics of the bitstream.
+         * The principle is roughly:
+         * Two decoders with the same ID can decode the same streams.
+         * Two encoders with the same ID can encode compatible streams.
+         * There may be slight deviations from the principle due to implementation
+         * details.
+         *
+         * If you add a codec ID to this list, add it so that
+         * 1. no value of an existing codec ID changes (that would break ABI),
+         * 2. it is as close as possible to similar codecs
+         *
+         * After adding new codec IDs, do not forget to add an entry to the codec
+         * descriptor list and bump libavcodec minor version.
+         */
+        public enum AVCodecID
         {
-            CODEC_ID_NONE,
-            CODEC_ID_MPEG1VIDEO,
-            CODEC_ID_MPEG2VIDEO, /* prefered ID for MPEG Video 1 or 2 decoding */
-            CODEC_ID_MPEG2VIDEO_XVMC,
-            CODEC_ID_H261,
-            CODEC_ID_H263,
-            CODEC_ID_RV10,
-            CODEC_ID_RV20,
-            CODEC_ID_MJPEG,
-            CODEC_ID_MJPEGB,
-            CODEC_ID_LJPEG,
-            CODEC_ID_SP5X,
-            CODEC_ID_JPEGLS,
-            CODEC_ID_MPEG4,
-            CODEC_ID_RAWVIDEO,
-            CODEC_ID_MSMPEG4V1,
-            CODEC_ID_MSMPEG4V2,
-            CODEC_ID_MSMPEG4V3,
-            CODEC_ID_WMV1,
-            CODEC_ID_WMV2,
-            CODEC_ID_H263P,
-            CODEC_ID_H263I,
-            CODEC_ID_FLV1,
-            CODEC_ID_SVQ1,
-            CODEC_ID_SVQ3,
-            CODEC_ID_DVVIDEO,
-            CODEC_ID_HUFFYUV,
-            CODEC_ID_CYUV,
-            CODEC_ID_H264,
-            CODEC_ID_INDEO3,
-            CODEC_ID_VP3,
-            CODEC_ID_THEORA,
-            CODEC_ID_ASV1,
-            CODEC_ID_ASV2,
-            CODEC_ID_FFV1,
-            CODEC_ID_4XM,
-            CODEC_ID_VCR1,
-            CODEC_ID_CLJR,
-            CODEC_ID_MDEC,
-            CODEC_ID_ROQ,
-            CODEC_ID_INTERPLAY_VIDEO,
-            CODEC_ID_XAN_WC3,
-            CODEC_ID_XAN_WC4,
-            CODEC_ID_RPZA,
-            CODEC_ID_CINEPAK,
-            CODEC_ID_WS_VQA,
-            CODEC_ID_MSRLE,
-            CODEC_ID_MSVIDEO1,
-            CODEC_ID_IDCIN,
-            CODEC_ID_8BPS,
-            CODEC_ID_SMC,
-            CODEC_ID_FLIC,
-            CODEC_ID_TRUEMOTION1,
-            CODEC_ID_VMDVIDEO,
-            CODEC_ID_MSZH,
-            CODEC_ID_ZLIB,
-            CODEC_ID_QTRLE,
-            CODEC_ID_SNOW,
-            CODEC_ID_TSCC,
-            CODEC_ID_ULTI,
-            CODEC_ID_QDRAW,
-            CODEC_ID_VIXL,
-            CODEC_ID_QPEG,
-            CODEC_ID_XVID,
-            CODEC_ID_PNG,
-            CODEC_ID_PPM,
-            CODEC_ID_PBM,
-            CODEC_ID_PGM,
-            CODEC_ID_PGMYUV,
-            CODEC_ID_PAM,
-            CODEC_ID_FFVHUFF,
-            CODEC_ID_RV30,
-            CODEC_ID_RV40,
-            CODEC_ID_VC1,
-            CODEC_ID_WMV3,
-            CODEC_ID_LOCO,
-            CODEC_ID_WNV1,
-            CODEC_ID_AASC,
-            CODEC_ID_INDEO2,
-            CODEC_ID_FRAPS,
-            CODEC_ID_TRUEMOTION2,
-            CODEC_ID_BMP,
-            CODEC_ID_CSCD,
-            CODEC_ID_MMVIDEO,
-            CODEC_ID_ZMBV,
-            CODEC_ID_AVS,
-            CODEC_ID_SMACKVIDEO,
-            CODEC_ID_NUV,
-            CODEC_ID_KMVC,
-            CODEC_ID_FLASHSV,
-            CODEC_ID_CAVS,
-            CODEC_ID_JPEG2000,
-            CODEC_ID_VMNC,
-            CODEC_ID_VP5,
-            CODEC_ID_VP6,
-            CODEC_ID_VP6F,
+            AV_CODEC_ID_NONE,
 
-            /* various pcm "codecs" */
-            CODEC_ID_PCM_S16LE = 0x10000,
-            CODEC_ID_PCM_S16BE,
-            CODEC_ID_PCM_U16LE,
-            CODEC_ID_PCM_U16BE,
-            CODEC_ID_PCM_S8,
-            CODEC_ID_PCM_U8,
-            CODEC_ID_PCM_MULAW,
-            CODEC_ID_PCM_ALAW,
-            CODEC_ID_PCM_S32LE,
-            CODEC_ID_PCM_S32BE,
-            CODEC_ID_PCM_U32LE,
-            CODEC_ID_PCM_U32BE,
-            CODEC_ID_PCM_S24LE,
-            CODEC_ID_PCM_S24BE,
-            CODEC_ID_PCM_U24LE,
-            CODEC_ID_PCM_U24BE,
-            CODEC_ID_PCM_S24DAUD,
+            /* video codecs */
+            AV_CODEC_ID_MPEG1VIDEO,
+            AV_CODEC_ID_MPEG2VIDEO, //< preferred ID for MPEG-1/2 video decoding
+//#if FF_API_XVMC
+            AV_CODEC_ID_MPEG2VIDEO_XVMC,
+//#endif /* FF_API_XVMC */
+            AV_CODEC_ID_H261,
+            AV_CODEC_ID_H263,
+            AV_CODEC_ID_RV10,
+            AV_CODEC_ID_RV20,
+            AV_CODEC_ID_MJPEG,
+            AV_CODEC_ID_MJPEGB,
+            AV_CODEC_ID_LJPEG,
+            AV_CODEC_ID_SP5X,
+            AV_CODEC_ID_JPEGLS,
+            AV_CODEC_ID_MPEG4,
+            AV_CODEC_ID_RAWVIDEO,
+            AV_CODEC_ID_MSMPEG4V1,
+            AV_CODEC_ID_MSMPEG4V2,
+            AV_CODEC_ID_MSMPEG4V3,
+            AV_CODEC_ID_WMV1,
+            AV_CODEC_ID_WMV2,
+            AV_CODEC_ID_H263P,
+            AV_CODEC_ID_H263I,
+            AV_CODEC_ID_FLV1,
+            AV_CODEC_ID_SVQ1,
+            AV_CODEC_ID_SVQ3,
+            AV_CODEC_ID_DVVIDEO,
+            AV_CODEC_ID_HUFFYUV,
+            AV_CODEC_ID_CYUV,
+            AV_CODEC_ID_H264,
+            AV_CODEC_ID_INDEO3,
+            AV_CODEC_ID_VP3,
+            AV_CODEC_ID_THEORA,
+            AV_CODEC_ID_ASV1,
+            AV_CODEC_ID_ASV2,
+            AV_CODEC_ID_FFV1,
+            AV_CODEC_ID_4XM,
+            AV_CODEC_ID_VCR1,
+            AV_CODEC_ID_CLJR,
+            AV_CODEC_ID_MDEC,
+            AV_CODEC_ID_ROQ,
+            AV_CODEC_ID_INTERPLAY_VIDEO,
+            AV_CODEC_ID_XAN_WC3,
+            AV_CODEC_ID_XAN_WC4,
+            AV_CODEC_ID_RPZA,
+            AV_CODEC_ID_CINEPAK,
+            AV_CODEC_ID_WS_VQA,
+            AV_CODEC_ID_MSRLE,
+            AV_CODEC_ID_MSVIDEO1,
+            AV_CODEC_ID_IDCIN,
+            AV_CODEC_ID_8BPS,
+            AV_CODEC_ID_SMC,
+            AV_CODEC_ID_FLIC,
+            AV_CODEC_ID_TRUEMOTION1,
+            AV_CODEC_ID_VMDVIDEO,
+            AV_CODEC_ID_MSZH,
+            AV_CODEC_ID_ZLIB,
+            AV_CODEC_ID_QTRLE,
+            AV_CODEC_ID_TSCC,
+            AV_CODEC_ID_ULTI,
+            AV_CODEC_ID_QDRAW,
+            AV_CODEC_ID_VIXL,
+            AV_CODEC_ID_QPEG,
+            AV_CODEC_ID_PNG,
+            AV_CODEC_ID_PPM,
+            AV_CODEC_ID_PBM,
+            AV_CODEC_ID_PGM,
+            AV_CODEC_ID_PGMYUV,
+            AV_CODEC_ID_PAM,
+            AV_CODEC_ID_FFVHUFF,
+            AV_CODEC_ID_RV30,
+            AV_CODEC_ID_RV40,
+            AV_CODEC_ID_VC1,
+            AV_CODEC_ID_WMV3,
+            AV_CODEC_ID_LOCO,
+            AV_CODEC_ID_WNV1,
+            AV_CODEC_ID_AASC,
+            AV_CODEC_ID_INDEO2,
+            AV_CODEC_ID_FRAPS,
+            AV_CODEC_ID_TRUEMOTION2,
+            AV_CODEC_ID_BMP,
+            AV_CODEC_ID_CSCD,
+            AV_CODEC_ID_MMVIDEO,
+            AV_CODEC_ID_ZMBV,
+            AV_CODEC_ID_AVS,
+            AV_CODEC_ID_SMACKVIDEO,
+            AV_CODEC_ID_NUV,
+            AV_CODEC_ID_KMVC,
+            AV_CODEC_ID_FLASHSV,
+            AV_CODEC_ID_CAVS,
+            AV_CODEC_ID_JPEG2000,
+            AV_CODEC_ID_VMNC,
+            AV_CODEC_ID_VP5,
+            AV_CODEC_ID_VP6,
+            AV_CODEC_ID_VP6F,
+            AV_CODEC_ID_TARGA,
+            AV_CODEC_ID_DSICINVIDEO,
+            AV_CODEC_ID_TIERTEXSEQVIDEO,
+            AV_CODEC_ID_TIFF,
+            AV_CODEC_ID_GIF,
+            AV_CODEC_ID_DXA,
+            AV_CODEC_ID_DNXHD,
+            AV_CODEC_ID_THP,
+            AV_CODEC_ID_SGI,
+            AV_CODEC_ID_C93,
+            AV_CODEC_ID_BETHSOFTVID,
+            AV_CODEC_ID_PTX,
+            AV_CODEC_ID_TXD,
+            AV_CODEC_ID_VP6A,
+            AV_CODEC_ID_AMV,
+            AV_CODEC_ID_VB,
+            AV_CODEC_ID_PCX,
+            AV_CODEC_ID_SUNRAST,
+            AV_CODEC_ID_INDEO4,
+            AV_CODEC_ID_INDEO5,
+            AV_CODEC_ID_MIMIC,
+            AV_CODEC_ID_RL2,
+            AV_CODEC_ID_ESCAPE124,
+            AV_CODEC_ID_DIRAC,
+            AV_CODEC_ID_BFI,
+            AV_CODEC_ID_CMV,
+            AV_CODEC_ID_MOTIONPIXELS,
+            AV_CODEC_ID_TGV,
+            AV_CODEC_ID_TGQ,
+            AV_CODEC_ID_TQI,
+            AV_CODEC_ID_AURA,
+            AV_CODEC_ID_AURA2,
+            AV_CODEC_ID_V210X,
+            AV_CODEC_ID_TMV,
+            AV_CODEC_ID_V210,
+            AV_CODEC_ID_DPX,
+            AV_CODEC_ID_MAD,
+            AV_CODEC_ID_FRWU,
+            AV_CODEC_ID_FLASHSV2,
+            AV_CODEC_ID_CDGRAPHICS,
+            AV_CODEC_ID_R210,
+            AV_CODEC_ID_ANM,
+            AV_CODEC_ID_BINKVIDEO,
+            AV_CODEC_ID_IFF_ILBM,
+//#define AV_CODEC_ID_IFF_BYTERUN1 AV_CODEC_ID_IFF_ILBM
+            AV_CODEC_ID_KGV1,
+            AV_CODEC_ID_YOP,
+            AV_CODEC_ID_VP8,
+            AV_CODEC_ID_PICTOR,
+            AV_CODEC_ID_ANSI,
+            AV_CODEC_ID_A64_MULTI,
+            AV_CODEC_ID_A64_MULTI5,
+            AV_CODEC_ID_R10K,
+            AV_CODEC_ID_MXPEG,
+            AV_CODEC_ID_LAGARITH,
+            AV_CODEC_ID_PRORES,
+            AV_CODEC_ID_JV,
+            AV_CODEC_ID_DFA,
+            AV_CODEC_ID_WMV3IMAGE,
+            AV_CODEC_ID_VC1IMAGE,
+            AV_CODEC_ID_UTVIDEO,
+            AV_CODEC_ID_BMV_VIDEO,
+            AV_CODEC_ID_VBLE,
+            AV_CODEC_ID_DXTORY,
+            AV_CODEC_ID_V410,
+            AV_CODEC_ID_XWD,
+            AV_CODEC_ID_CDXL,
+            AV_CODEC_ID_XBM,
+            AV_CODEC_ID_ZEROCODEC,
+            AV_CODEC_ID_MSS1,
+            AV_CODEC_ID_MSA1,
+            AV_CODEC_ID_TSCC2,
+            AV_CODEC_ID_MTS2,
+            AV_CODEC_ID_CLLC,
+            AV_CODEC_ID_MSS2,
+            AV_CODEC_ID_VP9,
+            AV_CODEC_ID_AIC,
+            AV_CODEC_ID_ESCAPE130,
+            AV_CODEC_ID_G2M,
+            AV_CODEC_ID_WEBP,
+            AV_CODEC_ID_HNM4_VIDEO,
+            AV_CODEC_ID_HEVC,
+//#define AV_CODEC_ID_H265 AV_CODEC_ID_HEVC
+            AV_CODEC_ID_FIC,
+            AV_CODEC_ID_ALIAS_PIX,
+            AV_CODEC_ID_BRENDER_PIX,
+            AV_CODEC_ID_PAF_VIDEO,
+            AV_CODEC_ID_EXR,
+            AV_CODEC_ID_VP7,
+            AV_CODEC_ID_SANM,
+            AV_CODEC_ID_SGIRLE,
+            AV_CODEC_ID_MVC1,
+            AV_CODEC_ID_MVC2,
+            AV_CODEC_ID_HQX,
+            AV_CODEC_ID_TDSC,
+            AV_CODEC_ID_HQ_HQA,
+            AV_CODEC_ID_HAP,
+            AV_CODEC_ID_DDS,
+            AV_CODEC_ID_DXV,
+            AV_CODEC_ID_SCREENPRESSO,
+            AV_CODEC_ID_RSCC,
 
-            /* various adpcm codecs */
-            CODEC_ID_ADPCM_IMA_QT = 0x11000,
-            CODEC_ID_ADPCM_IMA_WAV,
-            CODEC_ID_ADPCM_IMA_DK3,
-            CODEC_ID_ADPCM_IMA_DK4,
-            CODEC_ID_ADPCM_IMA_WS,
-            CODEC_ID_ADPCM_IMA_SMJPEG,
-            CODEC_ID_ADPCM_MS,
-            CODEC_ID_ADPCM_4XM,
-            CODEC_ID_ADPCM_XA,
-            CODEC_ID_ADPCM_ADX,
-            CODEC_ID_ADPCM_EA,
-            CODEC_ID_ADPCM_G726,
-            CODEC_ID_ADPCM_CT,
-            CODEC_ID_ADPCM_SWF,
-            CODEC_ID_ADPCM_YAMAHA,
-            CODEC_ID_ADPCM_SBPRO_4,
-            CODEC_ID_ADPCM_SBPRO_3,
-            CODEC_ID_ADPCM_SBPRO_2,
+            AV_CODEC_ID_Y41P = 0x8000,
+            AV_CODEC_ID_AVRP,
+            AV_CODEC_ID_012V,
+            AV_CODEC_ID_AVUI,
+            AV_CODEC_ID_AYUV,
+            AV_CODEC_ID_TARGA_Y216,
+            AV_CODEC_ID_V308,
+            AV_CODEC_ID_V408,
+            AV_CODEC_ID_YUV4,
+            AV_CODEC_ID_AVRN,
+            AV_CODEC_ID_CPIA,
+            AV_CODEC_ID_XFACE,
+            AV_CODEC_ID_SNOW,
+            AV_CODEC_ID_SMVJPEG,
+            AV_CODEC_ID_APNG,
+            AV_CODEC_ID_DAALA,
+            AV_CODEC_ID_CFHD,
+            AV_CODEC_ID_TRUEMOTION2RT,
+            AV_CODEC_ID_M101,
+            AV_CODEC_ID_MAGICYUV,
+            AV_CODEC_ID_SHEERVIDEO,
+            AV_CODEC_ID_YLC,
+            AV_CODEC_ID_PSD,
+            AV_CODEC_ID_PIXLET,
+            AV_CODEC_ID_SPEEDHQ,
+            AV_CODEC_ID_FMVC,
+            AV_CODEC_ID_SCPR,
+            AV_CODEC_ID_CLEARVIDEO,
+            AV_CODEC_ID_XPM,
+            AV_CODEC_ID_AV1,
+            AV_CODEC_ID_BITPACKED,
+            AV_CODEC_ID_MSCC,
+            AV_CODEC_ID_SRGC,
+            AV_CODEC_ID_SVG,
+            AV_CODEC_ID_GDV,
+
+            /* various PCM "codecs" */
+            AV_CODEC_ID_FIRST_AUDIO = 0x10000,     //< A dummy id pointing at the start of audio codecs
+            AV_CODEC_ID_PCM_S16LE = 0x10000,
+            AV_CODEC_ID_PCM_S16BE,
+            AV_CODEC_ID_PCM_U16LE,
+            AV_CODEC_ID_PCM_U16BE,
+            AV_CODEC_ID_PCM_S8,
+            AV_CODEC_ID_PCM_U8,
+            AV_CODEC_ID_PCM_MULAW,
+            AV_CODEC_ID_PCM_ALAW,
+            AV_CODEC_ID_PCM_S32LE,
+            AV_CODEC_ID_PCM_S32BE,
+            AV_CODEC_ID_PCM_U32LE,
+            AV_CODEC_ID_PCM_U32BE,
+            AV_CODEC_ID_PCM_S24LE,
+            AV_CODEC_ID_PCM_S24BE,
+            AV_CODEC_ID_PCM_U24LE,
+            AV_CODEC_ID_PCM_U24BE,
+            AV_CODEC_ID_PCM_S24DAUD,
+            AV_CODEC_ID_PCM_ZORK,
+            AV_CODEC_ID_PCM_S16LE_PLANAR,
+            AV_CODEC_ID_PCM_DVD,
+            AV_CODEC_ID_PCM_F32BE,
+            AV_CODEC_ID_PCM_F32LE,
+            AV_CODEC_ID_PCM_F64BE,
+            AV_CODEC_ID_PCM_F64LE,
+            AV_CODEC_ID_PCM_BLURAY,
+            AV_CODEC_ID_PCM_LXF,
+            AV_CODEC_ID_S302M,
+            AV_CODEC_ID_PCM_S8_PLANAR,
+            AV_CODEC_ID_PCM_S24LE_PLANAR,
+            AV_CODEC_ID_PCM_S32LE_PLANAR,
+            AV_CODEC_ID_PCM_S16BE_PLANAR,
+
+            AV_CODEC_ID_PCM_S64LE = 0x10800,
+            AV_CODEC_ID_PCM_S64BE,
+            AV_CODEC_ID_PCM_F16LE,
+            AV_CODEC_ID_PCM_F24LE,
+
+            /* various ADPCM codecs */
+            AV_CODEC_ID_ADPCM_IMA_QT = 0x11000,
+            AV_CODEC_ID_ADPCM_IMA_WAV,
+            AV_CODEC_ID_ADPCM_IMA_DK3,
+            AV_CODEC_ID_ADPCM_IMA_DK4,
+            AV_CODEC_ID_ADPCM_IMA_WS,
+            AV_CODEC_ID_ADPCM_IMA_SMJPEG,
+            AV_CODEC_ID_ADPCM_MS,
+            AV_CODEC_ID_ADPCM_4XM,
+            AV_CODEC_ID_ADPCM_XA,
+            AV_CODEC_ID_ADPCM_ADX,
+            AV_CODEC_ID_ADPCM_EA,
+            AV_CODEC_ID_ADPCM_G726,
+            AV_CODEC_ID_ADPCM_CT,
+            AV_CODEC_ID_ADPCM_SWF,
+            AV_CODEC_ID_ADPCM_YAMAHA,
+            AV_CODEC_ID_ADPCM_SBPRO_4,
+            AV_CODEC_ID_ADPCM_SBPRO_3,
+            AV_CODEC_ID_ADPCM_SBPRO_2,
+            AV_CODEC_ID_ADPCM_THP,
+            AV_CODEC_ID_ADPCM_IMA_AMV,
+            AV_CODEC_ID_ADPCM_EA_R1,
+            AV_CODEC_ID_ADPCM_EA_R3,
+            AV_CODEC_ID_ADPCM_EA_R2,
+            AV_CODEC_ID_ADPCM_IMA_EA_SEAD,
+            AV_CODEC_ID_ADPCM_IMA_EA_EACS,
+            AV_CODEC_ID_ADPCM_EA_XAS,
+            AV_CODEC_ID_ADPCM_EA_MAXIS_XA,
+            AV_CODEC_ID_ADPCM_IMA_ISS,
+            AV_CODEC_ID_ADPCM_G722,
+            AV_CODEC_ID_ADPCM_IMA_APC,
+            AV_CODEC_ID_ADPCM_VIMA,
+//#if FF_API_VIMA_DECODER
+//    AV_CODEC_ID_VIMA = AV_CODEC_ID_ADPCM_VIMA,
+//#endif
+
+            AV_CODEC_ID_ADPCM_AFC = 0x11800,
+            AV_CODEC_ID_ADPCM_IMA_OKI,
+            AV_CODEC_ID_ADPCM_DTK,
+            AV_CODEC_ID_ADPCM_IMA_RAD,
+            AV_CODEC_ID_ADPCM_G726LE,
+            AV_CODEC_ID_ADPCM_THP_LE,
+            AV_CODEC_ID_ADPCM_PSX,
+            AV_CODEC_ID_ADPCM_AICA,
+            AV_CODEC_ID_ADPCM_IMA_DAT4,
+            AV_CODEC_ID_ADPCM_MTAF,
 
             /* AMR */
-            CODEC_ID_AMR_NB = 0x12000,
-            CODEC_ID_AMR_WB,
+            AV_CODEC_ID_AMR_NB = 0x12000,
+            AV_CODEC_ID_AMR_WB,
 
             /* RealAudio codecs*/
-            CODEC_ID_RA_144 = 0x13000,
-            CODEC_ID_RA_288,
+            AV_CODEC_ID_RA_144 = 0x13000,
+            AV_CODEC_ID_RA_288,
 
             /* various DPCM codecs */
-            CODEC_ID_ROQ_DPCM = 0x14000,
-            CODEC_ID_INTERPLAY_DPCM,
-            CODEC_ID_XAN_DPCM,
-            CODEC_ID_SOL_DPCM,
+            AV_CODEC_ID_ROQ_DPCM = 0x14000,
+            AV_CODEC_ID_INTERPLAY_DPCM,
+            AV_CODEC_ID_XAN_DPCM,
+            AV_CODEC_ID_SOL_DPCM,
 
-            CODEC_ID_MP2 = 0x15000,
-            CODEC_ID_MP3, /* prefered ID for MPEG Audio layer 1, 2 or3 decoding */
-            CODEC_ID_AAC,
-            CODEC_ID_MPEG4AAC,
-            CODEC_ID_AC3,
-            CODEC_ID_DTS,
-            CODEC_ID_VORBIS,
-            CODEC_ID_DVAUDIO,
-            CODEC_ID_WMAV1,
-            CODEC_ID_WMAV2,
-            CODEC_ID_MACE3,
-            CODEC_ID_MACE6,
-            CODEC_ID_VMDAUDIO,
-            CODEC_ID_SONIC,
-            CODEC_ID_SONIC_LS,
-            CODEC_ID_FLAC,
-            CODEC_ID_MP3ADU,
-            CODEC_ID_MP3ON4,
-            CODEC_ID_SHORTEN,
-            CODEC_ID_ALAC,
-            CODEC_ID_WESTWOOD_SND1,
-            CODEC_ID_GSM,
-            CODEC_ID_QDM2,
-            CODEC_ID_COOK,
-            CODEC_ID_TRUESPEECH,
-            CODEC_ID_TTA,
-            CODEC_ID_SMACKAUDIO,
-            CODEC_ID_QCELP,
+            AV_CODEC_ID_SDX2_DPCM = 0x14800,
+            AV_CODEC_ID_GREMLIN_DPCM,
+
+            /* audio codecs */
+            AV_CODEC_ID_MP2 = 0x15000,
+            AV_CODEC_ID_MP3, //< preferred ID for decoding MPEG audio layer 1, 2 or 3
+            AV_CODEC_ID_AAC,
+            AV_CODEC_ID_AC3,
+            AV_CODEC_ID_DTS,
+            AV_CODEC_ID_VORBIS,
+            AV_CODEC_ID_DVAUDIO,
+            AV_CODEC_ID_WMAV1,
+            AV_CODEC_ID_WMAV2,
+            AV_CODEC_ID_MACE3,
+            AV_CODEC_ID_MACE6,
+            AV_CODEC_ID_VMDAUDIO,
+            AV_CODEC_ID_FLAC,
+            AV_CODEC_ID_MP3ADU,
+            AV_CODEC_ID_MP3ON4,
+            AV_CODEC_ID_SHORTEN,
+            AV_CODEC_ID_ALAC,
+            AV_CODEC_ID_WESTWOOD_SND1,
+            AV_CODEC_ID_GSM, //< as in Berlin toast format
+            AV_CODEC_ID_QDM2,
+            AV_CODEC_ID_COOK,
+            AV_CODEC_ID_TRUESPEECH,
+            AV_CODEC_ID_TTA,
+            AV_CODEC_ID_SMACKAUDIO,
+            AV_CODEC_ID_QCELP,
+            AV_CODEC_ID_WAVPACK,
+            AV_CODEC_ID_DSICINAUDIO,
+            AV_CODEC_ID_IMC,
+            AV_CODEC_ID_MUSEPACK7,
+            AV_CODEC_ID_MLP,
+            AV_CODEC_ID_GSM_MS, /* as found in WAV */
+            AV_CODEC_ID_ATRAC3,
+//#if FF_API_VOXWARE
+            AV_CODEC_ID_VOXWARE,
+//#endif
+            AV_CODEC_ID_APE,
+            AV_CODEC_ID_NELLYMOSER,
+            AV_CODEC_ID_MUSEPACK8,
+            AV_CODEC_ID_SPEEX,
+            AV_CODEC_ID_WMAVOICE,
+            AV_CODEC_ID_WMAPRO,
+            AV_CODEC_ID_WMALOSSLESS,
+            AV_CODEC_ID_ATRAC3P,
+            AV_CODEC_ID_EAC3,
+            AV_CODEC_ID_SIPR,
+            AV_CODEC_ID_MP1,
+            AV_CODEC_ID_TWINVQ,
+            AV_CODEC_ID_TRUEHD,
+            AV_CODEC_ID_MP4ALS,
+            AV_CODEC_ID_ATRAC1,
+            AV_CODEC_ID_BINKAUDIO_RDFT,
+            AV_CODEC_ID_BINKAUDIO_DCT,
+            AV_CODEC_ID_AAC_LATM,
+            AV_CODEC_ID_QDMC,
+            AV_CODEC_ID_CELT,
+            AV_CODEC_ID_G723_1,
+            AV_CODEC_ID_G729,
+            AV_CODEC_ID_8SVX_EXP,
+            AV_CODEC_ID_8SVX_FIB,
+            AV_CODEC_ID_BMV_AUDIO,
+            AV_CODEC_ID_RALF,
+            AV_CODEC_ID_IAC,
+            AV_CODEC_ID_ILBC,
+            AV_CODEC_ID_OPUS,
+            AV_CODEC_ID_COMFORT_NOISE,
+            AV_CODEC_ID_TAK,
+            AV_CODEC_ID_METASOUND,
+            AV_CODEC_ID_PAF_AUDIO,
+            AV_CODEC_ID_ON2AVC,
+            AV_CODEC_ID_DSS_SP,
+
+            AV_CODEC_ID_FFWAVESYNTH = 0x15800,
+            AV_CODEC_ID_SONIC,
+            AV_CODEC_ID_SONIC_LS,
+            AV_CODEC_ID_EVRC,
+            AV_CODEC_ID_SMV,
+            AV_CODEC_ID_DSD_LSBF,
+            AV_CODEC_ID_DSD_MSBF,
+            AV_CODEC_ID_DSD_LSBF_PLANAR,
+            AV_CODEC_ID_DSD_MSBF_PLANAR,
+            AV_CODEC_ID_4GV,
+            AV_CODEC_ID_INTERPLAY_ACM,
+            AV_CODEC_ID_XMA1,
+            AV_CODEC_ID_XMA2,
+            AV_CODEC_ID_DST,
+            AV_CODEC_ID_ATRAC3AL,
+            AV_CODEC_ID_ATRAC3PAL,
+            AV_CODEC_ID_DOLBY_E,
 
             /* subtitle codecs */
-            CODEC_ID_DVD_SUBTITLE = 0x17000,
-            CODEC_ID_DVB_SUBTITLE,
+            AV_CODEC_ID_FIRST_SUBTITLE = 0x17000,   //< A dummy ID pointing at the start of subtitle codecs.
+            AV_CODEC_ID_DVD_SUBTITLE = 0x17000,
+            AV_CODEC_ID_DVB_SUBTITLE,
+            AV_CODEC_ID_TEXT,                       //< raw UTF-8 text
+            AV_CODEC_ID_XSUB,
+            AV_CODEC_ID_SSA,
+            AV_CODEC_ID_MOV_TEXT,
+            AV_CODEC_ID_HDMV_PGS_SUBTITLE,
+            AV_CODEC_ID_DVB_TELETEXT,
+            AV_CODEC_ID_SRT,
 
-            CODEC_ID_MPEG2TS = 0x20000, /* _FAKE_ codec to indicate a raw MPEG2 transport
-                         stream (only used by libavformat) */
-        };
+            AV_CODEC_ID_MICRODVD = 0x17800,
+            AV_CODEC_ID_EIA_608,
+            AV_CODEC_ID_JACOSUB,
+            AV_CODEC_ID_SAMI,
+            AV_CODEC_ID_REALTEXT,
+            AV_CODEC_ID_STL,
+            AV_CODEC_ID_SUBVIEWER1,
+            AV_CODEC_ID_SUBVIEWER,
+            AV_CODEC_ID_SUBRIP,
+            AV_CODEC_ID_WEBVTT,
+            AV_CODEC_ID_MPL2,
+            AV_CODEC_ID_VPLAYER,
+            AV_CODEC_ID_PJS,
+            AV_CODEC_ID_ASS,
+            AV_CODEC_ID_HDMV_TEXT_SUBTITLE,
 
-        public enum CodecType
-        {
-            CODEC_TYPE_UNKNOWN = -1,
-            CODEC_TYPE_VIDEO,
-            CODEC_TYPE_AUDIO,
-            CODEC_TYPE_DATA,
-            CODEC_TYPE_SUBTITLE,
+            /* other specific kind of codecs (generally used for attachments) */
+            AV_CODEC_ID_FIRST_UNKNOWN = 0x18000,           //< A dummy ID pointing at the start of various fake codecs.
+            AV_CODEC_ID_TTF = 0x18000,
+
+            AV_CODEC_ID_SCTE_35,                            //< Contain timestamp estimated through PCR of program stream.
+            AV_CODEC_ID_BINTEXT = 0x18800,
+            AV_CODEC_ID_XBIN,
+            AV_CODEC_ID_IDF,
+            AV_CODEC_ID_OTF,
+            AV_CODEC_ID_SMPTE_KLV,
+            AV_CODEC_ID_DVD_NAV,
+            AV_CODEC_ID_TIMED_ID3,
+            AV_CODEC_ID_BIN_DATA,
+
+
+            AV_CODEC_ID_PROBE = 0x19000,            //< codec_id is not known (like AV_CODEC_ID_NONE) but lavf should attempt to identify it
+
+            AV_CODEC_ID_MPEG2TS = 0x20000,          // _FAKE_ codec to indicate a raw MPEG-2 TS
+                                                    // stream (only used by libavformat)
+            AV_CODEC_ID_MPEG4SYSTEMS = 0x20001,     //*< _FAKE_ codec to indicate a MPEG-4 Systems
+                                                    //* stream (only used by libavformat) */
+            AV_CODEC_ID_FFMETADATA = 0x21000,       //< Dummy codec for streams containing only metadata information.
+            AV_CODEC_ID_WRAPPED_AVFRAME = 0x21001,  //< Passthrough codec, AVFrames wrapped in AVPacket
         };
 
         /* currently unused, may be used if 24/32 bits samples ever supported */
@@ -1435,6 +1736,37 @@ namespace SharpFFmpeg
 
         public delegate void OpaqueCallback();
 
+
+        /**
+        * This structure describes decoded (raw) audio or video data.
+        *
+        * AVFrame must be allocated using av_frame_alloc(). Note that this only
+        * allocates the AVFrame itself, the buffers for the data must be managed
+        * through other means (see below).
+        * AVFrame must be freed with av_frame_free().
+        *
+        * AVFrame is typically allocated once and then reused multiple times to hold
+        * different data (e.g. a single AVFrame to hold frames received from a
+        * decoder). In such a case, av_frame_unref() will free any references held by
+        * the frame and reset it to its original clean state before it
+        * is reused again.
+        *
+        * The data described by an AVFrame is usually reference counted through the
+        * AVBuffer API. The underlying buffer references are stored in AVFrame.buf /
+        * AVFrame.extended_buf. An AVFrame is considered to be reference counted if at
+        * least one reference is set, i.e. if AVFrame.buf[0] != NULL. In such a case,
+        * every single data plane must be contained in one of the buffers in
+        * AVFrame.buf or AVFrame.extended_buf.
+        * There may be a single buffer for all the data, or one separate buffer for
+        * each plane, or anything in between.
+        *
+        * sizeof(AVFrame) is not a part of the public ABI, so new fields may be added
+        * to the end with a minor bump.
+        *
+        * Fields can be accessed through AVOptions, the name string used, matches the
+        * C structure field name for fields accessible through AVOptions. The AVClass
+        * for AVFrame can be obtained from avcodec_get_frame_class()
+        */
         public class AVFrame
         {
             /**
@@ -1628,7 +1960,7 @@ namespace SharpFFmpeg
             // * AV_NUM_DATA_POINTERS channels, there may be more buffers than can fit in
             // * this array.Then the extra AVBufferRef pointers are stored in the
             // * extended_buf array.
-            IntPtr buf;
+            public IntPtr buf;
 
             /**
              * For planar audio which requires more than AV_NUM_DATA_POINTERS
@@ -1642,73 +1974,59 @@ namespace SharpFFmpeg
              * This array is always allocated using av_malloc() by whoever constructs
              * the frame. It is freed in av_frame_unref().
              */
-            IntPtr extended_buf;
+            public IntPtr extended_buf;
             /**
              * Number of elements in extended_buf.
              */
-            int nb_extended_buf;
+            [MarshalAs(UnmanagedType.I4)]
+            public int nb_extended_buf;
 
-            AVFrameSideData** side_data;
-            int nb_side_data;
+            public IntPtr side_data;
 
-            /**
-             * @defgroup lavu_frame_flags AV_FRAME_FLAGS
-             * @ingroup lavu_frame
-             * Flags describing additional frame properties.
-             *
-             * @{
-             */
-
-            /**
-             * The frame data may be corrupted, e.g. due to decoding errors.
-             */
-#define AV_FRAME_FLAG_CORRUPT       (1 << 0)
-            /**
-             * A flag to mark the frames which need to be decoded, but shouldn't be output.
-             */
-#define AV_FRAME_FLAG_DISCARD   (1 << 2)
-            /**
-             * @}
-             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int nb_side_data;
 
             /**
              * Frame flags, a combination of @ref lavu_frame_flags
              */
-            int flags;
+            [MarshalAs(UnmanagedType.I4)]
+            public int flags;
 
             /**
              * MPEG vs JPEG YUV range.
              * - encoding: Set by user
              * - decoding: Set by libavcodec
              */
-            enum AVColorRange color_range;
+            public AVColorRange color_range;
 
-    enum AVColorPrimaries color_primaries;
+            public AVColorPrimaries color_primaries;
 
-    enum AVColorTransferCharacteristic color_trc;
+            public AVColorTransferCharacteristic color_trc;
 
-    /**
-     * YUV colorspace type.
-     * - encoding: Set by user
-     * - decoding: Set by libavcodec
-     */
-    enum AVColorSpace colorspace;
+            /**
+             * YUV colorspace type.
+             * - encoding: Set by user
+             * - decoding: Set by libavcodec
+             */
+            public AVColorSpace colorspace;
 
-    enum AVChromaLocation chroma_location;
+            public AVChromaLocation chroma_location;
 
-    /**
-     * frame timestamp estimated using various heuristics, in stream time base
-     * - encoding: unused
-     * - decoding: set by libavcodec, read by user.
-     */
-    int64_t best_effort_timestamp;
+            /**
+             * frame timestamp estimated using various heuristics, in stream time base
+             * - encoding: unused
+             * - decoding: set by libavcodec, read by user.
+             */
+            [MarshalAs(UnmanagedType.I8)]
+            public Int64 best_effort_timestamp;
 
             /**
              * reordered pos from the last AVPacket that has been input into the decoder
              * - encoding: unused
              * - decoding: Read by user.
              */
-            int64_t pkt_pos;
+            [MarshalAs(UnmanagedType.I8)]
+            public Int64 pkt_pos;
 
             /**
              * duration of the corresponding packet, expressed in
@@ -1716,14 +2034,15 @@ namespace SharpFFmpeg
              * - encoding: unused
              * - decoding: Read by user.
              */
-            int64_t pkt_duration;
+            [MarshalAs(UnmanagedType.I8)]
+            public Int64 pkt_duration;
 
             /**
              * metadata.
              * - encoding: Set by user.
              * - decoding: Set by libavcodec.
              */
-            AVDictionary* metadata;
+            public IntPtr metadata;
 
             /**
              * decode error flags of the frame, set to a combination of
@@ -1732,16 +2051,16 @@ namespace SharpFFmpeg
              * - encoding: unused
              * - decoding: set by libavcodec, read by user.
              */
-            int decode_error_flags;
-#define FF_DECODE_ERROR_INVALID_BITSTREAM   1
-#define FF_DECODE_ERROR_MISSING_REFERENCE   2
+            [MarshalAs(UnmanagedType.I4)]
+            public int decode_error_flags;
 
             /**
              * number of audio channels, only used for audio.
              * - encoding: unused
              * - decoding: Read by user.
              */
-            int channels;
+            [MarshalAs(UnmanagedType.I4)]
+            public int channels;
 
             /**
              * size of the corresponding packet containing the compressed
@@ -1750,30 +2069,14 @@ namespace SharpFFmpeg
              * - encoding: unused
              * - decoding: set by libavcodec, read by user.
              */
-            int pkt_size;
+            [MarshalAs(UnmanagedType.I4)]
+            public int pkt_size;
 
-#if FF_API_FRAME_QP
-    /**
-     * QP table
-     */
-    attribute_deprecated
-    int8_t *qscale_table;
-    /**
-     * QP store stride
-     */
-    attribute_deprecated
-    int qstride;
-
-    attribute_deprecated
-    int qscale_type;
-
-    AVBufferRef *qp_table_buf;
-#endif
             /**
              * For hwaccel-format frames, this should be a reference to the
              * AVHWFramesContext describing the frame.
              */
-            AVBufferRef* hw_frames_ctx;
+            public IntPtr hw_frames_ctx;
 
             /**
              * AVBufferRef for free use by the API user. FFmpeg will never check the
@@ -1784,7 +2087,7 @@ namespace SharpFFmpeg
              * This is unrelated to the opaque field, although it serves a similar
              * purpose.
              */
-            AVBufferRef* opaque_ref;
+            public IntPtr opaque_ref;
 
             /**
              * @anchor cropping
@@ -1794,26 +2097,30 @@ namespace SharpFFmpeg
              * the frame intended for presentation.
              * @{
              */
-            size_t crop_top;
-            size_t crop_bottom;
-            size_t crop_left;
-            size_t crop_right;
+            [MarshalAs(UnmanagedType.U4)]
+            public UInt32 crop_top;
+            [MarshalAs(UnmanagedType.U4)]
+            public UInt32 crop_bottom;
+            [MarshalAs(UnmanagedType.U4)]
+            public UInt32 crop_left;
+            [MarshalAs(UnmanagedType.U4)]
+            public UInt32 crop_right;
 
         };
 
-        public delegate void DrawhorizBandCallback(AVCodecContext pAVCodecContext, IntPtr pAVFrame,
+        public delegate void DrawhorizBandCallback(AVCodecContext pAVCodecContext, AVFrame pAVFrame,
                                             [MarshalAs(UnmanagedType.LPArray, SizeConst = 4)]int[] offset,
                                             int y, int type, int height);
 
         public delegate void RtpCallback(AVCodecContext pAVCodecContext, IntPtr pdata, int size, int mb_nb);
 
-        public delegate int GetBufferCallback(AVCodecContext pAVCodecContext, IntPtr pAVFrame, int flags);
+        public delegate int GetBufferCallback(AVCodecContext pAVCodecContext, AVFrame pAVFrame, int flags);
 
-        public delegate void ReleaseBufferCallback(AVCodecContext pAVCodecContext, IntPtr pAVFrame);
+        public delegate void ReleaseBufferCallback(AVCodecContext pAVCodecContext, AVFrame pAVFrame);
 
-        public delegate PixelFormat GetFormatCallback(AVCodecContext pAVCodecContext, IntPtr pPixelFormat);
+        public delegate AVPixelFormat GetFormatCallback(AVCodecContext pAVCodecContext, IntPtr pPixelFormat);
 
-        public delegate int RegetBufferCallback(AVCodecContext pAVCodecContext, IntPtr pAVFrame);
+        public delegate int RegetBufferCallback(AVCodecContext pAVCodecContext, AVFrame pAVFrame);
 
         public delegate int FuncCallback(AVCodecContext pAVCodecContext, IntPtr parg);
 
@@ -1839,11 +2146,11 @@ namespace SharpFFmpeg
             [MarshalAs(UnmanagedType.I4)]
             public int log_level_offset;
 
-            public CodecType codec_type; /* see CODEC_TYPE_xxx */
+            public AVMediaType codec_type; /* see CODEC_TYPE_xxx */
 
             public IntPtr codec; // AVCodec
 
-            public CodecID codec_id; /* see CODEC_ID_xxx */
+            public AVCodecID codec_id; /* see CODEC_ID_xxx */
 
             //*
             //* fourcc(LSB first, so "ABCD" -> ('D'<<24) + ('C'<<16) + ('B'<<8) + 'A').
@@ -1999,7 +2306,7 @@ namespace SharpFFmpeg
             * - encoding: set by user.
             * - decoding: set by lavc.
             */
-            public PixelFormat pix_fmt;
+            public AVPixelFormat pix_fmt;
 
             /**
             * motion estimation algorithm used for video coding.
@@ -3467,29 +3774,41 @@ namespace SharpFFmpeg
             public int apply_cropping;
         };
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int InitThreadCopyCallback(AVCodecContext pAVCodecContext);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int UpdateThreadContextCallback(AVCodecContext dst, AVCodecContext src);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void InitStaticDataCallback(AVCodec codec);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int InitCallback(AVCodecContext pAVCodecContext);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int EncodeSubCallback(AVCodecContext pAVCodecContext, IntPtr buf, int buf_size, IntPtr pAVSubtitle);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int Encode2Callback(AVCodecContext avctx, AVPacket avpkt, AVFrame frame, ref int got_pkt_ptr);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int DecodeCallback(AVCodecContext avctx, IntPtr outdata, ref int outdata_size, AVPacket avpkt);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int CloseCallback(AVCodecContext avctx);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int SendFrameCallback(AVCodecContext avctx, AVFrame frame);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int ReceivePacketCallback(AVCodecContext avctx, AVPacket avpkt);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int ReceiveFrameCallback(AVCodecContext avctx, AVFrame frame);
 
-        public delegate int FlushCallback(AVCodecContext avctx);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void FlushCallback(AVCodecContext avctx);
 
         [StructLayout(LayoutKind.Sequential)]
         public class AVCodec
@@ -3504,9 +3823,9 @@ namespace SharpFFmpeg
             [MarshalAs(UnmanagedType.LPStr)]
             public String long_name;
 
-            public CodecType type;
+            public AVMediaType type;
 
-            public CodecID id;
+            public AVCodecID id;
 
             [MarshalAs(UnmanagedType.I4)]
             public int capabilities;
@@ -3534,7 +3853,7 @@ namespace SharpFFmpeg
             //#if LIBAVCODEC_VERSION_INT < ((50<<16)+(0<<8)+0)
             //    void *dummy; // FIXME remove next time we break binary compatibility
             //#endif
-            public AVCodec next; // AVCodec *next
+            public IntPtr next; // AVCodec *next
 
             /**
             * @name Frame-level threading support functions
@@ -3545,7 +3864,7 @@ namespace SharpFFmpeg
              * If the codec allocates writable tables in init(), re-allocate them here.
              * priv_data will be set to a copy of the original.
              */
-            [MarshalAs(UnmanagedType.FunctionPtr)]
+            //[MarshalAs(UnmanagedType.FunctionPtr)]
             public InitThreadCopyCallback init_thread_copy;
 
             /**
@@ -3555,7 +3874,7 @@ namespace SharpFFmpeg
             *
             * dst and src will (rarely) point to the same context, in which case memcpy should be skipped.
             */
-            [MarshalAs(UnmanagedType.FunctionPtr)]
+            //[MarshalAs(UnmanagedType.FunctionPtr)]
             public UpdateThreadContextCallback update_thread_context;
 
             /**
@@ -3566,34 +3885,34 @@ namespace SharpFFmpeg
             /**
             * Initialize codec static data, called from avcodec_register().
             */
-            [MarshalAs(UnmanagedType.FunctionPtr)]
+            //[MarshalAs(UnmanagedType.FunctionPtr)]
             public InitStaticDataCallback init_static_data;
 
-            [MarshalAs(UnmanagedType.FunctionPtr)]
+            //[MarshalAs(UnmanagedType.FunctionPtr)]
             public InitCallback init;
 
-            [MarshalAs(UnmanagedType.FunctionPtr)]
+            //[MarshalAs(UnmanagedType.FunctionPtr)]
             public EncodeSubCallback encode_sub;
 
-            [MarshalAs(UnmanagedType.FunctionPtr)]
+            //[MarshalAs(UnmanagedType.FunctionPtr)]
             public Encode2Callback encode2;
 
-            [MarshalAs(UnmanagedType.FunctionPtr)]
+            //[MarshalAs(UnmanagedType.FunctionPtr)]
             public DecodeCallback decode;
 
-            [MarshalAs(UnmanagedType.FunctionPtr)]
+            //[MarshalAs(UnmanagedType.FunctionPtr)]
             public CloseCallback close;
 
-            [MarshalAs(UnmanagedType.FunctionPtr)]
+            //[MarshalAs(UnmanagedType.FunctionPtr)]
             public SendFrameCallback send_frame;
 
-            [MarshalAs(UnmanagedType.FunctionPtr)]
+            //[MarshalAs(UnmanagedType.FunctionPtr)]
             public ReceivePacketCallback receive_packet;
 
-            [MarshalAs(UnmanagedType.FunctionPtr)]
+            //[MarshalAs(UnmanagedType.FunctionPtr)]
             public ReceiveFrameCallback receive_frame;
 
-            [MarshalAs(UnmanagedType.FunctionPtr)]
+            //[MarshalAs(UnmanagedType.FunctionPtr)]
             public FlushCallback flush;
 
             /**
@@ -3611,7 +3930,7 @@ namespace SharpFFmpeg
             public String bsfs;
         };
 
-        public delegate int HWAccelAllocFrame(AVCodecContext avctx, IntPtr pAVFrame);
+        public delegate int HWAccelAllocFrame(AVCodecContext avctx, AVFrame pAVFrame);
 
         public delegate int HWAccelStartFrame(AVCodecContext avctx, IntPtr buf, UInt32 buf_size);
 
@@ -3648,7 +3967,7 @@ namespace SharpFFmpeg
              *
              * See AV_CODEC_ID_xxx
              */
-            public CodecID id;
+            public AVCodecID id;
 
             /**
              * Supported pixel format.

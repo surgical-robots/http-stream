@@ -11,7 +11,7 @@ namespace SharpFFmpeg
         /// Initialize optional fields of a packet.
         /// </summary>
         /// <param name="pAVPacket"></param>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_init_packet(AVPacket pAVPacket);
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace SharpFFmpeg
         /// <param name="pAVPacket"></param>
         /// <param name="size"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_new_packet(AVPacket pAVPacket, int size);
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace SharpFFmpeg
         /// <param name="pAVPacket"></param>
         /// <param name="size"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_get_packet(IntPtr pByteIOContext, AVPacket pAVPacket, int size);
 
         /// <summary>
@@ -38,21 +38,21 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="pAVPacket"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_dup_packet(AVPacket pAVPacket);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVPacket"></param>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avcodec-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_packet_unref(AVPacket pAVPacket);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVImageFormat"></param>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_register_image_format(IntPtr pAVImageFormat);
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="pAVProbeData"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr av_probe_image_format(IntPtr pAVProbeData);
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr guess_image_format([MarshalAs(UnmanagedType.LPTStr)]String filename);
 
         /// <summary>
@@ -76,8 +76,8 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern CodecID av_guess_image2_codec([MarshalAs(UnmanagedType.LPTStr)]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern AVCodecID av_guess_image2_codec([MarshalAs(UnmanagedType.LPTStr)]
                                                                     String filename);
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace SharpFFmpeg
         /// <param name="alloc_cb"></param>
         /// <param name="opaque"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_read_image(IntPtr pByteIOContext,
                                             [MarshalAs(UnmanagedType.LPTStr)]String filename,
                                             IntPtr pAVImageFormat,
@@ -104,21 +104,21 @@ namespace SharpFFmpeg
         /// <param name="pAVImageFormat"></param>
         /// <param name="pAVImageInfo"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_write_image(IntPtr pByteIOContext, IntPtr pAVImageFormat, IntPtr pAVImageInfo);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVInputFormat"></param>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_register_input_format(IntPtr pAVInputFormat);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVOutputFormat"></param>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_register_output_format(IntPtr pAVOutputFormat);
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace SharpFFmpeg
         /// <param name="filename"></param>
         /// <param name="mime_type"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr guess_stream_format([MarshalAs(UnmanagedType.LPTStr)]
                                                         String short_name,
                                                         [MarshalAs(UnmanagedType.LPTStr)]
@@ -143,7 +143,7 @@ namespace SharpFFmpeg
         /// <param name="filename"></param>
         /// <param name="mime_type"></param>
         /// <returns>AVOutputFormat pointer</returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr guess_format([MarshalAs(UnmanagedType.LPTStr)]
                                                   String short_name,
                                                   [MarshalAs(UnmanagedType.LPTStr)]
@@ -160,15 +160,15 @@ namespace SharpFFmpeg
         /// <param name="mime_type"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern CodecID av_guess_codec(IntPtr pAVOutoutFormat,
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
+        public static extern AVCodecID av_guess_codec(IntPtr pAVOutoutFormat,
                                                             [MarshalAs(UnmanagedType.LPTStr)]
                                                             String short_name,
                                                             [MarshalAs(UnmanagedType.LPTStr)]
                                                             String filename,
                                                             [MarshalAs(UnmanagedType.LPTStr)]
                                                             String mime_type,
-                                                            CodecType type);
+                                                            AVMediaType type);
 
         /// <summary>
         /// 
@@ -176,16 +176,16 @@ namespace SharpFFmpeg
         /// <param name="pFile"></param>
         /// <param name="buf"></param>
         /// <param name="size"></param>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_hex_dump(IntPtr pFile, IntPtr buf, int size);
 
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_pkt_dump2(IntPtr pFile, AVPacket pAVPacket, int dump_payload, IntPtr pAVStream);
 
         /// <summary>
         /// 
         /// </summary>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_register_all();
 
 
@@ -195,7 +195,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="?"></param>
         /// <returns>AVInputFormat pointer</returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr av_find_input_format([MarshalAs(UnmanagedType.LPTStr)]String short_name);
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace SharpFFmpeg
         /// <param name="pAVProbeData"></param>
         /// <param name="is_opened"></param>
         /// <returns>AVInputFormat pointer</returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr av_probe_input_format(IntPtr pAVProbeData, int is_opened);
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace SharpFFmpeg
         /// <param name="buf_size"></param>
         /// <param name="pAVFormatParameters"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_open_input_file([Out]out IntPtr pFormatContext,
                                 [MarshalAs(UnmanagedType.LPStr)]String filename,
                                 IntPtr pAVInputFormat, int buf_size, IntPtr pAVFormatParameters);
@@ -225,7 +225,7 @@ namespace SharpFFmpeg
         /// 
         /// </summary>
         /// <returns>AVFormatContext pointer</returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr av_alloc_format_context();
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="pAVFormatContext"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_find_stream_info(IntPtr pAVFormatContext);
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace SharpFFmpeg
         /// <param name="pAVFormatContext"></param>
         /// <param name="pAVPacket"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_read_packet(IntPtr pAVFormatContext, AVPacket pAVPacket);
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace SharpFFmpeg
         /// <param name="pAVFormatContext"></param>
         /// <param name="pAVPacket"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_read_frame(IntPtr pAVFormatContext, AVPacket pAVPacket);
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace SharpFFmpeg
         /// <param name="timestamp"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_seek_frame(IntPtr pAVFormatContext, int stream_index, Int64 timestamp, int flags);
 
         /// <summary>
@@ -270,7 +270,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="pAVFormatContext"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_read_play(IntPtr pAVFormatContext);
 
         /// <summary>
@@ -278,14 +278,14 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="pAVFormatContext"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_read_pause(IntPtr pAVFormatContext);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVFormatContext"></param>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_close_input_file(IntPtr pAVFormatContext);
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace SharpFFmpeg
         /// <param name="pAVFormatContext"></param>
         /// <param name="id"></param>
         /// <returns>AVStream pointer</returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr av_new_stream(IntPtr pAVFormatContext, int id);
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace SharpFFmpeg
         /// <param name="pts_wrap_bits"></param>
         /// <param name="pts_num"></param>
         /// <param name="pts_den"></param>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_set_pts_info(IntPtr pAVStream, int pts_wrap_bits, int pts_num, int pts_den);
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="pAVFormatContext"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_find_default_stream_index(IntPtr pAVFormatContext);
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace SharpFFmpeg
         /// <param name="timestamp"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_index_search_timestamp(IntPtr pAVStream, Int64 timestamp, int flags);
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace SharpFFmpeg
         /// <param name="distance"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_add_index_entry(IntPtr pAVStream, Int64 pos, Int64 timestamp, int size, int distance, int flags);
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace SharpFFmpeg
         /// <param name="target_ts"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_seek_frame_binary(IntPtr pAVFormatContext, int stream_index, Int64 target_ts, int flags);
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace SharpFFmpeg
         /// <param name="pAVFormatContext"></param>
         /// <param name="pAVStream"></param>
         /// <param name="timestamp"></param>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void av_update_cur_dts(IntPtr pAVFormatContext, IntPtr pAVStream, Int64 timestamp);
 
         /* media file output */
@@ -367,7 +367,7 @@ namespace SharpFFmpeg
         /// <param name="pAVFormatContext"></param>
         /// <param name="pAVFormatParameters"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_set_parameters(IntPtr pAVFormatContext, IntPtr pAVFormatParameters);
 
         /// <summary>
@@ -375,7 +375,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="pAVFormatContext"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_write_header(IntPtr pAVFormatContext);
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace SharpFFmpeg
         /// <param name="pAVFormatContext"></param>
         /// <param name="pAVPacket"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_write_frame(IntPtr pAVFormatContext, AVPacket pAVPacket);
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace SharpFFmpeg
         /// <param name="pAVFormatContext"></param>
         /// <param name="pAVPacket"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_interleaved_write_frame(IntPtr pAVFormatContext, AVPacket pAVPacket);
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace SharpFFmpeg
         /// <param name="pAVPacket"></param>
         /// <param name="flush"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_interleave_packet_per_dts(IntPtr pAVFormatContext, out AVPacket p_out_AVPacket, AVPacket pAVPacket, int flush);
 
         /// <summary>
@@ -412,7 +412,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="pAVFormatContext"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_write_trailer(IntPtr pAVFormatContext);
 
         /// <summary>
@@ -422,7 +422,7 @@ namespace SharpFFmpeg
         /// <param name="index"></param>
         /// <param name="url"></param>
         /// <param name="is_output"></param>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void dump_format(IntPtr pAVFormatContext, int index,
                                                 [MarshalAs(UnmanagedType.LPTStr)]
                                                 String url,
@@ -435,7 +435,7 @@ namespace SharpFFmpeg
         /// <param name="height_ptr"></param>
         /// <param name="arg"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int parse_image_size(IntPtr width_ptr, IntPtr height_ptr,
                                                 [MarshalAs(UnmanagedType.LPTStr)]String arg);
 
@@ -446,7 +446,7 @@ namespace SharpFFmpeg
         /// <param name="pFrame_rate_base"></param>
         /// <param name="arg"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int parse_frame_rate(IntPtr pFrame_rate, IntPtr pFrame_rate_base,
                                                 [MarshalAs(UnmanagedType.LPTStr)]String arg);
 
@@ -456,14 +456,14 @@ namespace SharpFFmpeg
         /// <param name="datestr"></param>
         /// <param name="duration"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern Int64 parse_date([MarshalAs(UnmanagedType.LPTStr)]String datestr, int duration);
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern Int64 av_gettime();
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="fd"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern Int64 ffm_read_write_index(int fd);
 
         /// <summary>
@@ -479,7 +479,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="fd"></param>
         /// <param name="pos"></param>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void ffm_write_write_index(int fd, Int64 pos);
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace SharpFFmpeg
         /// <param name="pAVFormatContext"></param>
         /// <param name="pos"></param>
         /// <param name="file_size"></param>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern void ffm_set_write_index(IntPtr pAVFormatContext, Int64 pos, Int64 file_size);
 
         /// <summary>
@@ -499,7 +499,7 @@ namespace SharpFFmpeg
         /// <param name="tag1"></param>
         /// <param name="info"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int find_info_tag([MarshalAs(UnmanagedType.LPTStr)]String arg,
                                                 int arg_size,
                                                 [MarshalAs(UnmanagedType.LPTStr)]String tag1,
@@ -513,7 +513,7 @@ namespace SharpFFmpeg
         /// <param name="path"></param>
         /// <param name="number"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_get_frame_filename(IntPtr buf, int buf_size,
                                             [MarshalAs(UnmanagedType.LPTStr)]String path, int number);
 
@@ -522,21 +522,21 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_filename_number_test([MarshalAs(UnmanagedType.LPTStr)]String filename);
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int video_grab_init();
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int audio_init();
 
         /* DV1394 */
@@ -544,14 +544,14 @@ namespace SharpFFmpeg
         /// 
         /// </summary>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int dv1394_init();
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
+        [DllImport("avformat-57.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int dc1394_init();
 
 
@@ -688,7 +688,7 @@ namespace SharpFFmpeg
             int channels;
             int width;
             int height;
-            PixelFormat pix_fmt;
+            AVPixelFormat pix_fmt;
             IntPtr image_format; // AVImageFormat
             int channel;
             [MarshalAs(UnmanagedType.LPStr)]
@@ -699,12 +699,12 @@ namespace SharpFFmpeg
             int mpeg2ts_compute_pcr;
             int initial_pause;
             int prealloced_context;
-            CodecID video_codec_id;
-            CodecID audio_codec_id;
+            AVCodecID video_codec_id;
+            AVCodecID audio_codec_id;
         };
 
         public delegate int WriteHeader(IntPtr pAVFormatContext);
-        public delegate int WritePacket(IntPtr pAVFormatContext, IntPtr pAVPacket);
+        public delegate int WritePacket(IntPtr pAVFormatContext, AVPacket pAVPacket);
         public delegate int WriteTrailer(IntPtr pAVFormatContext);
         public delegate int SetParametersCallback(IntPtr pAVFormatContext, IntPtr avFormatParameters);
         public delegate int InterleavePacketCallback(IntPtr pAVFormatContext, IntPtr pOutAVPacket, IntPtr pInAVPacket, int flush);
@@ -726,9 +726,9 @@ namespace SharpFFmpeg
 
             int priv_data_size;
 
-            CodecID audio_codec;
+            AVCodecID audio_codec;
 
-            CodecID video_codec;
+            AVCodecID video_codec;
 
             [MarshalAs(UnmanagedType.FunctionPtr)]
             WriteHeader write_header;
@@ -1039,7 +1039,7 @@ namespace SharpFFmpeg
         [StructLayout(LayoutKind.Sequential)]
         public struct AVImageInfo
         {
-            PixelFormat pix_fmt; // requested pixel format
+            AVPixelFormat pix_fmt; // requested pixel format
 
             [MarshalAs(UnmanagedType.I4)]
             int width; // requested width

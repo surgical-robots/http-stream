@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
@@ -30,10 +31,10 @@ namespace HttpStream
         VideoCapture capture;
         bool isRunning = false;
 
-        IntPtr codec;
-        IntPtr c;
-        IntPtr frame;
-        IntPtr pkt;
+        FFmpeg.AVCodec codec;
+        FFmpeg.AVCodecContext c;
+        FFmpeg.AVFrame frame;
+        FFmpeg.AVPacket pkt;
 
         public MainWindow()
         {
@@ -53,21 +54,66 @@ namespace HttpStream
             {
                 DeviceNames.Add(d.Name);
             }
+            InitEncoder();
         }
 
         void InitEncoder()
         {
+            string dir = Environment.SystemDirectory;
             FFmpeg.avcodec_register_all();
 
-            codec = FFmpeg.avcodec_find_encoder(FFmpeg.CodecID.CODEC_ID_MPEG4);
+            codec = FFmpeg.avcodec_find_encoder(FFmpeg.AVCodecID.AV_CODEC_ID_MPEG4);
             c = FFmpeg.avcodec_alloc_context3(codec);
             pkt = FFmpeg.av_packet_alloc();
 
-            FFmpeg.avcodec_open2(c, codec, IntPtr.Zero);
+            c.bit_rate = 400000;
+            c.width = 640;
+            c.height = 480;
+            FFmpeg.AVRational dummy;
+            dummy.num = 1;
+            dummy.den = 30;
+            c.time_base = dummy;
+            dummy.num = 30;
+            dummy.den = 1;
+            c.framerate = dummy;
+
+            c.gop_size = 10;
+            c.max_b_frames = 1;
+            c.pix_fmt = FFmpeg.AVPixelFormat.AV_PIX_FMT_RGB24;
+
+            int ret = FFmpeg.avcodec_open2(c, codec, IntPtr.Zero);
+            if (ret < 0)
+            {
+                Debug.Print("Could not open codec!");
+            }
 
             frame = FFmpeg.av_frame_alloc();
+            if(frame == null)
+            {
+                Debug.Print("Could not allocate video frame!");
+            }
 
-            FFmpeg.av_frame_get_buffer(frame, 32);
+            frame.format = (int)c.pix_fmt;
+            frame.width = c.width;
+            frame.height = c.height;
+
+            //ret = FFmpeg.av_frame_get_buffer(frame, 32);
+            //if (ret < 0)
+            //    Debug.Print("Could not allocate video frame data!");
+        }
+
+        void Encode()
+        {
+            int err = FFmpeg.avcodec_send_frame(c, frame);
+            if (err > 0)
+                Debug.Print("Error sending a frame for encoding!");
+
+            while( err >= 0)
+            {
+                err = FFmpeg.avcodec_receive_packet(c, pkt);
+                if (err < 0)
+                    Debug.Print("Error during encoding!");
+            }
         }
 
         //public ObservableCollection<string> DeviceNames { get; set; }
@@ -231,9 +277,17 @@ namespace HttpStream
                             {
                                 while (isRunning)
                                 {
-                                    Mat frame = capture.QueryFrame();
-                                    Image<Bgr, byte> img = frame.ToImage<Bgr, byte>();
+                                    Mat rawFrame = capture.QueryFrame();
+                                    Image<Bgr, byte> img = rawFrame.ToImage<Bgr, byte>();
                                     VideoDisplay.Image = img;
+
+                                    //int size = Marshal.ReadInt32(rawFrame.Total) * rawFrame.ElementSize;
+                                    //byte[] bytes = new byte[size];
+
+                                    //Array.Copy(rawFrame.Data, bytes, size);
+
+                                    //frame.data = bytes;
+                                    //Encode();
                                 }
                             });
                         }
