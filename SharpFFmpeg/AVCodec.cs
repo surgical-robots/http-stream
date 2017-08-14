@@ -208,7 +208,7 @@ namespace SharpFFmpeg
         /// <param name="width"></param>
         /// <param name="height"></param>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void avcodec_set_dimensions(IntPtr pAVCodecContext, int width, int height);
+        public static extern void avcodec_set_dimensions(AVCodecContext pAVCodecContext, int width, int height);
 
         /// <summary>
         /// 
@@ -364,7 +364,7 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="pAVCodecContext"></param>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void avcodec_get_context_defaults(IntPtr pAVCodecContext);
+        public static extern int avcodec_get_context_defaults3(AVCodecContext pAVCodecContext);
 
         /// <summary>
         /// 
@@ -394,7 +394,7 @@ namespace SharpFFmpeg
         /// <param name="pAVFrame"></param>
         /// <returns></returns>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_default_get_buffer(IntPtr pAVCodecContext, IntPtr pAVFrame);
+        public static extern int avcodec_default_get_buffer2(AVCodecContext pAVCodecContext, IntPtr pAVFrame);
 
         /// <summary>
         /// 
@@ -402,7 +402,7 @@ namespace SharpFFmpeg
         /// <param name="pAVCodecContext"></param>
         /// <param name="pAVFrame"></param>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void avcodec_default_release_buffer(IntPtr pAVCodecContext, IntPtr pAVFrame);
+        public static extern void avcodec_default_release_buffer(AVCodecContext pAVCodecContext, IntPtr pAVFrame);
 
         /// <summary>
         /// 
@@ -410,7 +410,7 @@ namespace SharpFFmpeg
         /// <param name="pAVCodecContext"></param>
         /// <param name="pAVFrame"></param>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void avcodec_default_reget_buffer(IntPtr pAVCodecContext, IntPtr pAVFrame);
+        public static extern void avcodec_default_reget_buffer(AVCodecContext pAVCodecContext, IntPtr pAVFrame);
 
         /// <summary>
         /// 
@@ -419,7 +419,7 @@ namespace SharpFFmpeg
         /// <param name="width"></param>
         /// <param name="height"></param>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void avcodec_align_dimensions(IntPtr pAVCodecContext, ref int width, ref int height);
+        public static extern void avcodec_align_dimensions(AVCodecContext pAVCodecContext, ref int width, ref int height);
 
         /// <summary>
         /// 
@@ -437,7 +437,7 @@ namespace SharpFFmpeg
         /// <param name="fmt"></param>
         /// <returns></returns>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern PixelFormat avcodec_default_get_format(IntPtr pAVCodecContext, ref PixelFormat fmt);
+        public static extern PixelFormat avcodec_default_get_format(AVCodecContext pAVCodecContext, ref PixelFormat fmt);
 
         /// <summary>
         /// 
@@ -446,14 +446,14 @@ namespace SharpFFmpeg
         /// <param name="thread_count"></param>
         /// <returns></returns>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_thread_init(IntPtr pAVCodecContext, int thread_count);
+        public static extern int avcodec_thread_init(AVCodecContext pAVCodecContext, int thread_count);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVCodecContext"></param>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void avcodec_thread_free(IntPtr pAVCodecContext);
+        public static extern void avcodec_thread_free(AVCodecContext pAVCodecContext);
 
         /// <summary>
         /// 
@@ -465,7 +465,7 @@ namespace SharpFFmpeg
         /// <param name="count"></param>
         /// <returns></returns>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_thread_execute(IntPtr pAVCodecContext,
+        public static extern int avcodec_thread_execute(AVCodecContext pAVCodecContext,
                                 [MarshalAs(UnmanagedType.FunctionPtr)]FuncCallback func,
                                 [MarshalAs(UnmanagedType.LPArray)]IntPtr[] arg, ref int ret, int count);
 
@@ -479,7 +479,7 @@ namespace SharpFFmpeg
         /// <param name="count"></param>
         /// <returns></returns>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_default_execute(IntPtr pAVCodecContext,
+        public static extern int avcodec_default_execute(AVCodecContext pAVCodecContext,
                                [MarshalAs(UnmanagedType.FunctionPtr)]FuncCallback func,
                                [MarshalAs(UnmanagedType.LPArray)]IntPtr[] arg, ref int ret, int count);
 
@@ -490,7 +490,7 @@ namespace SharpFFmpeg
         /// <param name="pAVCodec"></param>
         /// <returns></returns>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_open2(IntPtr pAVCodecContext, IntPtr pAVCodec, IntPtr pAVDictionary);
+        public static extern int avcodec_open2(AVCodecContext pAVCodecContext, IntPtr pAVCodec, IntPtr pAVDictionary);
 
         /// <summary>
         /// 
@@ -502,7 +502,7 @@ namespace SharpFFmpeg
         /// <param name="buf_size"></param>
         /// <returns></returns>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_decode_audio(IntPtr pAVCodecContext,
+        public static extern int avcodec_decode_audio4(AVCodecContext pAVCodecContext,
                                             IntPtr samples, out int frame_size_ptr,
                                             IntPtr buf, int buf_size);
 
@@ -516,7 +516,7 @@ namespace SharpFFmpeg
         /// <param name="buf_size"></param>
         /// <returns></returns>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_decode_video(IntPtr pAVCodecContext, IntPtr pAVFrame,
+        public static extern int avcodec_decode_video2(AVCodecContext pAVCodecContext, IntPtr pAVFrame,
                                             ref int got_picture_ptr, IntPtr buf, int buf_size);
 
         /// <summary>
@@ -529,7 +529,7 @@ namespace SharpFFmpeg
         /// <param name="buf_size"></param>
         /// <returns></returns>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_decode_subtitle(IntPtr pAVCodecContext, IntPtr pAVSubtitle,
+        public static extern int avcodec_decode_subtitle2(AVCodecContext pAVCodecContext, IntPtr pAVSubtitle,
                                            ref int got_sub_ptr, IntPtr buf, int buf_size);
 
         /// <summary>
@@ -542,33 +542,10 @@ namespace SharpFFmpeg
         /// <param name="buf_size"></param>
         /// <returns></returns>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_parse_frame(IntPtr pAVCodecContext,
+        public static extern int avcodec_parse_frame(AVCodecContext pAVCodecContext,
                                             [MarshalAs(UnmanagedType.LPArray)]IntPtr[] pdata,
                                             IntPtr data_size_ptr, IntPtr buf, int buf_size);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pAVCodecContext"></param>
-        /// <param name="buf"></param>
-        /// <param name="buf_size"></param>
-        /// <param name="samples"></param>
-        /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_encode_audio(IntPtr pAVCodecContext, IntPtr buf, int buf_size,
-                                            IntPtr samples);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pAVCodecContext"></param>
-        /// <param name="buf"></param>
-        /// <param name="buf_size"></param>
-        /// <param name="pAVFrame"></param>
-        /// <returns></returns>
-        [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_encode_video(IntPtr pAVCodecContext, IntPtr buf, int buf_size,
-                                            IntPtr pAVFrame);
 
         /// <summary>
         /// 
@@ -579,7 +556,7 @@ namespace SharpFFmpeg
         /// <param name="pAVSubtitle"></param>
         /// <returns></returns>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_encode_subtitle(IntPtr pAVCodecContext, IntPtr buf, int buf_size,
+        public static extern int avcodec_encode_subtitle(AVCodecContext pAVCodecContext, IntPtr buf, int buf_size,
                                             IntPtr pAVSubtitle);
 
         /// <summary>
@@ -588,7 +565,7 @@ namespace SharpFFmpeg
         /// <param name="pAVCodecContext"></param>
         /// <returns></returns>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_close(IntPtr pAVCodecContext);
+        public static extern int avcodec_close(AVCodecContext pAVCodecContext);
 
         /// <summary>
         /// 
@@ -601,14 +578,14 @@ namespace SharpFFmpeg
         /// </summary>
         /// <param name="pAVCodecContext"></param>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void avcodec_flush_buffers(IntPtr pAVCodecContext);
+        public static extern void avcodec_flush_buffers(AVCodecContext pAVCodecContext);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVCodecContext"></param>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void avcodec_default_free_buffers(IntPtr pAVCodecContext);
+        public static extern void avcodec_default_free_buffers(AVCodecContext pAVCodecContext);
 
         /// <summary>
         /// 
@@ -654,8 +631,8 @@ namespace SharpFFmpeg
         /// <param name="dts"></param>
         /// <returns></returns>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int av_parser_parse(IntPtr pAVCodecParserContext,
-                                                IntPtr pAVCodecContext,
+        public static extern int av_parser_parse2(IntPtr pAVCodecParserContext,
+                                                AVCodecContext pAVCodecContext,
                             [MarshalAs(UnmanagedType.LPArray)]IntPtr[] poutbuf, ref int poutbuf_size,
                             IntPtr buf, int buf_size, Int64 pts, Int64 dts);
 
@@ -672,7 +649,7 @@ namespace SharpFFmpeg
         /// <returns></returns>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_parser_change(IntPtr pAVCodecParserContext,
-                                                IntPtr pAVCodecContext,
+                                                AVCodecContext pAVCodecContext,
                             [MarshalAs(UnmanagedType.LPArray)]IntPtr[] poutbuf, ref int poutbuf_size,
                             IntPtr buf, int buf_size, int keyframe);
 
@@ -713,7 +690,7 @@ namespace SharpFFmpeg
         /// <returns></returns>
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
         public static extern int av_bitstream_filter_filter(IntPtr pAVBitStreamFilterContext,
-                                        IntPtr pAVCodecContext,
+                                        AVCodecContext pAVCodecContext,
                                         [MarshalAs(UnmanagedType.LPStr)]String args,
                                         [MarshalAs(UnmanagedType.LPArray)]IntPtr[] poutbuf,
                                         ref  int poutbuf_size, IntPtr buf, int buf_size, int keyframe);
@@ -822,10 +799,10 @@ namespace SharpFFmpeg
                             int padleft, int padright, ref int color);
 
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_send_frame(IntPtr pAVCodecContext, IntPtr pAVFrame);
+        public static extern int avcodec_send_frame(AVCodecContext pAVCodecContext, IntPtr pAVFrame);
 
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int avcodec_receive_packet(IntPtr pAVCodecContext, IntPtr pAVPacket);
+        public static extern int avcodec_receive_packet(AVCodecContext pAVCodecContext, AVPacket pAVPacket);
 
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
         public static extern IntPtr av_packet_alloc();
@@ -834,7 +811,7 @@ namespace SharpFFmpeg
         public static extern void avcodec_free_context([In, Out] AVCodecContext pAVCodecContext);
 
         [DllImport("avcodec.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void av_packet_free(IntPtr pAVPacket);
+        public static extern void av_packet_free([In,Out] AVPacket pAVPacket);
 
         // *********************************************************************************
         // Constants
@@ -1168,6 +1145,7 @@ namespace SharpFFmpeg
         public const int FF_ALPHA_SEMI_TRANSP = 0x0002; // image has some transparent pixels 
 
         public const int AV_PARSER_PTS_NB = 4;
+        public const int AV_NUM_DATA_POINTERS = 8;
 
         public const int PARSER_FLAG_COMPLETE_FRAMES = 0x0001;
 
@@ -1455,29 +1433,399 @@ namespace SharpFFmpeg
             public short[] position;
         };
 
-        public struct AVFrame
+        public delegate void OpaqueCallback();
+
+        public class AVFrame
         {
+            /**
+            * pointer to the picture/channel planes.
+            * This might be different from the first allocated byte
+            *
+            * Some decoders access areas outside 0,0 - width,height, please
+            * see avcodec_align_dimensions2(). Some filters and swscale can read
+            * up to 16 bytes beyond the planes, if these filters are to be used,
+            * then 16 extra bytes must be allocated.
+            *
+            * NOTE: Except for hwaccel formats, pointers not needed by the format
+            * MUST be set to NULL.
+            */
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = AV_NUM_DATA_POINTERS)]
+            public byte[] data;
+
+            /**
+            * For video, size in bytes of each picture line.
+            * For audio, size in bytes of each plane.
+            *
+            * For audio, only linesize[0] may be set. For planar audio, each channel
+            * plane must be the same size.
+            *
+            * For video the linesizes should be multiples of the CPUs alignment
+            * preference, this is 16 or 32 for modern desktop CPUs.
+            * Some code requires such alignment other code can be slower without
+            * correct alignment, for yet other it makes no difference.
+            *
+            * @note The linesize may be larger than the size of usable data -- there
+            * may be extra padding present for performance reasons
+            */
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = AV_NUM_DATA_POINTERS)]
+            public int[] linesize;
+
+            /**
+            * pointers to the data planes/channels.
+            *
+            * For video, this should simply point to data[].
+            *
+            * For planar audio, each channel has a separate data pointer, and
+            * linesize[0] contains the size of each channel buffer.
+            * For packed audio, there is just one data pointer, and linesize[0]
+            * contains the total size of the buffer for all channels.
+            *
+            * Note: Both data and extended_data should always be set in a valid frame,
+            * but for planar audio with more channels that can fit in data,
+            * extended_data must be used in order to access all channels.
+            */
+            public IntPtr extended_data;
+
+            /**
+            * @name Video dimensions
+            * Video frames only. The coded dimensions (in pixels) of the video frame,
+            * i.e. the size of the rectangle that contains some well-defined values.
+            *
+            * @note The part of the frame intended for display/presentation is further
+            * restricted by the @ref cropping "Cropping rectangle".
+            * @{
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int width;
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int height;
+
+            /**
+            * number of audio samples (per channel) described by this frame
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int nb_samples;
+
+            /**
+            * format of the frame, -1 if unknown or unset
+            * Values correspond to enum AVPixelFormat for video frames,
+            * enum AVSampleFormat for audio)
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int format;
+
+            /**
+             * 1 -> keyframe, 0-> not
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int key_frame;
+
+            /**
+             * Picture type of the frame.
+             */
+            public AVPictureType pict_type;
+
+            /**
+             * Sample aspect ratio for the video frame, 0/1 if unknown/unspecified.
+             */
+            public AVRational sample_aspect_ratio;
+
+            /**
+             * Presentation timestamp in time_base units (time when frame should be shown to user).
+             */
+            [MarshalAs(UnmanagedType.I8)]
+            public Int64 pts;
+
+            /**
+             * DTS copied from the AVPacket that triggered returning this frame. (if frame threading isn't used)
+             * This is also the Presentation time of this AVFrame calculated from
+             * only AVPacket.dts values without pts values.
+             */
+            [MarshalAs(UnmanagedType.I8)]
+            public Int64 pkt_dts;
+
+            /**
+             * picture number in bitstream order
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int coded_picture_number;
+            /**
+             * picture number in display order
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int display_picture_number;
+
+            /**
+             * quality (between 1 (good) and FF_LAMBDA_MAX (bad))
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int quality;
+
+            /**
+             * for some private data of the user
+             */
+             [MarshalAs(UnmanagedType.FunctionPtr)]
+            public OpaqueCallback opaque;
+
+            /**
+             * When decoding, this signals how much the picture must be delayed.
+             * extra_delay = repeat_pict / (2*fps)
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int repeat_pict;
+
+            /**
+             * The content of the picture is interlaced.
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int interlaced_frame;
+
+            /**
+             * If the content is interlaced, is top field displayed first.
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int top_field_first;
+
+            /**
+             * Tell user application that palette has changed from previous frame.
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int palette_has_changed;
+
+            /**
+             * reordered opaque 64 bits (generally an integer or a double precision float
+             * PTS but can be anything).
+             * The user sets AVCodecContext.reordered_opaque to represent the input at
+             * that time,
+             * the decoder reorders values as needed and sets AVFrame.reordered_opaque
+             * to exactly one of the values provided by the user through AVCodecContext.reordered_opaque
+             * @deprecated in favor of pkt_pts
+             */
+            [MarshalAs(UnmanagedType.I8)]
+            public Int64 reordered_opaque;
+
+            /**
+             * Sample rate of the audio data.
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int sample_rate;
+
+            /**
+             * Channel layout of the audio data.
+             */
+            [MarshalAs(UnmanagedType.U8)]
+            public UInt64 channel_layout;
+
+            //*
+            // * AVBuffer references backing the data for this frame.If all elements of
+            // * this array are NULL, then this frame is not reference counted.This array
+            // * must be filled contiguously -- if buf[i] is non-NULL then buf[j] must
+            // * also be non-NULL for all j < i.
+            // *
+            // * There may be at most one AVBuffer per data plane, so for video this array
+            // * always contains all the references. For planar audio with more than
+            // * AV_NUM_DATA_POINTERS channels, there may be more buffers than can fit in
+            // * this array.Then the extra AVBufferRef pointers are stored in the
+            // * extended_buf array.
+            IntPtr buf;
+
+            /**
+             * For planar audio which requires more than AV_NUM_DATA_POINTERS
+             * AVBufferRef pointers, this array will hold all the references which
+             * cannot fit into AVFrame.buf.
+             *
+             * Note that this is different from AVFrame.extended_data, which always
+             * contains all the pointers. This array only contains the extra pointers,
+             * which cannot fit into AVFrame.buf.
+             *
+             * This array is always allocated using av_malloc() by whoever constructs
+             * the frame. It is freed in av_frame_unref().
+             */
+            IntPtr extended_buf;
+            /**
+             * Number of elements in extended_buf.
+             */
+            int nb_extended_buf;
+
+            AVFrameSideData** side_data;
+            int nb_side_data;
+
+            /**
+             * @defgroup lavu_frame_flags AV_FRAME_FLAGS
+             * @ingroup lavu_frame
+             * Flags describing additional frame properties.
+             *
+             * @{
+             */
+
+            /**
+             * The frame data may be corrupted, e.g. due to decoding errors.
+             */
+#define AV_FRAME_FLAG_CORRUPT       (1 << 0)
+            /**
+             * A flag to mark the frames which need to be decoded, but shouldn't be output.
+             */
+#define AV_FRAME_FLAG_DISCARD   (1 << 2)
+            /**
+             * @}
+             */
+
+            /**
+             * Frame flags, a combination of @ref lavu_frame_flags
+             */
+            int flags;
+
+            /**
+             * MPEG vs JPEG YUV range.
+             * - encoding: Set by user
+             * - decoding: Set by libavcodec
+             */
+            enum AVColorRange color_range;
+
+    enum AVColorPrimaries color_primaries;
+
+    enum AVColorTransferCharacteristic color_trc;
+
+    /**
+     * YUV colorspace type.
+     * - encoding: Set by user
+     * - decoding: Set by libavcodec
+     */
+    enum AVColorSpace colorspace;
+
+    enum AVChromaLocation chroma_location;
+
+    /**
+     * frame timestamp estimated using various heuristics, in stream time base
+     * - encoding: unused
+     * - decoding: set by libavcodec, read by user.
+     */
+    int64_t best_effort_timestamp;
+
+            /**
+             * reordered pos from the last AVPacket that has been input into the decoder
+             * - encoding: unused
+             * - decoding: Read by user.
+             */
+            int64_t pkt_pos;
+
+            /**
+             * duration of the corresponding packet, expressed in
+             * AVStream->time_base units, 0 if unknown.
+             * - encoding: unused
+             * - decoding: Read by user.
+             */
+            int64_t pkt_duration;
+
+            /**
+             * metadata.
+             * - encoding: Set by user.
+             * - decoding: Set by libavcodec.
+             */
+            AVDictionary* metadata;
+
+            /**
+             * decode error flags of the frame, set to a combination of
+             * FF_DECODE_ERROR_xxx flags if the decoder produced a frame, but there
+             * were errors during the decoding.
+             * - encoding: unused
+             * - decoding: set by libavcodec, read by user.
+             */
+            int decode_error_flags;
+#define FF_DECODE_ERROR_INVALID_BITSTREAM   1
+#define FF_DECODE_ERROR_MISSING_REFERENCE   2
+
+            /**
+             * number of audio channels, only used for audio.
+             * - encoding: unused
+             * - decoding: Read by user.
+             */
+            int channels;
+
+            /**
+             * size of the corresponding packet containing the compressed
+             * frame.
+             * It is set to a negative value if unknown.
+             * - encoding: unused
+             * - decoding: set by libavcodec, read by user.
+             */
+            int pkt_size;
+
+#if FF_API_FRAME_QP
+    /**
+     * QP table
+     */
+    attribute_deprecated
+    int8_t *qscale_table;
+    /**
+     * QP store stride
+     */
+    attribute_deprecated
+    int qstride;
+
+    attribute_deprecated
+    int qscale_type;
+
+    AVBufferRef *qp_table_buf;
+#endif
+            /**
+             * For hwaccel-format frames, this should be a reference to the
+             * AVHWFramesContext describing the frame.
+             */
+            AVBufferRef* hw_frames_ctx;
+
+            /**
+             * AVBufferRef for free use by the API user. FFmpeg will never check the
+             * contents of the buffer ref. FFmpeg calls av_buffer_unref() on it when
+             * the frame is unreferenced. av_frame_copy_props() calls create a new
+             * reference with av_buffer_ref() for the target frame's opaque_ref field.
+             *
+             * This is unrelated to the opaque field, although it serves a similar
+             * purpose.
+             */
+            AVBufferRef* opaque_ref;
+
+            /**
+             * @anchor cropping
+             * @name Cropping
+             * Video frames only. The number of pixels to discard from the the
+             * top/bottom/left/right border of the frame to obtain the sub-rectangle of
+             * the frame intended for presentation.
+             * @{
+             */
+            size_t crop_top;
+            size_t crop_bottom;
+            size_t crop_left;
+            size_t crop_right;
+
         };
 
-        public delegate void DrawhorizBandCallback(IntPtr pAVCodecContext, IntPtr pAVFrame,
+        public delegate void DrawhorizBandCallback(AVCodecContext pAVCodecContext, IntPtr pAVFrame,
                                             [MarshalAs(UnmanagedType.LPArray, SizeConst = 4)]int[] offset,
                                             int y, int type, int height);
 
-        public delegate void RtpCallback(IntPtr pAVCodecContext, IntPtr pdata, int size, int mb_nb);
+        public delegate void RtpCallback(AVCodecContext pAVCodecContext, IntPtr pdata, int size, int mb_nb);
 
-        public delegate int GetBufferCallback(IntPtr pAVCodecContext, IntPtr pAVFrame);
+        public delegate int GetBufferCallback(AVCodecContext pAVCodecContext, IntPtr pAVFrame, int flags);
 
-        public delegate void ReleaseBufferCallback(IntPtr pAVCodecContext, IntPtr pAVFrame);
+        public delegate void ReleaseBufferCallback(AVCodecContext pAVCodecContext, IntPtr pAVFrame);
 
-        public delegate PixelFormat GetFormatCallback(IntPtr pAVCodecContext, IntPtr pPixelFormat);
+        public delegate PixelFormat GetFormatCallback(AVCodecContext pAVCodecContext, IntPtr pPixelFormat);
 
-        public delegate int RegetBufferCallback(IntPtr pAVCodecContext, IntPtr pAVFrame);
+        public delegate int RegetBufferCallback(AVCodecContext pAVCodecContext, IntPtr pAVFrame);
 
-        public delegate int FuncCallback(IntPtr pAVCodecContext, IntPtr parg);
+        public delegate int FuncCallback(AVCodecContext pAVCodecContext, IntPtr parg);
 
-        public delegate int ExecuteCallback(IntPtr pAVCodecContext,
+        public delegate int ExecuteCallback(AVCodecContext pAVCodecContext,
                                             [MarshalAs(UnmanagedType.FunctionPtr)]FuncCallback func,
-                                            [MarshalAs(UnmanagedType.LPArray)]IntPtr[] arg2, ref int ret, int count);
+                                            [MarshalAs(UnmanagedType.LPArray)]IntPtr[] arg2, ref int ret, int count, int size);
+
+        public delegate int Execute2Callback(AVCodecContext pAVCodecContext,
+                                    [MarshalAs(UnmanagedType.FunctionPtr)]FuncCallback func,
+                                    [MarshalAs(UnmanagedType.LPArray)]IntPtr[] arg2, ref int ret, int count);
+
+        public delegate void GetHWAccelContext();
 
         [StructLayout(LayoutKind.Sequential)]
         public class AVCodecContext
@@ -1488,13 +1836,46 @@ namespace SharpFFmpeg
              */
             public IntPtr av_class; //  AVClass *av_class;
 
+            [MarshalAs(UnmanagedType.I4)]
+            public int log_level_offset;
+
+            public CodecType codec_type; /* see CODEC_TYPE_xxx */
+
+            public IntPtr codec; // AVCodec
+
+            public CodecID codec_id; /* see CODEC_ID_xxx */
+
+            //*
+            //* fourcc(LSB first, so "ABCD" -> ('D'<<24) + ('C'<<16) + ('B'<<8) + 'A').
+            //* this is used to workaround some encoder bugs
+            //* - encoding: set by user, if not then the default based on codec_id will be used
+            //* - decoding: set by user, will be converted to upper case by lavc during init
+
+            [MarshalAs(UnmanagedType.U4)]
+            public uint codec_tag;
+
+            public IntPtr priv_data;
+
+            /**
+            * internal_buffers.
+            * Don't touch, used by lavc default_get_buffer()
+            */
+            public IntPtr internal_buffer; // void* internal_buffer;
+
+            /**
+            * private data of the user, can be used to carry app specific stuff.
+            * - encoding: set by user
+            * - decoding: set by user
+            */
+            public IntPtr opaque;
+
             /**
              * the average bitrate.
              * - encoding: set by user. unused for constant quantizer encoding
              * - decoding: set by lavc. 0 or some bitrate if this info is available in the stream
              */
-            [MarshalAs(UnmanagedType.I4)]
-            public int bit_rate;
+            [MarshalAs(UnmanagedType.I8)]
+            public Int64 bit_rate;
 
             /**
              * number of bits the bitstream is allowed to diverge from the reference.
@@ -1506,6 +1887,22 @@ namespace SharpFFmpeg
             public int bit_rate_tolerance;
 
             /**
+            * global quality for codecs which cannot change it per frame.
+            * this should be proportional to MPEG1/2/4 qscale.
+            * - encoding: set by user.
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int global_quality;
+
+            /**
+            * - encoding: set by user.
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int compression_level;
+
+            /**
              * CODEC_FLAG_*.
              * - encoding: set by user.
              * - decoding: set by user.
@@ -1514,22 +1911,12 @@ namespace SharpFFmpeg
             public int flags;
 
             /**
-             * some codecs needs additionnal format info. It is stored here
-             * - encoding: set by user.
-             * - decoding: set by lavc. (FIXME is this ok?)
-             */
+            * CODEC_FLAG2_*.
+            * - encoding: set by user.
+            * - decoding: set by user.
+            */
             [MarshalAs(UnmanagedType.I4)]
-            public int sub_id;
-
-            /**
-             * motion estimation algorithm used for video coding.
-             * 1 (zero), 2 (full), 3 (log), 4 (phods), 5 (epzs), 6 (x1), 7 (hex),
-             * 8 (umh), 9 (iter) [7, 8 are x264 specific, 9 is snow specific]
-             * - encoding: MUST be set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int me_method;
+            public int flags2;
 
             /**
              * some codecs need / can use extra-data like huffman tables.
@@ -1548,14 +1935,33 @@ namespace SharpFFmpeg
             public int extradata_size;
 
             /**
-             * this is the fundamental unit of time (in seconds) in terms
-             * of which frame timestamps are represented. for fixed-fps content,
-             * timebase should be 1/framerate and timestamp increments should be
-             * identically 1.
-             * - encoding: MUST be set by user
-             * - decoding: set by lavc.
-             */
+            * this is the fundamental unit of time (in seconds) in terms
+            * of which frame timestamps are represented. for fixed-fps content,
+            * timebase should be 1/framerate and timestamp increments should be
+            * identically 1.
+            * - encoding: MUST be set by user
+            * - decoding: set by lavc.
+            */
             public AVRational time_base;
+
+            /**
+            * For some codecs, the time base is closer to the field rate than the frame rate.
+            * Most notably, H.264 and MPEG-2 specify time_base as half of frame duration
+            * if no telecine is used ...
+            *
+            * Set to time_base ticks per frame. Default 1, e.g., H.264/MPEG-2 set it to 2.
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int ticks_per_frame;
+
+            /**
+            * number of frames the decoded output will be delayed relative to
+            * the encoded input.
+            * - encoding: set by lavc.
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int delay;
 
             /* video only */
             /**
@@ -1572,6 +1978,15 @@ namespace SharpFFmpeg
             public int height;
 
             /**
+             * bitsream width / height. may be different from width/height if lowres
+             * or other things are used
+             * - encoding: unused
+             * - decoding: set by user before init if known, codec should override / dynamically change if needed
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int coded_width, coded_height;
+
+            /**
              * the number of pictures in a group of pitures, or 0 for intra_only.
              * - encoding: set by user.
              * - decoding: unused
@@ -1580,109 +1995,55 @@ namespace SharpFFmpeg
             public int gop_size;
 
             /**
-             * pixel format, see PIX_FMT_xxx.
-             * - encoding: set by user.
-             * - decoding: set by lavc.
-             */
+            * pixel format, see PIX_FMT_xxx.
+            * - encoding: set by user.
+            * - decoding: set by lavc.
+            */
             public PixelFormat pix_fmt;
 
             /**
-             * Frame rate emulation. If not zero lower layer (i.e. format handler)
-             * has to read frames at native frame rate.
-             * - encoding: set by user.
-             * - decoding: unused.
-             */
+            * motion estimation algorithm used for video coding.
+            * 1 (zero), 2 (full), 3 (log), 4 (phods), 5 (epzs), 6 (x1), 7 (hex),
+            * 8 (umh), 9 (iter) [7, 8 are x264 specific, 9 is snow specific]
+            * - encoding: MUST be set by user.
+            * - decoding: unused
+            */
             [MarshalAs(UnmanagedType.I4)]
-            public int rate_emu;
+            public int me_method;
 
             /**
-             * if non NULL, 'draw_horiz_band' is called by the libavcodec
-             * decoder to draw an horizontal band. It improve cache usage. Not
-             * all codecs can do that. You must check the codec capabilities
-             * before
-             * - encoding: unused
-             * - decoding: set by user.
-             * @param height the height of the slice
-             * @param y the y position of the slice
-             * @param type 1->top field, 2->bottom field, 3->frame
-             * @param offset offset into the AVFrame.data from which the slice should be read
-             */
+            * if non NULL, 'draw_horiz_band' is called by the libavcodec
+            * decoder to draw an horizontal band. It improve cache usage. Not
+            * all codecs can do that. You must check the codec capabilities
+            * before
+            * - encoding: unused
+            * - decoding: set by user.
+            * @param height the height of the slice
+            * @param y the y position of the slice
+            * @param type 1->top field, 2->bottom field, 3->frame
+            * @param offset offset into the AVFrame.data from which the slice should be read
+            */
             [MarshalAs(UnmanagedType.FunctionPtr)]
             public DrawhorizBandCallback draw_horiz_band;
 
-            /* audio only */
-            [MarshalAs(UnmanagedType.I4)]
-            public int sample_rate; // samples per sec
-
-            [MarshalAs(UnmanagedType.I4)]
-            public int channels;
+            /**
+            * callback to negotiate the pixelFormat.
+            * @param fmt is the list of formats which are supported by the codec,
+            * its terminated by -1 as 0 is a valid format, the formats are ordered by quality
+            * the first is allways the native one
+            * @return the choosen format
+            * - encoding: unused
+            * - decoding: set by user, if not set then the native format will always be choosen
+            */
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public GetFormatCallback get_format;
 
             /**
-             * audio sample format.
-             * - encoding: set by user.
-             * - decoding: set by lavc.
-             */
-            public SampleFormat sample_fmt;  // sample format, currenly unused
-
-            /* the following data should not be initialized */
-            /**
-             * samples per packet. initialized when calling 'init'
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int frame_size;
-
-            [MarshalAs(UnmanagedType.I4)]
-            public int frame_number;   // audio or video frame number
-
-            [MarshalAs(UnmanagedType.I4)]
-            public int real_pict_num;  // returns the real picture number of previous encoded frame
-
-            /**
-             * number of frames the decoded output will be delayed relative to
-             * the encoded input.
-             * - encoding: set by lavc.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int delay;
-
-            /* - encoding parameters */
-            [MarshalAs(UnmanagedType.R4)]
-            public float qcompress;  // amount of qscale change between easy & hard scenes (0.0-1.0)
-
-            [MarshalAs(UnmanagedType.R4)]
-            public float qblur;      // amount of qscale smoothing over time (0.0-1.0)
-
-            /**
-             * minimum quantizer.
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int qmin;
-
-            /**
-             * maximum quantizer.
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int qmax;
-
-            /**
-             * maximum quantizer difference etween frames.
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int max_qdiff;
-
-            /**
-             * maximum number of b frames between non b frames.
-             * note: the output will be delayed by max_b_frames+1 relative to the input
-             * - encoding: set by user.
-             * - decoding: unused
-             */
+            * maximum number of b frames between non b frames.
+            * note: the output will be delayed by max_b_frames+1 relative to the input
+            * - encoding: set by user.
+            * - decoding: unused
+            */
             [MarshalAs(UnmanagedType.I4)]
             public int max_b_frames;
 
@@ -1702,281 +2063,38 @@ namespace SharpFFmpeg
             public int b_frame_strategy;
 
             /**
-             * hurry up amount.
-             * deprecated in favor of skip_idct and skip_frame
-             * - encoding: unused
-             * - decoding: set by user. 1-> skip b frames, 2-> skip idct/dequant too, 5-> skip everything except header
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int hurry_up;
-
-            public IntPtr codec; // AVCodec
-
-            public IntPtr priv_data;
-
-            /* unused, FIXME remove*/
-            [MarshalAs(UnmanagedType.I4)]
-            public int rtp_mode;
-
-            /* The size of the RTP payload: the coder will  */
-            /* do it's best to deliver a chunk with size    */
-            /* below rtp_payload_size, the chunk will start */
-            /* with a start code on some codecs like H.263  */
-            /* This doesn't take account of any particular  */
-            /* headers inside the transmited RTP payload    */
-            [MarshalAs(UnmanagedType.I4)]
-            public int rtp_payload_size;
-
-            /* The RTP callback: This function is called   */
-            /* every time the encoder has a packet to send */
-            /* Depends on the encoder if the data starts   */
-            /* with a Start Code (it should) H.263 does.   */
-            /* mb_nb contains the number of macroblocks    */
-            /* encoded in the RTP payload                  */
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public RtpCallback rtp_callback;
-
-            /* statistics, used for 2-pass encoding */
-            [MarshalAs(UnmanagedType.I4)]
-            public int mv_bits;
-
-            [MarshalAs(UnmanagedType.I4)]
-            public int header_bits;
-
-            [MarshalAs(UnmanagedType.I4)]
-            public int i_tex_bits;
-
-            [MarshalAs(UnmanagedType.I4)]
-            public int p_tex_bits;
-
-            [MarshalAs(UnmanagedType.I4)]
-            public int i_count;
-
-            [MarshalAs(UnmanagedType.I4)]
-            public int p_count;
-
-            [MarshalAs(UnmanagedType.I4)]
-            public int skip_count;
-
-            [MarshalAs(UnmanagedType.I4)]
-            public int misc_bits;
-
-            /**
-             * number of bits used for the previously encoded frame.
-             * - encoding: set by lavc
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int frame_bits;
-
-            /**
-             * private data of the user, can be used to carry app specific stuff.
-             * - encoding: set by user
-             * - decoding: set by user
-             */
-            public IntPtr opaque;
-
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
-            public byte[] codec_name;
-
-            public CodecType codec_type; /* see CODEC_TYPE_xxx */
-
-            public CodecID codec_id; /* see CODEC_ID_xxx */
-
-            /**
-             * fourcc (LSB first, so "ABCD" -> ('D'<<24) + ('C'<<16) + ('B'<<8) + 'A').
-             * this is used to workaround some encoder bugs
-             * - encoding: set by user, if not then the default based on codec_id will be used
-             * - decoding: set by user, will be converted to upper case by lavc during init
-             */
-            [MarshalAs(UnmanagedType.U4)]
-            public uint codec_tag;
-
-            /**
-             * workaround bugs in encoders which sometimes cannot be detected automatically.
-             * - encoding: set by user
-             * - decoding: set by user
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int workaround_bugs;
-
-            /**
-             * luma single coeff elimination threshold.
-             * - encoding: set by user
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int luma_elim_threshold;
-
-            /**
-             * chroma single coeff elimination threshold.
-             * - encoding: set by user
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int chroma_elim_threshold;
-
-            /**
-             * strictly follow the std (MPEG4, ...).
-             * - encoding: set by user
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int strict_std_compliance;
-
-            /**
-             * qscale offset between ip and b frames.
-             * if > 0 then the last p frame quantizer will be used (q= lastp_q*factor+offset)
-             * if < 0 then normal ratecontrol will be done (q= -normal_q*factor+offset)
-             * - encoding: set by user.
-             * - decoding: unused
-             */
+            * qscale offset between ip and b frames.
+            * if > 0 then the last p frame quantizer will be used (q= lastp_q*factor+offset)
+            * if < 0 then normal ratecontrol will be done (q= -normal_q*factor+offset)
+            * - encoding: set by user.
+            * - decoding: unused
+            */
             [MarshalAs(UnmanagedType.R4)]
             public float b_quant_offset;
 
             /**
-             * error resilience higher values will detect more errors but may missdetect
-             * some more or less valid parts as errors.
-             * - encoding: unused
-             * - decoding: set by user
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int error_resilience;
-
-            /**
-              * called at the beginning of each frame to get a buffer for it.
-              * if pic.reference is set then the frame will be read later by lavc
-              * avcodec_align_dimensions() should be used to find the required width and
-              * height, as they normally need to be rounded up to the next multiple of 16
-              * - encoding: unused
-              * - decoding: set by lavc, user can override
-              */
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public GetBufferCallback get_buffer;
-
-            /**
-             * called to release buffers which where allocated with get_buffer.
-             * a released buffer can be reused in get_buffer()
-             * pic.data[*] must be set to NULL
-             * - encoding: unused
-             * - decoding: set by lavc, user can override
-             */
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public ReleaseBufferCallback release_buffer;
-
-            /**
-             * if 1 the stream has a 1 frame delay during decoding.
-             * - encoding: set by lavc
-             * - decoding: set by lavc
-             */
+            * if 1 the stream has a 1 frame delay during decoding.
+            * - encoding: set by lavc
+            * - decoding: set by lavc
+            */
             [MarshalAs(UnmanagedType.I4)]
             public int has_b_frames;
 
             /**
-             * number of bytes per packet if constant and known or 0
-             * used by some WAV based audio codecs
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int block_align;
-
-            /* - decoding only: if true, only parsing is done
-                       (function avcodec_parse_frame()). The frame
-                       data is returned. Only MPEG codecs support this now. */
-            [MarshalAs(UnmanagedType.I4)]
-            public int parse_only;
-
-            /**
-             * 0-> h263 quant 1-> mpeg quant.
-             * - encoding: set by user.
-             * - decoding: unused
-             */
+            * 0-> h263 quant 1-> mpeg quant.
+            * - encoding: set by user.
+            * - decoding: unused
+            */
             [MarshalAs(UnmanagedType.I4)]
             public int mpeg_quant;
 
             /**
-             * pass1 encoding statistics output buffer.
-             * - encoding: set by lavc
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.LPStr)]
-            public String stats_out; // char* stats_out
-
-            /**
-             * pass2 encoding statistics input buffer.
-             * concatenated stuff from stats_out of pass1 should be placed here
-             * - encoding: allocated/set/freed by user
-             * - decoding: unused
-             */
-            public String stats_in;// char *stats_in
-
-
-            /**
-             * ratecontrol qmin qmax limiting method.
-             * 0-> clipping, 1-> use a nice continous function to limit qscale wthin qmin/qmax
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.R4)]
-            public float rc_qsquish;
-
-            [MarshalAs(UnmanagedType.R4)]
-            float rc_qmod_amp;
-
-            [MarshalAs(UnmanagedType.I4)]
-            public int rc_qmod_freq;
-
-            /**
-             * ratecontrol override, see RcOverride.
-             * - encoding: allocated/set/freed by user.
-             * - decoding: unused
-             */
-            public IntPtr rc_override; // RcOverride* rc_override;
-
-            [MarshalAs(UnmanagedType.I4)]
-            public int rc_override_count;
-
-            /**
-             * rate control equation.
-             * - encoding: set by user
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.LPStr)]
-            public String rc_eq; // char* rc_eq;
-
-            /**
-             * maximum bitrate.
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int rc_max_rate;
-
-            /**
-             * minimum bitrate.
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int rc_min_rate;
-
-            /**
-             * decoder bitstream buffer size.
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int rc_buffer_size;
-
-            [MarshalAs(UnmanagedType.R4)]
-            public float rc_buffer_aggressivity;
-
-            /**
-             * qscale factor between p and i frames.
-             * if > 0 then the last p frame quantizer will be used (q= lastp_q*factor+offset)
-             * if < 0 then normal ratecontrol will be done (q= -normal_q*factor+offset)
-             * - encoding: set by user.
-             * - decoding: unused
-             */
+            * qscale factor between p and i frames.
+            * if > 0 then the last p frame quantizer will be used (q= lastp_q*factor+offset)
+            * if < 0 then normal ratecontrol will be done (q= -normal_q*factor+offset)
+            * - encoding: set by user.
+            * - decoding: unused
+            */
             [MarshalAs(UnmanagedType.R4)]
             public float i_quant_factor;
 
@@ -1989,26 +2107,10 @@ namespace SharpFFmpeg
             public float i_quant_offset;
 
             /**
-             * initial complexity for pass1 ratecontrol.
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.R4)]
-            public float rc_initial_cplx;
-
-            /**
-             * dct algorithm, see FF_DCT_* below.
-             * - encoding: set by user
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int dct_algo;
-
-            /**
-             * luminance masking (0-> disabled).
-             * - encoding: set by user
-             * - decoding: unused
-             */
+            * luminance masking (0-> disabled).
+            * - encoding: set by user
+            * - decoding: unused
+            */
             [MarshalAs(UnmanagedType.R4)]
             public float lumi_masking;
 
@@ -2044,23 +2146,11 @@ namespace SharpFFmpeg
             [MarshalAs(UnmanagedType.R4)]
             public float dark_masking;
 
-            /* for binary compatibility */
-            [MarshalAs(UnmanagedType.I4)]
-            public int unused;
-
             /**
-             * idct algorithm, see FF_IDCT_* below.
-             * - encoding: set by user
-             * - decoding: set by user
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int idct_algo;
-
-            /**
-             * slice count.
-             * - encoding: set by lavc
-             * - decoding: set by user (or 0)
-             */
+            * slice count.
+            * - encoding: set by lavc
+            * - decoding: set by user (or 0)
+            */
             [MarshalAs(UnmanagedType.I4)]
             public int slice_count;
 
@@ -2072,100 +2162,18 @@ namespace SharpFFmpeg
             public IntPtr slice_offset; // int *slice_offset
 
             /**
-             * error concealment flags.
-             * - encoding: unused
-             * - decoding: set by user
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int error_concealment;
-
-            /**
-             * dsp_mask could be add used to disable unwanted CPU features
-             * CPU features (i.e. MMX, SSE. ...)
-             *
-             * with FORCE flag you may instead enable given CPU features
-             * (Dangerous: usable in case of misdetection, improper usage however will
-             * result into program crash)
-             */
-            [MarshalAs(UnmanagedType.U4)]
-            public uint dsp_mask;
-
-            /**
-             * bits per sample/pixel from the demuxer (needed for huffyuv).
-             * - encoding: set by lavc
-             * - decoding: set by user
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int bits_per_sample;
-
-            /**
-             * prediction method (needed for huffyuv).
-             * - encoding: set by user
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int prediction_method;
-
-            /**
-             * sample aspect ratio (0 if unknown).
-             * numerator and denominator must be relative prime and smaller then 256 for some video standards
-             * - encoding: set by user.
-             * - decoding: set by lavc.
-             */
+            * sample aspect ratio (0 if unknown).
+            * numerator and denominator must be relative prime and smaller then 256 for some video standards
+            * - encoding: set by user.
+            * - decoding: set by lavc.
+            */
             public AVRational sample_aspect_ratio;
 
             /**
-             * the picture in the bitstream.
-             * - encoding: set by lavc
-             * - decoding: set by lavc
-             */
-            public IntPtr coded_frame; // AVFrame* coded_frame;
-
-            /**
-             * debug.
-             * - encoding: set by user.
-             * - decoding: set by user.
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int debug;
-
-            /**
-             * debug.
-             * - encoding: set by user.
-             * - decoding: set by user.
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int debug_mv;
-
-            /**
-             * error.
-             * - encoding: set by lavc if flags&CODEC_FLAG_PSNR
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-            public Int64[] error;
-
-            /**
-             * minimum MB quantizer.
-             * - encoding: unused
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int mb_qmin;
-
-            /**
-             * maximum MB quantizer.
-             * - encoding: unused
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int mb_qmax;
-
-            /**
-             * motion estimation compare function.
-             * - encoding: set by user.
-             * - decoding: unused
-             */
+            * motion estimation compare function.
+            * - encoding: set by user.
+            * - decoding: unused
+            */
             [MarshalAs(UnmanagedType.I4)]
             public int me_cmp;
 
@@ -2243,18 +2251,6 @@ namespace SharpFFmpeg
             public int me_subpel_quality;
 
             /**
-             * callback to negotiate the pixelFormat.
-             * @param fmt is the list of formats which are supported by the codec,
-             * its terminated by -1 as 0 is a valid format, the formats are ordered by quality
-             * the first is allways the native one
-             * @return the choosen format
-             * - encoding: unused
-             * - decoding: set by user, if not set then the native format will always be choosen
-             */
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public GetFormatCallback get_format;
-
-            /**
              * DTG active format information (additionnal aspect ratio
              * information only used in DVB MPEG2 transport streams). 0 if
              * not set.
@@ -2292,65 +2288,10 @@ namespace SharpFFmpeg
             public int inter_quant_bias;
 
             /**
-             * color table ID.
-             * - encoding: unused.
-             * - decoding: which clrtable should be used for 8bit RGB images
-             *             table have to be stored somewhere FIXME
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int color_table_id;
-
-            /**
-             * internal_buffer count.
-             * Don't touch, used by lavc default_get_buffer()
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int internal_buffer_count;
-
-            /**
-             * internal_buffers.
-             * Don't touch, used by lavc default_get_buffer()
-             */
-            public IntPtr internal_buffer; // void* internal_buffer;
-
-            /**
-             * global quality for codecs which cannot change it per frame.
-             * this should be proportional to MPEG1/2/4 qscale.
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int global_quality;
-
-            /**
-             * coder type
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int coder_type;
-
-            /**
-             * context model
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int context_model;
-
-#if FALSE
-    /**
-     *
-     * - encoding: unused
-     * - decoding: set by user.
-     */
-    uint8_t * (*realloc)(struct AVCodecContext *s, uint8_t *buf, int buf_size);
-#endif
-            /**
-              * slice flags
-              * - encoding: unused
-              * - decoding: set by user.
-              */
+            * slice flags
+            * - encoding: unused
+            * - decoding: set by user.
+            */
             [MarshalAs(UnmanagedType.I4)]
             public int slice_flags;
 
@@ -2363,10 +2304,10 @@ namespace SharpFFmpeg
             public int xvmc_acceleration;
 
             /**
-             * macroblock decision mode
-             * - encoding: set by user.
-             * - decoding: unused
-             */
+            * macroblock decision mode
+            * - encoding: set by user.
+            * - decoding: unused
+            */
             [MarshalAs(UnmanagedType.I4)]
             public int mb_decision;
 
@@ -2385,149 +2326,29 @@ namespace SharpFFmpeg
             public IntPtr inter_matrix; // uint16_t* inter_matrix;
 
             /**
-             * fourcc from the AVI stream header (LSB first, so "ABCD" -> ('D'<<24) + ('C'<<16) + ('B'<<8) + 'A').
-             * this is used to workaround some encoder bugs
-             * - encoding: unused
-             * - decoding: set by user, will be converted to upper case by lavc during init
-             */
-            [MarshalAs(UnmanagedType.U4)]
-            public uint stream_codec_tag;
-
-            /**
-             * scene change detection threshold.
-             * 0 is default, larger means fewer detected scene changes
-             * - encoding: set by user.
-             * - decoding: unused
-             */
+            * scene change detection threshold.
+            * 0 is default, larger means fewer detected scene changes
+            * - encoding: set by user.
+            * - decoding: unused
+            */
             [MarshalAs(UnmanagedType.I4)]
             public int scenechange_threshold;
 
             /**
-             * minimum lagrange multipler
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int lmin;
-
-            /**
-             * maximum lagrange multipler
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int lmax;
-
-            /**
-             * Palette control structure
-             * - encoding: ??? (no palette-enabled encoder yet)
-             * - decoding: set by user.
-             */
-            public IntPtr palctrl; // AVPaletteControl *palctrl;
-
-            /**
-             * noise reduction strength
-             * - encoding: set by user.
-             * - decoding: unused
-             */
+            * noise reduction strength
+            * - encoding: set by user.
+            * - decoding: unused
+            */
             [MarshalAs(UnmanagedType.I4)]
             public int noise_reduction;
 
             /**
-             * called at the beginning of a frame to get cr buffer for it.
-             * buffer type (size, hints) must be the same. lavc won't check it.
-             * lavc will pass previous buffer in pic, function should return
-             * same buffer or new buffer with old frame "painted" into it.
-             * if pic.data[0] == NULL must behave like get_buffer().
-             * - encoding: unused
-             * - decoding: set by lavc, user can override
-             */
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public RegetBufferCallback reget_buffer;
-
-            /**
-             * number of bits which should be loaded into the rc buffer before decoding starts
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int rc_initial_buffer_occupancy;
-
-            /**
-             *
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int inter_threshold;
-
-            /**
-             * CODEC_FLAG2_*.
-             * - encoding: set by user.
-             * - decoding: set by user.
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int flags2;
-
-            /**
-             * simulates errors in the bitstream to test error concealment.
-             * - encoding: set by user.
-             * - decoding: unused.
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int error_rate;
-
-            /**
-             * MP3 antialias algorithm, see FF_AA_* below.
-             * - encoding: unused
-             * - decoding: set by user
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int antialias_algo;
-
-            /**
-             * Quantizer noise shaping.
-             * - encoding: set by user
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int quantizer_noise_shaping;
-
-            /**
-             * Thread count.
-             * is used to decide how many independant tasks should be passed to execute()
-             * - encoding: set by user
-             * - decoding: set by user
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int thread_count;
-
-            /**
-             * the codec may call this to execute several independant things. it will return only after
-             * finishing all tasks, the user may replace this with some multithreaded implementation, the
-             * default implementation will execute the parts serially
-             * @param count the number of things to execute
-             * - encoding: set by lavc, user can override
-             * - decoding: set by lavc, user can override
-             */
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public ExecuteCallback execute;
-
-            /**
-             * Thread opaque.
-             * can be used by execute() to store some per AVCodecContext stuff.
-             * - encoding: set by execute()
-             * - decoding: set by execute()
-             */
-            public IntPtr thread_opaque; // void* thread_opaque;
-
-            /**
-             * Motion estimation threshold. under which no motion estimation is
-             * performed, but instead the user specified motion vectors are used
-             *
-             * - encoding: set by user
-             * - decoding: unused
-             */
+            * Motion estimation threshold. under which no motion estimation is
+            * performed, but instead the user specified motion vectors are used
+            *
+            * - encoding: set by user
+            * - decoding: unused
+            */
             [MarshalAs(UnmanagedType.I4)]
             public int me_threshold;
 
@@ -2548,18 +2369,10 @@ namespace SharpFFmpeg
             public int intra_dc_precision;
 
             /**
-             * noise vs. sse weight for the nsse comparsion function.
-             * - encoding: set by user
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int nsse_weight;
-
-            /**
-             * number of macroblock rows at the top which are skipped.
-             * - encoding: unused
-             * - decoding: set by user
-             */
+            * number of macroblock rows at the top which are skipped.
+            * - encoding: unused
+            * - decoding: set by user
+            */
             [MarshalAs(UnmanagedType.I4)]
             public int skip_top;
 
@@ -2572,77 +2385,11 @@ namespace SharpFFmpeg
             public int skip_bottom;
 
             /**
-             * profile
-             * - encoding: set by user
-             * - decoding: set by lavc
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int profile;
-
-            /**
-             * level
-             * - encoding: set by user
-             * - decoding: set by lavc
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int level;
-
-            /**
-             * low resolution decoding. 1-> 1/2 size, 2->1/4 size
-             * - encoding: unused
-             * - decoding: set by user
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int lowres;
-
-            /**
-             * bitsream width / height. may be different from width/height if lowres
-             * or other things are used
-             * - encoding: unused
-             * - decoding: set by user before init if known, codec should override / dynamically change if needed
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int coded_width, coded_height;
-
-            /**
-             * frame skip threshold
-             * - encoding: set by user
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int frame_skip_threshold;
-
-            /**
-             * frame skip factor
-             * - encoding: set by user
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int frame_skip_factor;
-
-
-            /**
-             * frame skip exponent
-             * - encoding: set by user
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int frame_skip_exp;
-
-            /**
-             * frame skip comparission function
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int frame_skip_cmp;
-
-            /**
-             * border processing masking. raises the quantizer for mbs on the borders
-             * of the picture.
-             * - encoding: set by user
-             * - decoding: unused
-             */
+            * border processing masking. raises the quantizer for mbs on the borders
+            * of the picture.
+            * - encoding: set by user
+            * - decoding: unused
+            */
             [MarshalAs(UnmanagedType.R4)]
             public float border_masking;
 
@@ -2671,24 +2418,10 @@ namespace SharpFFmpeg
             public int me_penalty_compensation;
 
             /**
-             *
-             * - encoding: unused
-             * - decoding: set by user.
-             */
-            AVDiscard skip_loop_filter;
-
-            /**
-             *
-             * - encoding: unused
-             * - decoding: set by user.
-             */
-            AVDiscard skip_frame;
-
-            /**
-             *
-             * - encoding: set by user.
-             * - decoding: unused
-             */
+            *
+            * - encoding: set by user.
+            * - decoding: unused
+            */
             [MarshalAs(UnmanagedType.I4)]
             public int bidir_refine;
 
@@ -2701,27 +2434,10 @@ namespace SharpFFmpeg
             public int brd_scale;
 
             /**
-             * constant rate factor - quality-based VBR - values ~correspond to qps
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int crf;
-
-
-            /**
-             * constant quantization parameter rate control method
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int cqp;
-
-            /**
-             * minimum gop size
-             * - encoding: set by user.
-             * - decoding: unused
-             */
+            * minimum gop size
+            * - encoding: set by user.
+            * - decoding: unused
+            */
             [MarshalAs(UnmanagedType.I4)]
             public int keyint_min;
 
@@ -2742,76 +2458,10 @@ namespace SharpFFmpeg
             public int chromaoffset;
 
             /**
-             * influences how often b-frames are used
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int bframebias;
-
-            /**
-             * trellis RD quantization
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int trellis;
-
-            /**
-             * reduce fluctuations in qp (before curve compression)
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.R4)]
-            public float complexityblur;
-
-            /**
-             * in-loop deblocking filter alphac0 parameter
-             * alpha is in the range -6...6
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int deblockalpha;
-
-            /**
-             * in-loop deblocking filter beta parameter
-             * beta is in the range -6...6
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int deblockbeta;
-
-            /**
-             * macroblock subpartition sizes to consider - p8x8, p4x4, b8x8, i8x8, i4x4
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int partitions;
-
-            /**
-             * direct mv prediction mode - 0 (none), 1 (spatial), 2 (temporal)
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int directpred;
-
-            /**
-             * audio cutoff bandwidth (0 means "automatic") . Currently used only by FAAC
-             * - encoding: set by user.
-             * - decoding: unused
-             */
-            [MarshalAs(UnmanagedType.I4)]
-            public int cutoff;
-
-            /**
-             * multiplied by qscale for each frame and added to scene_change_score
-             * - encoding: set by user.
-             * - decoding: unused
-             */
+            * multiplied by qscale for each frame and added to scene_change_score
+            * - encoding: set by user.
+            * - decoding: unused
+            */
             [MarshalAs(UnmanagedType.I4)]
             public int scenechange_factor;
 
@@ -2833,32 +2483,352 @@ namespace SharpFFmpeg
             public int b_sensitivity;
 
             /**
+            * Chromaticity coordinates of the source primaries.
+            * - encoding: Set by user
+            * - decoding: Set by libavcodec
+            */
+            public AVColorPrimaries color_primaries;
+
+            /**
+            * Color Transfer Characteristic.
+            * - encoding: Set by user
+            * - decoding: Set by libavcodec
+            */
+            public AVColorTransferCharacteristic color_trc;
+
+            /**
+             * YUV colorspace type.
+             * - encoding: Set by user
+             * - decoding: Set by libavcodec
+             */
+            public AVColorSpace colorspace;
+
+            /**
+             * MPEG vs JPEG YUV range.
+             * - encoding: Set by user
+             * - decoding: Set by libavcodec
+             */
+            public AVColorRange color_range;
+
+            /**
+             * This defines the location of chroma samples.
+             * - encoding: Set by user
+             * - decoding: Set by libavcodec
+             */
+            public AVChromaLocation chroma_sample_location;
+
+            /**
+            * Number of slices.
+            * Indicates number of picture subdivisions. Used for parallelized
+            * decoding.
+            * - encoding: Set by user
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int slices;
+
+            /** Field order
+            * - encoding: set by libavcodec
+            * - decoding: Set by user.
+            */
+            public AVFieldOrder field_order;
+
+            /* audio only */
+            [MarshalAs(UnmanagedType.I4)]
+            public int sample_rate; // samples per sec
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int channels;
+
+            /**
+             * audio sample format.
+             * - encoding: set by user.
+             * - decoding: set by lavc.
+             */
+            public SampleFormat sample_fmt;  // sample format, currenly unused
+
+            /* the following data should not be initialized */
+            /**
+             * samples per packet. initialized when calling 'init'
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int frame_size;
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int frame_number;   // audio or video frame number
+
+            /**
+            * number of bytes per packet if constant and known or 0
+            * used by some WAV based audio codecs
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int block_align;
+
+            /**
+            * audio cutoff bandwidth (0 means "automatic") . Currently used only by FAAC
+            * - encoding: set by user.
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int cutoff;
+
+            /**
+            * Audio channel layout.
+            * - encoding: set by user.
+            * - decoding: set by user, may be overwritten by libavcodec.
+            */
+            [MarshalAs(UnmanagedType.I8)]
+            UInt64 channel_layout;
+
+            /**
+            * Request decoder to use this channel layout if it can (0 for default)
+            * - encoding: unused
+            * - decoding: Set by user.
+            */
+            [MarshalAs(UnmanagedType.I8)]
+            UInt64 request_channel_layout;
+
+            /**
+            * Type of service that the audio stream conveys.
+            * - encoding: Set by user.
+            * - decoding: Set by libavcodec.
+            */
+            public AVAudioServiceType audio_service_type;
+
+            /**
+            * desired sample format
+            * - encoding: Not used.
+            * - decoding: Set by user.
+            * Decoder will decode to this format if it can.
+            */
+            public AVSampleFormat request_sample_fmt;
+
+            /**
+            * called at the beginning of each frame to get a buffer for it.
+            * if pic.reference is set then the frame will be read later by lavc
+            * avcodec_align_dimensions() should be used to find the required width and
+            * height, as they normally need to be rounded up to the next multiple of 16
+            * - encoding: unused
+            * - decoding: set by lavc, user can override
+            */
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public GetBufferCallback get_buffer2;
+
+            /**
+            * If non-zero, the decoded audio and video frames returned from
+            * avcodec_decode_video2() and avcodec_decode_audio4() are reference-counted
+            * and are valid indefinitely. The caller must free them with
+            * av_frame_unref() when they are not needed anymore.
+            * Otherwise, the decoded frames must not be freed by the caller and are
+            * only valid until the next decode call.
+            *
+            * This is always automatically enabled if avcodec_receive_frame() is used.
+            *
+            * - encoding: unused
+            * - decoding: set by the caller before avcodec_open2().
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int refcounted_frames;
+
+            /* - encoding parameters */
+            [MarshalAs(UnmanagedType.R4)]
+            public float qcompress;  // amount of qscale change between easy & hard scenes (0.0-1.0)
+
+            [MarshalAs(UnmanagedType.R4)]
+            public float qblur;      // amount of qscale smoothing over time (0.0-1.0)
+
+            /**
+             * minimum quantizer.
              * - encoding: set by user.
              * - decoding: unused
              */
             [MarshalAs(UnmanagedType.I4)]
-            public int compression_level;
+            public int qmin;
 
             /**
-             * sets whether to use LPC mode - used by FLAC encoder
+             * maximum quantizer.
              * - encoding: set by user.
-             * - decoding: unused.
+             * - decoding: unused
              */
             [MarshalAs(UnmanagedType.I4)]
-            public int use_lpc;
+            public int qmax;
 
             /**
-             * LPC coefficient precision - used by FLAC encoder
+             * maximum quantizer difference etween frames.
              * - encoding: set by user.
-             * - decoding: unused.
+             * - decoding: unused
              */
             [MarshalAs(UnmanagedType.I4)]
-            public int lpc_coeff_precision;
+            public int max_qdiff;
 
             /**
-             * - encoding: set by user.
-             * - decoding: unused.
+            * ratecontrol qmin qmax limiting method.
+            * 0-> clipping, 1-> use a nice continous function to limit qscale wthin qmin/qmax
+            * - encoding: set by user.
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.R4)]
+            public float rc_qsquish;
+
+            [MarshalAs(UnmanagedType.R4)]
+            float rc_qmod_amp;
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int rc_qmod_freq;
+
+            /**
+            * decoder bitstream buffer size.
+            * - encoding: set by user.
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int rc_buffer_size;
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int rc_override_count;
+
+            /**
+            * ratecontrol override, see RcOverride.
+            * - encoding: allocated/set/freed by user.
+            * - decoding: unused
+            */
+            public IntPtr rc_override; // RcOverride* rc_override;
+
+            /**
+             * rate control equation.
+             * - encoding: set by user
+             * - decoding: unused
              */
+            [MarshalAs(UnmanagedType.LPStr)]
+            public String rc_eq; // char* rc_eq;
+
+            /**
+             * maximum bitrate.
+             * - encoding: set by user.
+             * - decoding: unused
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int rc_max_rate;
+
+            /**
+             * minimum bitrate.
+             * - encoding: set by user.
+             * - decoding: unused
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int rc_min_rate;
+
+            [MarshalAs(UnmanagedType.R4)]
+            public float rc_buffer_aggressivity;
+
+            /**
+             * initial complexity for pass1 ratecontrol.
+             * - encoding: set by user.
+             * - decoding: unused
+             */
+            [MarshalAs(UnmanagedType.R4)]
+            public float rc_initial_cplx;
+
+            /**
+            * Ratecontrol attempt to use, at maximum, <value> of what can be used without an underflow.
+            * - encoding: Set by user.
+            * - decoding: unused.
+            */
+            [MarshalAs(UnmanagedType.R4)]
+            public float rc_max_available_vbv_use;
+
+            /**
+            * Ratecontrol attempt to use, at least, <value> times the amount needed to prevent a vbv overflow.
+            * - encoding: Set by user.
+            * - decoding: unused.
+            */
+            [MarshalAs(UnmanagedType.R4)]
+            public float rc_min_vbv_overflow_use;
+
+            /**
+            * number of bits which should be loaded into the rc buffer before decoding starts
+            * - encoding: set by user.
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int rc_initial_buffer_occupancy;
+
+            /**
+            * coder type
+            * - encoding: set by user.
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int coder_type;
+
+            /**
+             * context model
+             * - encoding: set by user.
+             * - decoding: unused
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int context_model;
+
+            /**
+            * minimum lagrange multipler
+            * - encoding: set by user.
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int lmin;
+
+            /**
+             * maximum lagrange multipler
+             * - encoding: set by user.
+             * - decoding: unused
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int lmax;
+
+            /**
+            * frame skip threshold
+            * - encoding: set by user
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int frame_skip_threshold;
+
+            /**
+             * frame skip factor
+             * - encoding: set by user
+             * - decoding: unused
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int frame_skip_factor;
+
+            /**
+             * frame skip exponent
+             * - encoding: set by user
+             * - decoding: unused
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int frame_skip_exp;
+
+            /**
+             * frame skip comparission function
+             * - encoding: set by user.
+             * - decoding: unused
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int frame_skip_cmp;
+
+            /**
+            * trellis RD quantization
+            * - encoding: set by user.
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int trellis;
+
+            /**
+            * - encoding: set by user.
+            * - decoding: unused.
+            */
             [MarshalAs(UnmanagedType.I4)]
             public int min_prediction_order;
 
@@ -2869,82 +2839,944 @@ namespace SharpFFmpeg
             [MarshalAs(UnmanagedType.I4)]
             public int max_prediction_order;
 
-            /**
-             * search method for selecting prediction order
-             * - encoding: set by user.
-             * - decoding: unused.
-             */
+            [MarshalAs(UnmanagedType.I8)]
+            public Int64 timecode_frame_start;
+
+            /* The RTP callback: This function is called   */
+            /* every time the encoder has a packet to send */
+            /* Depends on the encoder if the data starts   */
+            /* with a Start Code (it should) H.263 does.   */
+            /* mb_nb contains the number of macroblocks    */
+            /* encoded in the RTP payload                  */
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public RtpCallback rtp_callback;
+
+            /* The size of the RTP payload: the coder will  */
+            /* do it's best to deliver a chunk with size    */
+            /* below rtp_payload_size, the chunk will start */
+            /* with a start code on some codecs like H.263  */
+            /* This doesn't take account of any particular  */
+            /* headers inside the transmited RTP payload    */
             [MarshalAs(UnmanagedType.I4)]
-            public int prediction_order_method;
+            public int rtp_payload_size;
+
+            /* statistics, used for 2-pass encoding */
+            [MarshalAs(UnmanagedType.I4)]
+            public int mv_bits;
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int header_bits;
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int i_tex_bits;
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int p_tex_bits;
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int i_count;
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int p_count;
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int skip_count;
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int misc_bits;
 
             /**
-             * - encoding: set by user.
-             * - decoding: unused.
+             * number of bits used for the previously encoded frame.
+             * - encoding: set by lavc
+             * - decoding: unused
              */
             [MarshalAs(UnmanagedType.I4)]
-            public int min_partition_order;
+            public int frame_bits;
 
             /**
+            * pass1 encoding statistics output buffer.
+            * - encoding: set by lavc
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.LPStr)]
+            public String stats_out; // char* stats_out
+
+            /**
+             * pass2 encoding statistics input buffer.
+             * concatenated stuff from stats_out of pass1 should be placed here
+             * - encoding: allocated/set/freed by user
+             * - decoding: unused
+             */
+            [MarshalAs(UnmanagedType.LPStr)]
+            public String stats_in;// char *stats_in
+
+            /**
+            * workaround bugs in encoders which sometimes cannot be detected automatically.
+            * - encoding: set by user
+            * - decoding: set by user
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int workaround_bugs;
+
+            /**
+            * strictly follow the std (MPEG4, ...).
+            * - encoding: set by user
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int strict_std_compliance;
+
+            /**
+            * error concealment flags.
+            * - encoding: unused
+            * - decoding: set by user
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int error_concealment;
+
+            /**
+            * debug.
+            * - encoding: set by user.
+            * - decoding: set by user.
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int debug;
+
+            /**
+             * debug.
              * - encoding: set by user.
-             * - decoding: unused.
+             * - decoding: set by user.
              */
             [MarshalAs(UnmanagedType.I4)]
-            public int max_partition_order;
+            public int debug_mv;
+
+            /**
+            * Error recognition; may misdetect some more or less valid parts as errors.
+            * - encoding: unused
+            * - decoding: Set by user.
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int err_recognition;
+
+            /**
+            * opaque 64-bit number (generally a PTS) that will be reordered and
+            * output in AVFrame.reordered_opaque
+            * - encoding: unused
+            * - decoding: Set by user.
+            */
+            [MarshalAs(UnmanagedType.I8)]
+            public Int64 reordered_opaque;
+
+            /**
+            * Hardware accelerator in use
+            * - encoding: unused.
+            * - decoding: Set by libavcodec
+            */
+            public AVHWAccel hwaccel;
+
+            /**
+            * Hardware accelerator context.
+            * For some hardware accelerators, a global context needs to be
+            * provided by the user. In that case, this holds display-dependent
+            * data FFmpeg cannot instantiate itself. Please refer to the
+            * FFmpeg HW accelerator documentation to know how to fill this
+            * is. e.g. for VA API, this is a struct vaapi_context.
+            * - encoding: unused
+            * - decoding: Set by user
+            */
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public GetHWAccelContext hwaccel_context;
+
+            /**
+            * error.
+            * - encoding: set by lavc if flags&CODEC_FLAG_PSNR
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+            public Int64[] error;
+
+            /**
+            * dct algorithm, see FF_DCT_* below.
+            * - encoding: set by user
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int dct_algo;
+
+            /**
+             * idct algorithm, see FF_IDCT_* below.
+             * - encoding: set by user
+             * - decoding: set by user
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int idct_algo;
+
+            /**
+            * bits per sample/pixel from the demuxer (needed for huffyuv).
+            * - encoding: Set by libavcodec.
+            * - decoding: Set by user.
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int bits_per_coded_sample;
+
+            /**
+             * Bits per sample/pixel of internal libavcodec pixel/sample format.
+             * - encoding: set by user.
+             * - decoding: set by libavcodec.
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int bits_per_raw_sample;
+
+            /**
+            * low resolution decoding. 1-> 1/2 size, 2->1/4 size
+            * - encoding: unused
+            * - decoding: set by user
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int lowres;
+
+            /**
+            * the picture in the bitstream.
+            * - encoding: set by lavc
+            * - decoding: set by lavc
+            */
+            public IntPtr coded_frame; // AVFrame* coded_frame;
+
+            /**
+            * Thread count.
+            * is used to decide how many independant tasks should be passed to execute()
+            * - encoding: set by user
+            * - decoding: set by user
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int thread_count;
+
+            /**
+            * Which multithreading methods to use.
+            * Use of FF_THREAD_FRAME will increase decoding delay by one frame per thread,
+            * so clients which cannot provide future frames should not use it.
+            *
+            * - encoding: Set by user, otherwise the default is used.
+            * - decoding: Set by user, otherwise the default is used.
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int thread_type;
+
+            /**
+            * Which multithreading methods are in use by the codec.
+            * - encoding: Set by libavcodec.
+            * - decoding: Set by libavcodec.
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int active_thread_type;
+
+            /**
+             * Set by the client if its custom get_buffer() callback can be called
+             * synchronously from another thread, which allows faster multithreaded decoding.
+             * draw_horiz_band() will be called from other threads regardless of this setting.
+             * Ignored if the default get_buffer() is used.
+             * - encoding: Set by user.
+             * - decoding: Set by user.
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int thread_safe_callbacks;
+
+            /**
+            * the codec may call this to execute several independant things. it will return only after
+            * finishing all tasks, the user may replace this with some multithreaded implementation, the
+            * default implementation will execute the parts serially
+            * @param count the number of things to execute
+            * - encoding: set by lavc, user can override
+            * - decoding: set by lavc, user can override
+            */
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public ExecuteCallback execute;
+
+            //* The codec may call this to execute several independent things.
+            //* It will return only after finishing all tasks.
+            //* The user may replace this with some multithreaded implementation,
+            //* the default implementation will execute the parts serially.
+            //* Also see avcodec_thread_init and e.g.the --enable-pthread configure option.
+            //* @param c context passed also to func
+            //* @param count the number of things to execute
+            //* @param arg2 argument passed unchanged to func
+            //* @param ret return values of executed functions, must have space for "count" values.May be NULL.
+            //* @param func function that will be called count times, with jobnr from 0 to count-1.
+            //*             threadnr will be in the range 0 to c->thread_count-1 < MAX_THREADS and so that no
+            //* two instances of func executing at the same time will have the same threadnr.
+            //* @return always 0 currently, but code should handle a future improvement where when any call to func
+            //* returns < 0 no further calls to func may be done and< 0 is returned.
+            //* - encoding: Set by libavcodec, user can override.
+            //* - decoding: Set by libavcodec, user can override.
+
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public Execute2Callback execute2;
+
+            /**
+            * noise vs. sse weight for the nsse comparsion function.
+            * - encoding: set by user
+            * - decoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int nsse_weight;
+
+            /**
+             * profile
+             * - encoding: set by user
+             * - decoding: set by lavc
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int profile;
+
+            /**
+            * level
+            * - encoding: set by user
+            * - decoding: set by lavc
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int level;
+
+            /**
+             *
+             * - encoding: unused
+             * - decoding: set by user.
+             */
+            AVDiscard skip_loop_filter;
+
+            /**
+            * Skip IDCT/dequantization for selected frames.
+            * - encoding: unused
+            * - decoding: Set by user.
+            */
+            AVDiscard skip_idct;
+
+            /**
+             *
+             * - encoding: unused
+             * - decoding: set by user.
+             */
+            AVDiscard skip_frame;
+
+            /**
+            * Header containing style information for text subtitles.
+            * For SUBTITLE_ASS subtitle type, it should contain the whole ASS
+            * [Script Info] and [V4+ Styles] section, plus the [Events] line and
+            * the Format line following. It shouldn't include any Dialogue line.
+            * - encoding: Set/allocated/freed by user (before avcodec_open2())
+            * - decoding: Set/allocated/freed by libavcodec (by avcodec_open2())
+            */
+            [MarshalAs(UnmanagedType.U1)]
+            public byte subtitle_header;
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int subtitle_header_size;
+
+            /**
+            * simulates errors in the bitstream to test error concealment.
+            * - encoding: set by user.
+            * - decoding: unused.
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int error_rate;
+
+            /**
+            * VBV delay coded in the last frame (in periods of a 27 MHz clock).
+            * Used for compliant TS muxing.
+            * - encoding: Set by libavcodec.
+            * - decoding: unused.
+            * @deprecated this value is now exported as a part of
+            * AV_PKT_DATA_CPB_PROPERTIES packet side data
+            */
+            [MarshalAs(UnmanagedType.U8)]
+            public UInt64 vbv_delay;
+
+            /**
+            * Encoding only and set by default. Allow encoders to output packets
+            * that do not contain any encoded data, only side data.
+            *
+            * Some encoders need to output such packets, e.g. to update some stream
+            * parameters at the end of encoding.
+            *
+            * @deprecated this field disables the default behaviour and
+            *             it is kept only for compatibility.
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int side_data_only_packets;
+
+            /**
+            * Audio only. The number of "priming" samples (padding) inserted by the
+            * encoder at the beginning of the audio. I.e. this number of leading
+            * decoded samples must be discarded by the caller to get the original audio
+            * without leading padding.
+            *
+            * - decoding: unused
+            * - encoding: Set by libavcodec. The timestamps on the output packets are
+            *             adjusted by the encoder so that they always refer to the
+            *             first sample of the data actually contained in the packet,
+            *             including any added padding.  E.g. if the timebase is
+            *             1/samplerate and the timestamp of the first input sample is
+            *             0, the timestamp of the first output packet will be
+            *             -initial_padding.
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int initial_padding;
+
+            /**
+            * - decoding: For codecs that store a framerate value in the compressed
+            *             bitstream, the decoder may export it here. { 0, 1} when
+            *             unknown.
+            * - encoding: May be used to signal the framerate of CFR content to an
+            *             encoder.
+            */
+            public AVRational framerate;
+
+            /**
+            * Nominal unaccelerated pixel format, see AV_PIX_FMT_xxx.
+            * - encoding: unused.
+            * - decoding: Set by libavcodec before calling get_format()
+            */
+            public AVPixelFormat sw_pix_fmt;
+
+            /**
+            * Timebase in which pkt_dts/pts and AVPacket.dts/pts are.
+            * - encoding unused.
+            * - decoding set by user.
+            */
+            public AVRational pkt_timebase;
+
+            /**
+            * AVCodecDescriptor
+            * - encoding: unused.
+            * - decoding: set by libavcodec.
+            */
+            public IntPtr codec_descriptor;
+
+            /**
+            * Current statistics for PTS correction.
+            * - decoding: maintained and used by libavcodec, not intended to be used by user apps
+            * - encoding: unused
+            */
+            [MarshalAs(UnmanagedType.I8)]
+            public Int64 pts_correction_num_faulty_pts; /// Number of incorrect PTS values so far
+
+            [MarshalAs(UnmanagedType.I8)]
+            public Int64 pts_correction_num_faulty_dts; /// Number of incorrect DTS values so far
+
+            [MarshalAs(UnmanagedType.I8)]
+            public Int64 pts_correction_last_pts;       /// PTS of the last frame
+
+            [MarshalAs(UnmanagedType.I8)]
+            public Int64 pts_correction_last_dts;       /// DTS of the last frame
+
+            /**
+            * Character encoding of the input subtitles file.
+            * - decoding: set by user
+            * - encoding: unused
+            */
+            [MarshalAs(UnmanagedType.LPStr)]
+            public String sub_charenc;// char *sub_charenc;
+
+            /**
+            * Subtitles character encoding mode. Formats or codecs might be adjusting
+            * this setting (if they are doing the conversion themselves for instance).
+            * - decoding: set by libavcodec
+            * - encoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int sub_charenc_mode;
+
+            /**
+            * Skip processing alpha if supported by codec.
+            * Note that if the format uses pre-multiplied alpha (common with VP6,
+            * and recommended due to better video quality/compression)
+            * the image will look as if alpha-blended onto a black background.
+            * However for formats that do not use pre-multiplied alpha
+            * there might be serious artefacts (though e.g. libswscale currently
+            * assumes pre-multiplied alpha anyway).
+            *
+            * - decoding: set by user
+            * - encoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int skip_alpha;
+
+            /**
+             * Number of samples to skip after a discontinuity
+             * - decoding: unused
+             * - encoding: set by libavcodec
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int seek_preroll;
+
+            /**
+            * custom intra quantization matrix
+            * - encoding: Set by user, can be NULL.
+            * - decoding: unused.
+            */
+            [MarshalAs(UnmanagedType.U2)]
+            public UInt16 chroma_intra_matrix;
+
+            /**
+             * dump format separator.
+             * can be ", " or "\n      " or anything else
+             * - encoding: Set by user.
+             * - decoding: Set by user.
+             */
+             [MarshalAs(UnmanagedType.U1)]
+            public byte dump_separator;
+
+            /**
+             * ',' separated list of allowed decoders.
+             * If NULL then all are allowed
+             * - encoding: unused
+             * - decoding: set by user
+             */
+            [MarshalAs(UnmanagedType.LPStr)]
+            public String codec_whitelist;
+
+            /*
+            * Properties of the stream that gets decoded
+            * - encoding: unused
+            * - decoding: set by libavcodec
+            */
+            [MarshalAs(UnmanagedType.U4)]
+            public UInt32 properties;
+
+            /**
+            * Additional data associated with the entire coded stream.
+            *
+            * - decoding: unused
+            * - encoding: may be set by libavcodec after avcodec_open2().
+            */
+            public IntPtr coded_side_data;
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int nb_coded_side_data;
+
+            /**
+            * A reference to the AVHWFramesContext describing the input (for encoding)
+            * or output (decoding) frames. The reference is set by the caller and
+            * afterwards owned (and freed) by libavcodec - it should never be read by
+            * the caller after being set.
+            *
+            * - decoding: This field should be set by the caller from the get_format()
+            *             callback. The previous reference (if any) will always be
+            *             unreffed by libavcodec before the get_format() call.
+            *
+            *             If the default get_buffer2() is used with a hwaccel pixel
+            *             format, then this AVHWFramesContext will be used for
+            *             allocating the frame buffers.
+            *
+            * - encoding: For hardware encoders configured to use a hwaccel pixel
+            *             format, this field should be set by the caller to a reference
+            *             to the AVHWFramesContext describing input frames.
+            *             AVHWFramesContext.format must be equal to
+            *             AVCodecContext.pix_fmt.
+            *
+            *             This field should be set before avcodec_open2() is called.
+            */
+            public IntPtr hw_frames_ctx;
+
+            /**
+            * Control the form of AVSubtitle.rects[N]->ass
+            * - decoding: set by user
+            * - encoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int sub_text_format;
+
+            /**
+            * Audio only. The amount of padding (in samples) appended by the encoder to
+            * the end of the audio. I.e. this number of decoded samples must be
+            * discarded by the caller from the end of the stream to get the original
+            * audio without any trailing padding.
+            *
+            * - decoding: unused
+            * - encoding: unused
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int trailing_padding;
+
+            /**
+            * The number of pixels per image to maximally accept.
+            *
+            * - decoding: set by user
+            * - encoding: set by user
+            */
+            [MarshalAs(UnmanagedType.I8)]
+            public Int64 max_pixels;
+
+            /**
+            * A reference to the AVHWDeviceContext describing the device which will
+            * be used by a hardware encoder/decoder.  The reference is set by the
+            * caller and afterwards owned (and freed) by libavcodec.
+            *
+            * This should be used if either the codec device does not require
+            * hardware frames or any that are used are to be allocated internally by
+            * libavcodec.  If the user wishes to supply any of the frames used as
+            * encoder input or decoder output then hw_frames_ctx should be used
+            * instead.  When hw_frames_ctx is set in get_format() for a decoder, this
+            * field will be ignored while decoding the associated stream segment, but
+            * may again be used on a following one after another get_format() call.
+            *
+            * For both encoders and decoders this field should be set before
+            * avcodec_open2() is called and must not be written to thereafter.
+            *
+            * Note that some decoders may require this field to be set initially in
+            * order to support hw_frames_ctx at all - in that case, all frames
+            * contexts used must be created on the same device.
+            */
+            public IntPtr hw_device_ctx;
+
+            /**
+            * Bit set of AV_HWACCEL_FLAG_* flags, which affect hardware accelerated
+            * decoding (if active).
+            * - encoding: unused
+            * - decoding: Set by user (either before avcodec_open2(), or in the
+            *             AVCodecContext.get_format callback)
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int hwaccel_flags;
+
+            /**
+             * Video decoding only. Certain video codecs support cropping, meaning that
+             * only a sub-rectangle of the decoded frame is intended for display.  This
+             * option controls how cropping is handled by libavcodec.
+             *
+             * When set to 1 (the default), libavcodec will apply cropping internally.
+             * I.e. it will modify the output frame width/height fields and offset the
+             * data pointers (only by as much as possible while preserving alignment, or
+             * by the full amount if the AV_CODEC_FLAG_UNALIGNED flag is set) so that
+             * the frames output by the decoder refer only to the cropped area. The
+             * crop_* fields of the output frames will be zero.
+             *
+             * When set to 0, the width/height fields of the output frames will be set
+             * to the coded dimensions and the crop_* fields will describe the cropping
+             * rectangle. Applying the cropping is left to the caller.
+             *
+             * @warning When hardware acceleration with opaque output frames is used,
+             * libavcodec is unable to apply cropping from the top/left border.
+             *
+             * @note when this option is set to zero, the width/height fields of the
+             * AVCodecContext and output AVFrames have different meanings. The codec
+             * context fields store display dimensions (with the coded dimensions in
+             * coded_width/height), while the frame fields store the coded dimensions
+             * (with the display dimensions being determined by the crop_* fields).
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int apply_cropping;
         };
 
-        public delegate int InitCallback(IntPtr pAVCodecContext);
+        public delegate int InitThreadCopyCallback(AVCodecContext pAVCodecContext);
 
-        public delegate int EncodeCallback(IntPtr pAVCodecContext, IntPtr buf, int buf_size, IntPtr data);
+        public delegate int UpdateThreadContextCallback(AVCodecContext dst, AVCodecContext src);
 
-        public delegate int CloseCallback(IntPtr pAVCodecContext);
+        public delegate void InitStaticDataCallback(AVCodec codec);
 
-        public delegate int DecodeCallback(IntPtr pAVCodecContext, IntPtr outdata, ref int outdata_size,
-                                            IntPtr buf, int buf_size);
+        public delegate int InitCallback(AVCodecContext pAVCodecContext);
 
-        public delegate int FlushCallback(IntPtr pAVCodecContext);
+        public delegate int EncodeSubCallback(AVCodecContext pAVCodecContext, IntPtr buf, int buf_size, IntPtr pAVSubtitle);
+
+        public delegate int Encode2Callback(AVCodecContext avctx, AVPacket avpkt, AVFrame frame, ref int got_pkt_ptr);
+
+        public delegate int DecodeCallback(AVCodecContext avctx, IntPtr outdata, ref int outdata_size, AVPacket avpkt);
+
+        public delegate int CloseCallback(AVCodecContext avctx);
+
+        public delegate int SendFrameCallback(AVCodecContext avctx, AVFrame frame);
+
+        public delegate int ReceivePacketCallback(AVCodecContext avctx, AVPacket avpkt);
+
+        public delegate int ReceiveFrameCallback(AVCodecContext avctx, AVFrame frame);
+
+        public delegate int FlushCallback(AVCodecContext avctx);
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct AVCodec
+        public class AVCodec
         {
             [MarshalAs(UnmanagedType.LPStr)]
             public String name;
+
+            /**
+            * Descriptive name for the codec, meant to be more human readable than name.
+            * You should use the NULL_IF_CONFIG_SMALL() macro to define it.
+            */
+            [MarshalAs(UnmanagedType.LPStr)]
+            public String long_name;
 
             public CodecType type;
 
             public CodecID id;
 
             [MarshalAs(UnmanagedType.I4)]
-            public int priv_data_size;
-
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public InitCallback init;
-
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public EncodeCallback encode;
-
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public CloseCallback close;
-
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public DecodeCallback decode;
-
-            [MarshalAs(UnmanagedType.I4)]
             public int capabilities;
-
-            //#if LIBAVCODEC_VERSION_INT < ((50<<16)+(0<<8)+0)
-            //    void *dummy; // FIXME remove next time we break binary compatibility
-            //#endif
-            public IntPtr next; // AVCodec *next
-
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public FlushCallback flush;
 
             // array of supported framerates, or NULL if any, array is terminated by {0,0}
             public IntPtr supported_framerates;
 
             // array of supported pixel formats, or NULL if unknown, array is terminanted by -1
             public IntPtr pix_fmts; // enum PixelFormat *pix_fmts
+
+            public IntPtr supported_samplerates;       //< array of supported audio samplerates, or NULL if unknown, array is terminated by 0
+
+            public IntPtr sample_fmts;          //< array of supported sample formats, or NULL if unknown, array is terminated by -1
+            public IntPtr channel_layouts;      //< array of support channel layouts, or NULL if unknown. array is terminated by 0
+
+            [MarshalAs(UnmanagedType.U1)]
+            public byte max_lowres;             //< maximum value for lowres supported by the decoder
+
+            public IntPtr priv_class;           //< AVClass for the private context
+            public IntPtr profiles;             //< array of recognized profiles, or NULL if unknown, array is terminated by {FF_PROFILE_UNKNOWN}
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int priv_data_size;
+
+            //#if LIBAVCODEC_VERSION_INT < ((50<<16)+(0<<8)+0)
+            //    void *dummy; // FIXME remove next time we break binary compatibility
+            //#endif
+            public AVCodec next; // AVCodec *next
+
+            /**
+            * @name Frame-level threading support functions
+            * @{
+            */
+            /**
+             * If defined, called on thread contexts when they are created.
+             * If the codec allocates writable tables in init(), re-allocate them here.
+             * priv_data will be set to a copy of the original.
+             */
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public InitThreadCopyCallback init_thread_copy;
+
+            /**
+            * Copy necessary context variables from a previous thread context to the current one.
+            * If not defined, the next thread will start automatically; otherwise, the codec
+            * must call ff_thread_finish_setup().
+            *
+            * dst and src will (rarely) point to the same context, in which case memcpy should be skipped.
+            */
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public UpdateThreadContextCallback update_thread_context;
+
+            /**
+            * Private codec-specific defaults.
+            */
+            public IntPtr defaults;
+
+            /**
+            * Initialize codec static data, called from avcodec_register().
+            */
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public InitStaticDataCallback init_static_data;
+
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public InitCallback init;
+
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public EncodeSubCallback encode_sub;
+
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public Encode2Callback encode2;
+
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public DecodeCallback decode;
+
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public CloseCallback close;
+
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public SendFrameCallback send_frame;
+
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public ReceivePacketCallback receive_packet;
+
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public ReceiveFrameCallback receive_frame;
+
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public FlushCallback flush;
+
+            /**
+            * Internal codec capabilities.
+            * See FF_CODEC_CAP_* in internal.h
+            */
+            [MarshalAs(UnmanagedType.I4)]
+            public int caps_internal;
+
+            /**
+            * Decoding only, a comma-separated list of bitstream filters to apply to
+            * packets before decoding.
+            */
+            [MarshalAs(UnmanagedType.LPStr)]
+            public String bsfs;
         };
+
+        public delegate int HWAccelAllocFrame(AVCodecContext avctx, IntPtr pAVFrame);
+
+        public delegate int HWAccelStartFrame(AVCodecContext avctx, IntPtr buf, UInt32 buf_size);
+
+        public delegate int HWAccelDecodeSlice(AVCodecContext avctx, IntPtr buf, UInt32 buf_size);
+
+        public delegate int HWAccelEndFrame(AVCodecContext avctx);
+
+        public delegate void HWAccelDecodeMB(IntPtr pMpegEncContext);
+
+        public delegate int HWAccelInit(AVCodecContext avctx);
+
+        public delegate int HWAccelUninit(AVCodecContext avctx);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public class AVHWAccel
+        {
+            /**
+             * Name of the hardware accelerated codec.
+             * The name is globally unique among encoders and among decoders (but an
+             * encoder and a decoder can share the same name).
+             */
+            [MarshalAs(UnmanagedType.LPStr)]
+            public String name;
+
+            /**
+             * Type of codec implemented by the hardware accelerator.
+             *
+             * See AVMEDIA_TYPE_xxx
+             */
+            public AVMediaType type;
+
+            /**
+             * Codec implemented by the hardware accelerator.
+             *
+             * See AV_CODEC_ID_xxx
+             */
+            public CodecID id;
+
+            /**
+             * Supported pixel format.
+             *
+             * Only hardware accelerated formats are supported here.
+             */
+            public AVPixelFormat pix_fmt;
+
+            /**
+             * Hardware accelerated codec capabilities.
+             * see HWACCEL_CODEC_CAP_*
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int capabilities;
+
+            /*****************************************************************
+             * No fields below this line are part of the public API. They
+             * may not be used outside of libavcodec and can be changed and
+             * removed at will.
+             * New public fields should be added right above.
+             *****************************************************************
+             */
+            public AVHWAccel next;
+
+            /**
+             * Allocate a custom buffer
+             */
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public HWAccelAllocFrame alloc_frame;
+
+            /**
+             * Called at the beginning of each frame or field picture.
+             *
+             * Meaningful frame information (codec specific) is guaranteed to
+             * be parsed at this point. This function is mandatory.
+             *
+             * Note that buf can be NULL along with buf_size set to 0.
+             * Otherwise, this means the whole frame is available at this point.
+             *
+             * @param avctx the codec context
+             * @param buf the frame data buffer base
+             * @param buf_size the size of the frame in bytes
+             * @return zero if successful, a negative value otherwise
+             */
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public HWAccelStartFrame start_frame;
+
+            /**
+             * Callback for each slice.
+             *
+             * Meaningful slice information (codec specific) is guaranteed to
+             * be parsed at this point. This function is mandatory.
+             * The only exception is XvMC, that works on MB level.
+             *
+             * @param avctx the codec context
+             * @param buf the slice data buffer base
+             * @param buf_size the size of the slice in bytes
+             * @return zero if successful, a negative value otherwise
+             */
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public HWAccelDecodeSlice decode_slice;
+
+            /**
+             * Called at the end of each frame or field picture.
+             *
+             * The whole picture is parsed at this point and can now be sent
+             * to the hardware accelerator. This function is mandatory.
+             *
+             * @param avctx the codec context
+             * @return zero if successful, a negative value otherwise
+             */
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public HWAccelEndFrame end_frame;
+
+            /**
+             * Size of per-frame hardware accelerator private data.
+             *
+             * Private data is allocated with av_mallocz() before
+             * AVCodecContext.get_buffer() and deallocated after
+             * AVCodecContext.release_buffer().
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int frame_priv_data_size;
+
+            /**
+             * Called for every Macroblock in a slice.
+             *
+             * XvMC uses it to replace the ff_mpv_reconstruct_mb().
+             * Instead of decoding to raw picture, MB parameters are
+             * stored in an array provided by the video driver.
+             *
+             * @param s the mpeg context
+             */
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public HWAccelDecodeMB decode_mb;
+
+            /**
+             * Initialize the hwaccel private data.
+             *
+             * This will be called from ff_get_format(), after hwaccel and
+             * hwaccel_context are set and the hwaccel private data in AVCodecInternal
+             * is allocated.
+             */
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public HWAccelInit init;
+
+            /**
+             * Uninitialize the hwaccel private data.
+             *
+             * This will be called from get_format() or avcodec_close(), after hwaccel
+             * and hwaccel_context are already uninitialized.
+             */
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public HWAccelUninit uninit;
+
+            /**
+             * Size of the private data to allocate in
+             * AVCodecInternal.hwaccel_priv_data.
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int priv_data_size;
+
+            /**
+             * Internal hwaccel capabilities.
+             */
+            [MarshalAs(UnmanagedType.I4)]
+            public int caps_internal;
+        }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct AVPicture

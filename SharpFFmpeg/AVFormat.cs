@@ -8,25 +8,11 @@ namespace SharpFFmpeg
     public partial class FFmpeg
     {
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pAVPacket"></param>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void av_destruct_packet_nofree(IntPtr pAVPacket);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pAVPacket"></param>
-        [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void av_destruct_packet(IntPtr pAVPacket);
-
-        /// <summary>
         /// Initialize optional fields of a packet.
         /// </summary>
         /// <param name="pAVPacket"></param>
         [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void av_init_packet(IntPtr pAVPacket);
+        public static extern void av_init_packet(AVPacket pAVPacket);
 
         /// <summary>
         /// 
@@ -35,7 +21,7 @@ namespace SharpFFmpeg
         /// <param name="size"></param>
         /// <returns></returns>
         [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int av_new_packet(IntPtr pAVPacket, int size);
+        public static extern int av_new_packet(AVPacket pAVPacket, int size);
 
         /// <summary>
         /// 
@@ -45,7 +31,7 @@ namespace SharpFFmpeg
         /// <param name="size"></param>
         /// <returns></returns>
         [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int av_get_packet(IntPtr pByteIOContext, IntPtr pAVPacket, int size);
+        public static extern int av_get_packet(IntPtr pByteIOContext, AVPacket pAVPacket, int size);
 
         /// <summary>
         /// 
@@ -53,14 +39,14 @@ namespace SharpFFmpeg
         /// <param name="pAVPacket"></param>
         /// <returns></returns>
         [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int av_dup_packet(IntPtr pAVPacket);
+        public static extern int av_dup_packet(AVPacket pAVPacket);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pAVPacket"></param>
         [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void av_free_packet(IntPtr pAVPacket);
+        public static extern void av_packet_unref(AVPacket pAVPacket);
 
         /// <summary>
         /// 
@@ -194,7 +180,7 @@ namespace SharpFFmpeg
         public static extern void av_hex_dump(IntPtr pFile, IntPtr buf, int size);
 
         [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern void av_pkt_dump(IntPtr pFile, IntPtr pAVPacket, int dump_payload);
+        public static extern void av_pkt_dump2(IntPtr pFile, AVPacket pAVPacket, int dump_payload, IntPtr pAVStream);
 
         /// <summary>
         /// 
@@ -257,7 +243,7 @@ namespace SharpFFmpeg
         /// <param name="pAVPacket"></param>
         /// <returns></returns>
         [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int av_read_packet(IntPtr pAVFormatContext, IntPtr pAVPacket);
+        public static extern int av_read_packet(IntPtr pAVFormatContext, AVPacket pAVPacket);
 
         /// <summary>
         /// 
@@ -266,7 +252,7 @@ namespace SharpFFmpeg
         /// <param name="pAVPacket"></param>
         /// <returns></returns>
         [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int av_read_frame(IntPtr pAVFormatContext, IntPtr pAVPacket);
+        public static extern int av_read_frame(IntPtr pAVFormatContext, AVPacket pAVPacket);
 
         /// <summary>
         /// 
@@ -399,7 +385,7 @@ namespace SharpFFmpeg
         /// <param name="pAVPacket"></param>
         /// <returns></returns>
         [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int av_write_frame(IntPtr pAVFormatContext, IntPtr pAVPacket);
+        public static extern int av_write_frame(IntPtr pAVFormatContext, AVPacket pAVPacket);
 
         /// <summary>
         /// 
@@ -408,7 +394,7 @@ namespace SharpFFmpeg
         /// <param name="pAVPacket"></param>
         /// <returns></returns>
         [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int av_interleaved_write_frame(IntPtr pAVFormatContext, IntPtr pAVPacket);
+        public static extern int av_interleaved_write_frame(IntPtr pAVFormatContext, AVPacket pAVPacket);
 
         /// <summary>
         /// 
@@ -419,7 +405,7 @@ namespace SharpFFmpeg
         /// <param name="flush"></param>
         /// <returns></returns>
         [DllImport("avformat.dll"), SuppressUnmanagedCodeSecurity]
-        public static extern int av_interleave_packet_per_dts(IntPtr pAVFormatContext, out IntPtr p_out_AVPacket, IntPtr pAVPacket, int flush);
+        public static extern int av_interleave_packet_per_dts(IntPtr pAVFormatContext, out AVPacket p_out_AVPacket, AVPacket pAVPacket, int flush);
 
         /// <summary>
         /// 
@@ -635,11 +621,13 @@ namespace SharpFFmpeg
         // *********************************************************************************
 
 
-        public delegate void DestructCallback(IntPtr pAVPacket);
+        public delegate void DestructCallback(AVPacket pAVPacket);
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct AVPacket
+        public class AVPacket
         {
+            public IntPtr buf;
+
             [MarshalAs(UnmanagedType.I8)]
             public Int64 pts; // presentation time stamp in time_base units
 
@@ -657,16 +645,19 @@ namespace SharpFFmpeg
             [MarshalAs(UnmanagedType.I4)]
             public int flags;
 
+            public IntPtr side_data;
+
+            [MarshalAs(UnmanagedType.I4)]
+            public int side_data_elems;
+
             [MarshalAs(UnmanagedType.I4)]
             public int duration;
 
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public DestructCallback destruct;
-
-            public IntPtr priv;
-
             [MarshalAs(UnmanagedType.I8)]
             public Int64 pos;
+
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            public DestructCallback destruct;
         };
 
         [StructLayout(LayoutKind.Sequential)]
