@@ -26,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -170,9 +171,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharpFFmpeg\SharpFFmpeg.csproj">
-      <Project>{11e4451c-a61d-4680-ac23-d6e1391b3262}</Project>
-      <Name>SharpFFmpeg</Name>
+    <ProjectReference Include="..\FFmpeg.AutoGen\FFmpeg.AutoGen.csproj">
+      <Project>{a536b02a-b0b1-4753-8328-17369ef09976}</Project>
+      <Name>FFmpeg.AutoGen</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

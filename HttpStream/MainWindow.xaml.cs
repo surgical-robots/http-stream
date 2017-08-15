@@ -19,7 +19,8 @@ using Emgu.CV.Structure;
 
 using DirectShowLib;
 
-using SharpFFmpeg;
+//using SharpFFmpeg;
+using FFmpeg.AutoGen;
 
 namespace HttpStream
 {
@@ -31,10 +32,10 @@ namespace HttpStream
         VideoCapture capture;
         bool isRunning = false;
 
-        FFmpeg.AVCodec codec;
-        FFmpeg.AVCodecContext c;
-        FFmpeg.AVFrame frame;
-        FFmpeg.AVPacket pkt;
+        unsafe AVCodec *codec;
+        unsafe AVCodecContext *c;
+        unsafe AVFrame *frame;
+        unsafe AVPacket *pkt;
 
         public MainWindow()
         {
@@ -57,60 +58,68 @@ namespace HttpStream
             InitEncoder();
         }
 
-        void InitEncoder()
+        unsafe void InitEncoder()
         {
-            string dir = Environment.SystemDirectory;
-            FFmpeg.avcodec_register_all();
+            ffmpeg.avcodec_register_all();
 
-            codec = FFmpeg.avcodec_find_encoder(FFmpeg.AVCodecID.AV_CODEC_ID_MPEG4);
-            c = FFmpeg.avcodec_alloc_context3(codec);
-            pkt = FFmpeg.av_packet_alloc();
+            codec = ffmpeg.avcodec_find_encoder(AVCodecID.AV_CODEC_ID_MPEG2VIDEO);
+            if(codec->name == null)
+            {
+                Debug.Print("Error finding encoder!");
+            }
 
-            c.bit_rate = 400000;
-            c.width = 640;
-            c.height = 480;
-            FFmpeg.AVRational dummy;
+            c = ffmpeg.avcodec_alloc_context3(codec);
+            pkt = ffmpeg.av_packet_alloc();
+            
+            c->bit_rate = 400000;
+            c->width = 640;
+            c->height = 480;
+            AVRational dummy;
             dummy.num = 1;
             dummy.den = 30;
-            c.time_base = dummy;
+            c->time_base = dummy;
             dummy.num = 30;
             dummy.den = 1;
-            c.framerate = dummy;
+            c->framerate = dummy;
 
-            c.gop_size = 10;
-            c.max_b_frames = 1;
-            c.pix_fmt = FFmpeg.AVPixelFormat.AV_PIX_FMT_RGB24;
+            c->gop_size = 10;
+            c->max_b_frames = 1;
+            c->pix_fmt = AVPixelFormat.AV_PIX_FMT_YUV420P;
 
-            int ret = FFmpeg.avcodec_open2(c, codec, IntPtr.Zero);
+            int ret = ffmpeg.avcodec_open2(c, codec, null);
             if (ret < 0)
             {
                 Debug.Print("Could not open codec!");
             }
 
-            frame = FFmpeg.av_frame_alloc();
+            frame = ffmpeg.av_frame_alloc();
             if(frame == null)
             {
                 Debug.Print("Could not allocate video frame!");
             }
 
-            frame.format = (int)c.pix_fmt;
-            frame.width = c.width;
-            frame.height = c.height;
+            frame->format = (int)c->pix_fmt;
+            frame->width = c->width;
+            frame->height = c->height;
 
             //ret = FFmpeg.av_frame_get_buffer(frame, 32);
             //if (ret < 0)
             //    Debug.Print("Could not allocate video frame data!");
         }
 
-        void Encode()
+        unsafe void Encode()
         {
-            int err = FFmpeg.avcodec_send_frame(c, frame);
-            if (err > 0)
-                Debug.Print("Error sending a frame for encoding!");
-
-            while( err >= 0)
+            int err = ffmpeg.avcodec_send_frame(c, frame);
+            if (err < 0)
             {
-                err = FFmpeg.avcodec_receive_packet(c, pkt);
+                Debug.Print("Error sending a frame for encoding!");
+                err = ffmpeg.avcodec_receive_packet(c, pkt);
+                return;
+            }
+
+            while ( err >= 0)
+            {
+                err = ffmpeg.avcodec_receive_packet(c, pkt);
                 if (err < 0)
                     Debug.Print("Error during encoding!");
             }
@@ -255,7 +264,7 @@ namespace HttpStream
         /// <summary>
         /// Gets the DetectCOMsCommand.
         /// </summary>
-        public RelayCommand<string> StartCommand
+        unsafe public RelayCommand<string> StartCommand
         {
             get
             {
@@ -278,16 +287,22 @@ namespace HttpStream
                                 while (isRunning)
                                 {
                                     Mat rawFrame = capture.QueryFrame();
-                                    Image<Bgr, byte> img = rawFrame.ToImage<Bgr, byte>();
+                                    Image<Ycc, ushort> img = rawFrame.ToImage<Ycc, ushort>();
                                     VideoDisplay.Image = img;
 
-                                    //int size = Marshal.ReadInt32(rawFrame.Total) * rawFrame.ElementSize;
-                                    //byte[] bytes = new byte[size];
+                                    byte[] bytes = img.Bytes;
 
-                                    //Array.Copy(rawFrame.Data, bytes, size);
+                                    var handles = new GCHandle[bytes.Length];
+                                    byte*[] pBytes = new byte*[bytes.Length];
 
-                                    //frame.data = bytes;
-                                    //Encode();
+                                    for (int i = 0; i < bytes.Length; ++i)
+                                    {
+                                        handles[i] = GCHandle.Alloc(bytes[i], GCHandleType.Pinned);
+                                        pBytes[i] = (byte*)handles[i].AddrOfPinnedObject();
+                                    }
+
+                                    frame->data.UpdateFrom(pBytes);
+                                    Encode();
                                 }
                             });
                         }
