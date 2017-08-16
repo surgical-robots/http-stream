@@ -6,7 +6,7 @@
         xmlns:emgu="clr-namespace:Emgu.CV.UI;assembly=Emgu.CV.UI"
         xmlns:local="clr-namespace:HttpStream"
         mc:Ignorable="d"
-        Title="Http Stream" Height="350" Width="525">
+        Title="Http Stream" Height="600" Width="675">
     <Grid>
         <StackPanel>
             <UniformGrid Columns="2">

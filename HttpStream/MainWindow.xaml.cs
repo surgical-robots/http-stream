@@ -32,10 +32,17 @@ namespace HttpStream
         VideoCapture capture;
         bool isRunning = false;
 
-        unsafe AVCodec *codec;
-        unsafe AVCodecContext *c;
-        unsafe AVFrame *frame;
-        unsafe AVPacket *pkt;
+        unsafe AVCodec* codec;
+        unsafe AVCodecContext* c;
+        unsafe AVFrame* frame;
+        unsafe AVPacket* pkt;
+        unsafe AVOutputFormat* ofmt;
+        unsafe AVFormatContext* ifmt_ctx;
+        unsafe AVFormatContext* ofmt_ctx;
+        unsafe AVDeviceCapabilitiesQuery* dcq;
+        unsafe AVDeviceInfoList* dil;
+        unsafe AVDictionary* avdic;
+        int VideoStream;
 
         public MainWindow()
         {
@@ -58,9 +65,75 @@ namespace HttpStream
             InitEncoder();
         }
 
+        unsafe void CameraInit()
+        {
+            int res;
+            AVIOContext* ioctx;
+            ofmt = null;
+            ifmt_ctx = null;
+            ofmt_ctx = null;
+            avdic = null;
+            
+            string fullDName = "video=" + selectedDeviceName;
+
+            AVInputFormat* fmt = ffmpeg.av_find_input_format("dshow");
+
+            ifmt_ctx = ffmpeg.avformat_alloc_context();
+            fixed (AVDictionary** pAVdic = &avdic)
+            {
+                res = ffmpeg.av_dict_set(pAVdic, "video_size", "640x480", 0);
+                res = ffmpeg.av_dict_set(pAVdic, "pixel_format", "yuv420p", 0);
+                fixed (AVFormatContext** pFmtCxt = &ifmt_ctx)
+                {
+                    res = ffmpeg.avformat_open_input(pFmtCxt, fullDName, fmt, null);
+                }
+
+                ffmpeg.av_dict_free(pAVdic);
+            }
+            if (res < 0)
+            {
+                Debug.Print("Unable to open input device!");
+                return;
+            }
+
+            res = ffmpeg.avformat_find_stream_info(ifmt_ctx, null);
+            ffmpeg.av_dump_format(ifmt_ctx, 0, fullDName, 0);
+            return;
+            //ffmpeg.av_find_best_stream(ifmt_ctx, AVMediaType.AVMEDIA_TYPE_VIDEO, -1, -1, null, 0);
+        }
+
+        unsafe void GrabFrames()
+        {
+            int ret;
+            byte* pData;
+
+            pkt = ffmpeg.av_packet_alloc();
+            ret = ffmpeg.av_read_frame(ifmt_ctx, pkt);
+            pData = pkt->data;
+
+            byte[] data = new byte[pkt->size];
+            Marshal.Copy((IntPtr)pData, data, 0, pkt->size);
+
+            fixed (AVPacket** pPkt = &pkt)
+            {
+                ffmpeg.av_packet_free(pPkt);
+            }
+
+            Image<Gray, ushort> img = new Image<Gray, ushort>(640, 480);
+            img.Bytes = data;
+
+            VideoDisplay.Image = img;
+            //EncodePacket();
+            //AVStream* inStream;
+            //frame->data.UpdateFrom(pkt->data);
+            //inStream = ifmt_ctx->streams[pkt->stream_index];
+        }
+
         unsafe void InitEncoder()
         {
             ffmpeg.avcodec_register_all();
+            ffmpeg.av_register_all();
+            ffmpeg.avdevice_register_all();
 
             codec = ffmpeg.avcodec_find_encoder(AVCodecID.AV_CODEC_ID_MPEG2VIDEO);
             if(codec->name == null)
@@ -92,32 +165,48 @@ namespace HttpStream
                 Debug.Print("Could not open codec!");
             }
 
-            frame = ffmpeg.av_frame_alloc();
-            if(frame == null)
-            {
-                Debug.Print("Could not allocate video frame!");
-            }
+            //frame = ffmpeg.av_frame_alloc();
+            //if(frame == null)
+            //{
+            //    Debug.Print("Could not allocate video frame!");
+            //}
 
-            frame->format = (int)c->pix_fmt;
-            frame->width = c->width;
-            frame->height = c->height;
+            //frame->format = (int)c->pix_fmt;
+            //frame->width = c->width;
+            //frame->height = c->height;
 
             //ret = FFmpeg.av_frame_get_buffer(frame, 32);
             //if (ret < 0)
             //    Debug.Print("Could not allocate video frame data!");
         }
 
-        unsafe void Encode()
+        unsafe void EncodeFrame()
         {
             int err = ffmpeg.avcodec_send_frame(c, frame);
             if (err < 0)
             {
                 Debug.Print("Error sending a frame for encoding!");
-                err = ffmpeg.avcodec_receive_packet(c, pkt);
                 return;
             }
 
             while ( err >= 0)
+            {
+                err = ffmpeg.avcodec_receive_packet(c, pkt);
+                if (err < 0)
+                    Debug.Print("Error during encoding!");
+            }
+        }
+
+        unsafe void EncodePacket()
+        {
+            int err = ffmpeg.avcodec_send_packet(c, pkt);
+            if (err < 0)
+            {
+                Debug.Print("Error sending a frame for encoding!");
+                return;
+            }
+
+            while (err >= 0)
             {
                 err = ffmpeg.avcodec_receive_packet(c, pkt);
                 if (err < 0)
@@ -182,18 +271,19 @@ namespace HttpStream
                 }
 
                 selectedDeviceName = value;
+                CameraInit();
 
-                DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
+                //DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
 
-                for (int i = 0; i < _SystemCameras.Length; i++)
-                {
-                    if (_SystemCameras[i].Name == selectedDeviceName)
-                    {
-                        capture = new VideoCapture(i);
-                        //capture.ImageGrabbed += ProcessFrame;
-                        break;
-                    }
-                }
+                //for (int i = 0; i < _SystemCameras.Length; i++)
+                //{
+                //    if (_SystemCameras[i].Name == selectedDeviceName)
+                //    {
+                //        capture = new VideoCapture(i);
+                //        //capture.ImageGrabbed += ProcessFrame;
+                //        break;
+                //    }
+                //}
 
                 RaisePropertyChanged(SelectedDeviceNamePropertyName);
             }
@@ -286,23 +376,24 @@ namespace HttpStream
                             {
                                 while (isRunning)
                                 {
-                                    Mat rawFrame = capture.QueryFrame();
-                                    Image<Ycc, ushort> img = rawFrame.ToImage<Ycc, ushort>();
-                                    VideoDisplay.Image = img;
+                                    GrabFrames();
+                                    //Mat rawFrame = capture.QueryFrame();
+                                    //Image<Ycc, ushort> img = rawFrame.ToImage<Ycc, ushort>();
+                                    //VideoDisplay.Image = img;
 
-                                    byte[] bytes = img.Bytes;
+                                    //byte[] bytes = img.Bytes;
 
-                                    var handles = new GCHandle[bytes.Length];
-                                    byte*[] pBytes = new byte*[bytes.Length];
+                                    //var handles = new GCHandle[bytes.Length];
+                                    //byte*[] pBytes = new byte*[bytes.Length];
 
-                                    for (int i = 0; i < bytes.Length; ++i)
-                                    {
-                                        handles[i] = GCHandle.Alloc(bytes[i], GCHandleType.Pinned);
-                                        pBytes[i] = (byte*)handles[i].AddrOfPinnedObject();
-                                    }
+                                    //for (int i = 0; i < bytes.Length; ++i)
+                                    //{
+                                    //    handles[i] = GCHandle.Alloc(bytes[i], GCHandleType.Pinned);
+                                    //    pBytes[i] = (byte*)handles[i].AddrOfPinnedObject();
+                                    //}
 
-                                    frame->data.UpdateFrom(pBytes);
-                                    Encode();
+                                    //frame->data.UpdateFrom(pBytes);
+                                    //EncodeFrame();
                                 }
                             });
                         }
