@@ -18,6 +18,7 @@ using Emgu.CV.Util;
 using Emgu.CV.Structure;
 
 using DirectShowLib;
+using Accord.Video.DirectShow;
 
 //using SharpFFmpeg;
 using FFmpeg.AutoGen;
@@ -30,6 +31,8 @@ namespace HttpStream
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         VideoCapture capture;
+        VideoCaptureDevice CaptureDevice;
+        VideoCapabilities[] _deviceCapabilites;
         bool isRunning = false;
 
         unsafe AVCodec* codec;
@@ -43,6 +46,10 @@ namespace HttpStream
         unsafe AVDeviceInfoList* dil;
         unsafe AVDictionary* avdic;
         int VideoStream;
+
+        byte[] Udata = new byte[640 * 480];
+        byte[] Vdata = new byte[640 * 480];
+        bool UorV = false;
 
         public MainWindow()
         {
@@ -82,10 +89,10 @@ namespace HttpStream
             fixed (AVDictionary** pAVdic = &avdic)
             {
                 res = ffmpeg.av_dict_set(pAVdic, "video_size", "640x480", 0);
-                res = ffmpeg.av_dict_set(pAVdic, "pixel_format", "yuv420p", 0);
+                //res = ffmpeg.av_dict_set(pAVdic, "pixel_format", "yuv420p", 0);
                 fixed (AVFormatContext** pFmtCxt = &ifmt_ctx)
                 {
-                    res = ffmpeg.avformat_open_input(pFmtCxt, fullDName, fmt, null);
+                    res = ffmpeg.avformat_open_input(pFmtCxt, fullDName, fmt, pAVdic);
                 }
 
                 ffmpeg.av_dict_free(pAVdic);
@@ -106,6 +113,9 @@ namespace HttpStream
         {
             int ret;
             byte* pData;
+            byte[] YUVdata = new byte[640 * 480 * 3];
+            byte[] Ydata = new byte[640 * 480];
+            byte[] BGRdata = new byte[640 * 480 * 3];
 
             pkt = ffmpeg.av_packet_alloc();
             ret = ffmpeg.av_read_frame(ifmt_ctx, pkt);
@@ -118,9 +128,31 @@ namespace HttpStream
             {
                 ffmpeg.av_packet_free(pPkt);
             }
+            for (int i = 0; i < Ydata.Length; i++)
+            {
+                Ydata[i] = data[2 * i];
+                if(UorV)
+                    Udata[i] = data[2 * i + 1];
+                else
+                    Vdata[i] = data[2 * i + 1];
+            }
 
-            Image<Gray, ushort> img = new Image<Gray, ushort>(640, 480);
-            img.Bytes = data;
+            Image<Bgr, byte> img = new Image<Bgr, byte>(640, 480);
+            for (int i = 0; i < Ydata.Length; i++)
+            {
+                YUVdata[3 * i] = Ydata[i];
+                YUVdata[3 * i + 1] = Vdata[i];
+                YUVdata[3 * i + 2] = Udata[i];
+            }
+
+            for (int i = 0; i < Ydata.Length; i++)
+            {
+                BGRdata[3 * i] = (byte)Math.Round(1.164 * (Ydata[i] - 16) + 2.018 * (Udata[i] - 128));
+                BGRdata[3 * i + 1] = (byte)Math.Round(1.164 * (Ydata[i] - 16) - 0.813 * (Vdata[i] - 128) - 0.391 * (Udata[i] - 128));
+                BGRdata[3 * i + 2] = (byte)Math.Round(1.164 * (Ydata[i] - 16) + 1.596 * (Vdata[i] - 128));
+            }
+
+            img.Bytes = BGRdata;
 
             VideoDisplay.Image = img;
             //EncodePacket();
@@ -271,21 +303,37 @@ namespace HttpStream
                 }
 
                 selectedDeviceName = value;
-                CameraInit();
+                //CameraInit();
 
-                //DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
+                DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(DirectShowLib.FilterCategory.VideoInputDevice);
 
-                //for (int i = 0; i < _SystemCameras.Length; i++)
-                //{
-                //    if (_SystemCameras[i].Name == selectedDeviceName)
-                //    {
-                //        capture = new VideoCapture(i);
-                //        //capture.ImageGrabbed += ProcessFrame;
-                //        break;
-                //    }
-                //}
+                for (int i = 0; i < _SystemCameras.Length; i++)
+                {
+                    if (_SystemCameras[i].Name == selectedDeviceName)
+                    {
+                        //capture = new VideoCapture(i);
+                        CaptureDevice = new VideoCaptureDevice(_SystemCameras[i].Name);
+                        _deviceCapabilites = CaptureDevice.VideoCapabilities;
+                        SelectedSetting = 0;
+                        CreateCapabilityList();
+                        //capture.ImageGrabbed += ProcessFrame;
+                        break;
+                    }
+                }
 
                 RaisePropertyChanged(SelectedDeviceNamePropertyName);
+            }
+        }
+
+        void CreateCapabilityList()
+        {
+            string dummyString = "";
+            SettingNames.Clear();
+            foreach (VideoCapabilities settings in _deviceCapabilites)
+            {
+                dummyString = "";
+                dummyString = settings.FrameSize.Width + "x" + settings.FrameSize.Height + " " + settings.AverageFrameRate + "FPS";
+                SettingNames.Add(dummyString);
             }
         }
 
@@ -316,6 +364,36 @@ namespace HttpStream
 
                 settingNames = value;
                 RaisePropertyChanged(SettingNamesPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SelectedSetting" /> property's name.
+        /// </summary>
+        public const string SelectedSettingPropertyName = "SelectedSetting";
+
+        private int selectedSetting = 0;
+
+        /// <summary>
+        /// Sets and gets the SelectedSetting property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public int SelectedSetting
+        {
+            get
+            {
+                return selectedSetting;
+            }
+
+            set
+            {
+                if (selectedSetting == value)
+                {
+                    return;
+                }
+
+                selectedSetting = value;
+                RaisePropertyChanged(SelectedSettingPropertyName);
             }
         }
 
