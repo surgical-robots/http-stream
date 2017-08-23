@@ -216,8 +216,9 @@ namespace FFmpeg.AutoGen
     public unsafe struct byte_ptrArray8
     {
         public static readonly int Size = 8;
+        //byte* _0; byte* _1; byte* _2; byte* _3; byte* _4; byte* _5; byte* _6; byte* _7;
         byte* _0; byte* _1; byte* _2; byte* _3; byte* _4; byte* _5; byte* _6; byte* _7;
-        
+
         public byte* this[uint i]
         {
             get { if (i > Size) throw new ArgumentOutOfRangeException(); fixed (byte** p0 = &_0) { return *(p0 + i); } }
