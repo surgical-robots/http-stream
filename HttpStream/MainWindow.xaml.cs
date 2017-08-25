@@ -35,13 +35,17 @@ namespace HttpStream
         VideoCapabilities[] _deviceCapabilites;
         bool isRunning = false;
 
-        public int vidWidth = 1920;
-        public int vidHeight = 1080;
-        public int frameRate = 30;
+        public int vidWidth = 1280;
+        public int vidHeight = 720;
+        public int frameRate = 60;
+        Image<Bgr, byte> img;
+        byte[] data;
 
         public unsafe AVCodec* codec;
         public unsafe AVCodecContext* c;
         public unsafe AVFrame* frame;
+        public unsafe AVFrame* yuy2Frame;
+        public unsafe AVFrame* gbrFrame;
         public unsafe AVPacket* pkt;
         public unsafe AVPacket* enPkt;
         public unsafe AVOutputFormat* ofmt;
@@ -50,19 +54,19 @@ namespace HttpStream
         public unsafe AVDeviceCapabilitiesQuery* dcq;
         public unsafe AVDeviceInfoList* dil;
         public unsafe AVDictionary* avdic;
+        public unsafe SwsContext* swctx;
         public int VideoStream;
 
-        byte[] Udata;
-        byte[] Vdata;
-        bool UorV = false;
+        bool encoderInit = false;
 
         public MainWindow()
         {
             InitializeComponent();
             DataContext = this;
 
-            Udata = new byte[vidHeight * vidWidth];
-            Vdata = new byte[vidHeight * vidWidth];
+            // set up byte array for display
+            data = new byte[vidHeight * vidWidth * 3];
+            img = new Image<Bgr, byte>(vidWidth, vidHeight);
 
             DeviceNames = new ObservableCollection<string>();
             GetVideoDevices();
@@ -80,156 +84,6 @@ namespace HttpStream
             }
         }
 
-        unsafe void CameraInit()
-        {
-            int res;
-            AVIOContext* ioctx;
-            ofmt = null;
-            ifmt_ctx = null;
-            ofmt_ctx = null;
-            avdic = null;
-            
-            string fullDName = "video=" + selectedDeviceName;
-
-            AVInputFormat* fmt = ffmpeg.av_find_input_format("dshow");
-
-            string resString = vidWidth.ToString() + "x" + vidHeight.ToString();
-
-            ifmt_ctx = ffmpeg.avformat_alloc_context();
-            fixed (AVDictionary** pAVdic = &avdic)
-            {
-                res = ffmpeg.av_dict_set(pAVdic, "video_size", resString, 0);
-                res = ffmpeg.av_dict_set(pAVdic, "pixel_format", "none", 0);
-                fixed (AVFormatContext** pFmtCxt = &ifmt_ctx)
-                {
-                    res = ffmpeg.avformat_open_input(pFmtCxt, fullDName, fmt, pAVdic);
-                }
-
-                ffmpeg.av_dict_free(pAVdic);
-            }
-            if (res < 0)
-            {
-                Debug.Print("Unable to open input device!");
-                return;
-            }
-
-            res = ffmpeg.avformat_find_stream_info(ifmt_ctx, null);
-            ffmpeg.av_dump_format(ifmt_ctx, 0, fullDName, 0);
-            //return;
-            //ffmpeg.av_find_best_stream(ifmt_ctx, AVMediaType.AVMEDIA_TYPE_VIDEO, -1, -1, null, 0);
-        }
-
-        unsafe void GrabFrames()
-        {
-            int ret;
-            byte* pData;
-            byte[] YUVdata = new byte[vidWidth * vidHeight * 4];
-            byte[] Ydata = new byte[vidWidth * vidHeight];
-            byte[] BGRdata = new byte[vidWidth * vidHeight * 3];
-
-            pkt = ffmpeg.av_packet_alloc();
-            ret = ffmpeg.av_read_frame(ifmt_ctx, pkt);
-            if (ret < 0)
-            {
-                Debug.Print("Error reading new frame1!");
-            }
-            pData = pkt->data;
-
-            ret = ffmpeg.av_frame_make_writable(frame);
-            if (ret < 0)
-            {
-                Debug.Print("Cannot make frame writeable1!");
-            }
-            frame->data[0] = pData;
-
-            ret = ffmpeg.avcodec_send_frame(c, frame);
-            if (ret < 0)
-            {
-                Debug.Print("Error sending a frame for encoding1!");
-            }
-
-            //////////////////////////////////////////////
-            ret = ffmpeg.av_read_frame(ifmt_ctx, pkt);
-            if (ret < 0)
-            {
-                Debug.Print("Error reading new frame2!");
-            }
-            pData = pkt->data;
-
-            ret = ffmpeg.av_frame_make_writable(frame);
-            if (ret < 0)
-            {
-                Debug.Print("Cannot make frame writeable2!");
-            }
-            frame->data[0] = pData;
-
-            ret = ffmpeg.avcodec_send_frame(c, frame);
-            if (ret < 0)
-            {
-                Debug.Print("Error sending a frame for encoding2!");
-            }
-            ////////////////////////////////////////////////
-
-            enPkt = ffmpeg.av_packet_alloc();
-            ret = 0;
-            //while (ret >= 0)
-            //{
-                ret = ffmpeg.avcodec_receive_packet(c, enPkt);
-                if (ret < 0)
-                    Debug.Print("Error during encoding!");
-            //}
-
-            fixed (AVPacket** pPkt = &enPkt)
-            {
-                ffmpeg.av_packet_free(pPkt);
-            }
-            ///////////////////////////////////////////////////
-
-            byte[] data = new byte[pkt->size];
-            Marshal.Copy((IntPtr)pData, data, 0, pkt->size);
-
-            fixed (AVPacket** pPkt = &pkt)
-            {
-                ffmpeg.av_packet_free(pPkt);
-            }
-            for (int i = 0; i < Ydata.Length; i++)
-            {
-                Ydata[i] = data[2 * i];
-                //if(UorV)
-                //    Udata[i] = data[2 * i + 1];
-                //else
-                //    Vdata[i] = data[2 * i + 1];
-            }
-
-            Image<Gray, byte> img = new Image<Gray, byte>(vidWidth, vidHeight);
-
-            //Image<Bgr, byte> img = new Image<Bgr, byte>(vidWidth, vidHeight);
-            //for (int i = 0; i < Ydata.Length; i++)
-            //{
-            //    YUVdata[4 * i] = Ydata[i];
-            //    YUVdata[4 * i + 1] = Vdata[i];
-            //    YUVdata[4 * i + 2] = Ydata[i];
-            //    YUVdata[4 * i + 3] = Udata[i];
-            //}
-
-            //for (int i = 0; i < Ydata.Length; i++)
-            //{
-            //    BGRdata[3 * i] = (byte)Math.Round(1.164 * (Ydata[i] - 16) + 2.018 * (Udata[i] - 128));
-            //    BGRdata[3 * i + 1] = (byte)Math.Round(1.164 * (Ydata[i] - 16) - 0.813 * (Vdata[i] - 128) - 0.391 * (Udata[i] - 128));
-            //    BGRdata[3 * i + 2] = (byte)Math.Round(1.164 * (Ydata[i] - 16) + 1.596 * (Vdata[i] - 128));
-            //}
-
-            //img.Bytes = BGRdata;
-            img.Bytes = Ydata;
-
-            VideoDisplay.Image = img;
-            //EncodePacket();
-            //EncodeFrame();
-            //AVStream* inStream;
-            //frame->data.UpdateFrom(pkt->data);
-            //inStream = ifmt_ctx->streams[pkt->stream_index];
-        }
-
         unsafe void InitEncoder()
         {
             ffmpeg.avcodec_register_all();
@@ -238,7 +92,7 @@ namespace HttpStream
             ffmpeg.avfilter_register_all();
 
             codec = ffmpeg.avcodec_find_encoder(AVCodecID.AV_CODEC_ID_MPEG4);
-            if(codec->name == null)
+            if (codec->name == null)
             {
                 Debug.Print("Error finding encoder!");
             }
@@ -273,7 +127,7 @@ namespace HttpStream
                 Debug.Print("Could not allocate video frame!");
             }
 
-            frame->format = (int)c->pix_fmt;
+            frame->format = (int)AVPixelFormat.AV_PIX_FMT_YUV420P;
             frame->width = c->width;
             frame->height = c->height;
 
@@ -282,61 +136,126 @@ namespace HttpStream
                 Debug.Print("Could not allocate video frame data!");
         }
 
-        unsafe void EncodeFrame()
+        unsafe void CameraInit()
         {
-            int err = ffmpeg.avcodec_send_frame(c, frame);
-            if (err < 0)
+            int res;
+            ofmt = null;
+            ifmt_ctx = null;
+            ofmt_ctx = null;
+            avdic = null;
+            
+            string fullDName = "video=" + selectedDeviceName;
+
+            AVInputFormat* fmt = ffmpeg.av_find_input_format("dshow");
+
+            string resString = vidWidth.ToString() + "x" + vidHeight.ToString();
+
+            ifmt_ctx = ffmpeg.avformat_alloc_context();
+            fixed (AVDictionary** pAVdic = &avdic)
             {
-                Debug.Print("Error sending a frame for encoding!");
+                res = ffmpeg.av_dict_set(pAVdic, "video_size", resString, 0);
+                res = ffmpeg.av_dict_set(pAVdic, "pixel_format", "yuyv422", 0);
+                fixed (AVFormatContext** pFmtCxt = &ifmt_ctx)
+                {
+                    res = ffmpeg.avformat_open_input(pFmtCxt, fullDName, fmt, pAVdic);
+                }
+
+                ffmpeg.av_dict_free(pAVdic);
+            }
+            if (res < 0)
+            {
+                Debug.Print("Unable to open input device!");
                 return;
             }
 
-            enPkt = ffmpeg.av_packet_alloc();
+            res = ffmpeg.avformat_find_stream_info(ifmt_ctx, null);
+            ffmpeg.av_dump_format(ifmt_ctx, 0, fullDName, 0);
 
-            while ( err >= 0)
+            yuy2Frame = ffmpeg.av_frame_alloc();
+            if (yuy2Frame == null)
             {
-                err = ffmpeg.avcodec_receive_packet(c, enPkt);
-                if (err < 0)
-                    Debug.Print("Error during encoding!");
+                Debug.Print("Could not allocate video frame!");
             }
 
-            fixed (AVPacket** pPkt = &pkt)
-            {
-                ffmpeg.av_packet_free(pPkt);
-            }
+            yuy2Frame->format = (int)AVPixelFormat.AV_PIX_FMT_YUYV422;
+            yuy2Frame->width = c->width;
+            yuy2Frame->height = c->height;
 
-            fixed (AVPacket** pPkt = &enPkt)
-            {
-                ffmpeg.av_packet_free(pPkt);
-            }
+            res = ffmpeg.av_frame_get_buffer(yuy2Frame, 32);
+            if (res < 0)
+                Debug.Print("Could not allocate video frame data!");
+
+            gbrFrame = ffmpeg.av_frame_alloc();
+            gbrFrame->format = (int)AVPixelFormat.AV_PIX_FMT_BGR24;
+            gbrFrame->width = vidWidth;
+            gbrFrame->height = vidHeight;
+            res = ffmpeg.av_frame_get_buffer(gbrFrame, 32);
+
+            swctx = ffmpeg.sws_getContext(yuy2Frame->width, yuy2Frame->height, (AVPixelFormat)yuy2Frame->format, gbrFrame->width, gbrFrame->height, (AVPixelFormat)gbrFrame->format, 4, null, null, null);
+            if (swctx == null)
+                Debug.Print("Error getting sws context!");
         }
 
-        unsafe void EncodePacket()
+        unsafe void GrabFrames()
         {
-            int err = ffmpeg.avcodec_send_packet(c, pkt);
-            if (err < 0)
+            int ret;
+
+            // allocate video packet
+            pkt = ffmpeg.av_packet_alloc();
+            // read frame from capture device
+            ret = ffmpeg.av_read_frame(ifmt_ctx, pkt);
+            if (ret < 0)
             {
-                Debug.Print("Error sending a frame for encoding!");
-                return;
+                Debug.Print("Error reading new frame!");
             }
 
-            enPkt = ffmpeg.av_packet_alloc();
+            yuy2Frame->data[0] = pkt->data;
+            // convert YUY2 to GBR
+            ret = ffmpeg.sws_scale(swctx, yuy2Frame->data, yuy2Frame->linesize, 0, yuy2Frame->height, gbrFrame->data, gbrFrame->linesize);
+            if (ret < 0)
+                Debug.Print("Error during GBR scaling!");
+            // convert YUY2 to YUV
+            ret = ffmpeg.sws_scale(swctx, yuy2Frame->data, yuy2Frame->linesize, 0, yuy2Frame->height, frame->data, frame->linesize);
+            if (ret < 0)
+                Debug.Print("Error during YUV scaling!");
 
-            while (err >= 0)
-            {
-                err = ffmpeg.avcodec_receive_packet(c, enPkt);
-                if (err < 0)
-                    Debug.Print("Error during encoding!");
-            }
-
+            // copy GBR data into byte array from pointer
+            Marshal.Copy((IntPtr)gbrFrame->data[0], data, 0, vidHeight * vidWidth * 3);
+            // free the packet
             fixed (AVPacket** pPkt = &pkt)
             {
                 ffmpeg.av_packet_free(pPkt);
             }
-            fixed (AVPacket** pPkt = &enPkt)
+            img.Bytes = data;
+            VideoDisplay.Image = img;
+
+            EncodeFrame();
+        }
+
+        unsafe void EncodeFrame()
+        {
+            int ret;
+            if (!encoderInit)
             {
-                ffmpeg.av_packet_free(pPkt);
+                ret = ffmpeg.avcodec_send_frame(c, frame);
+                if (ret < 0)
+                    Debug.Print("Error sending a frame for encoding!");
+
+                encoderInit = true;
             }
+
+            ret = ffmpeg.avcodec_send_frame(c, frame);
+            if (ret < 0)
+                Debug.Print("Error sending a frame for encoding!");
+
+            enPkt = ffmpeg.av_packet_alloc();
+
+            ret = ffmpeg.avcodec_receive_packet(c, enPkt);
+            if (ret < 0)
+                Debug.Print("Error during encoding!");
+
+            fixed (AVPacket** pPkt = &enPkt)
+                ffmpeg.av_packet_free(pPkt);
         }
 
         //public ObservableCollection<string> DeviceNames { get; set; }
