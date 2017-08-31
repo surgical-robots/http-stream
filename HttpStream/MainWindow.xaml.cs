@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Windows;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Net;
+using System.Net.Sockets;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -34,10 +36,11 @@ namespace HttpStream
         VideoCaptureDevice CaptureDevice;
         VideoCapabilities[] _deviceCapabilites;
         bool isRunning = false;
+        bool isStreaming = false;
 
         public int vidWidth = 1280;
         public int vidHeight = 720;
-        public int frameRate = 60;
+        public int frameRate = 10;
         Image<Bgr, byte> img;
         byte[] data;
 
@@ -54,10 +57,14 @@ namespace HttpStream
         public unsafe AVDeviceCapabilitiesQuery* dcq;
         public unsafe AVDeviceInfoList* dil;
         public unsafe AVDictionary* avdic;
-        public unsafe SwsContext* swctx;
-        public int VideoStream;
+        public unsafe SwsContext* gbr_swctx;
+        public unsafe SwsContext* yuv_swctx;
 
         bool encoderInit = false;
+
+        UdpClient videoListener;
+        int videoPort = 11000;
+        int bitrate = 500000;
 
         public MainWindow()
         {
@@ -70,7 +77,13 @@ namespace HttpStream
 
             DeviceNames = new ObservableCollection<string>();
             GetVideoDevices();
-            InitEncoder();
+            //InitEncoder();
+            ffmpeg.avcodec_register_all();
+            ffmpeg.av_register_all();
+            ffmpeg.avdevice_register_all();
+            ffmpeg.avfilter_register_all();
+
+            GetAddresses();
         }
 
         void GetVideoDevices()
@@ -86,21 +99,16 @@ namespace HttpStream
 
         unsafe void InitEncoder()
         {
-            ffmpeg.avcodec_register_all();
-            ffmpeg.av_register_all();
-            ffmpeg.avdevice_register_all();
-            ffmpeg.avfilter_register_all();
-
             codec = ffmpeg.avcodec_find_encoder(AVCodecID.AV_CODEC_ID_MPEG4);
+            //codec = ffmpeg.avcodec_find_decoder(AVCodecID.AV_CODEC_ID_MPEG2VIDEO);
             if (codec->name == null)
             {
                 Debug.Print("Error finding encoder!");
             }
 
             c = ffmpeg.avcodec_alloc_context3(codec);
-            //pkt = ffmpeg.av_packet_alloc();
 
-            c->bit_rate = 400000;
+            c->bit_rate = bitrate;
             c->width = vidWidth;
             c->height = vidHeight;
             AVRational dummy;
@@ -111,7 +119,7 @@ namespace HttpStream
             dummy.den = 1;
             c->framerate = dummy;
 
-            c->gop_size = 10;
+            c->gop_size = 200;
             c->max_b_frames = 1;
             c->pix_fmt = AVPixelFormat.AV_PIX_FMT_YUV420P;
 
@@ -134,6 +142,54 @@ namespace HttpStream
             ret = ffmpeg.av_frame_get_buffer(frame, 32);
             if (ret < 0)
                 Debug.Print("Could not allocate video frame data!");
+        }
+
+        unsafe void InitDecoder()
+        {
+            codec = ffmpeg.avcodec_find_decoder(AVCodecID.AV_CODEC_ID_MPEG4);
+            //codec = ffmpeg.avcodec_find_decoder(AVCodecID.AV_CODEC_ID_MPEG2VIDEO);
+            if (codec->name == null)
+            {
+                Debug.Print("Error finding encoder!");
+            }
+
+            c = ffmpeg.avcodec_alloc_context3(codec);
+
+            c->bit_rate = bitrate;
+            c->width = vidWidth;
+            c->height = vidHeight;
+
+            c->pix_fmt = AVPixelFormat.AV_PIX_FMT_YUV420P;
+
+            int ret = ffmpeg.avcodec_open2(c, codec, null);
+            if (ret < 0)
+            {
+                Debug.Print("Could not open codec!");
+            }
+
+            frame = ffmpeg.av_frame_alloc();
+            if (frame == null)
+            {
+                Debug.Print("Could not allocate video frame!");
+            }
+
+            frame->format = (int)AVPixelFormat.AV_PIX_FMT_YUV420P;
+            frame->width = c->width;
+            frame->height = c->height;
+
+            ret = ffmpeg.av_frame_get_buffer(frame, 32);
+            if (ret < 0)
+                Debug.Print("Could not allocate video frame data!");
+
+            gbrFrame = ffmpeg.av_frame_alloc();
+            gbrFrame->format = (int)AVPixelFormat.AV_PIX_FMT_BGR24;
+            gbrFrame->width = vidWidth;
+            gbrFrame->height = vidHeight;
+            ret = ffmpeg.av_frame_get_buffer(gbrFrame, 32);
+
+            gbr_swctx = ffmpeg.sws_getContext(frame->width, frame->height, (AVPixelFormat)frame->format, gbrFrame->width, gbrFrame->height, (AVPixelFormat)gbrFrame->format, 4, null, null, null);
+            if (gbr_swctx == null)
+                Debug.Print("Error getting sws context!");
         }
 
         unsafe void CameraInit()
@@ -191,8 +247,12 @@ namespace HttpStream
             gbrFrame->height = vidHeight;
             res = ffmpeg.av_frame_get_buffer(gbrFrame, 32);
 
-            swctx = ffmpeg.sws_getContext(yuy2Frame->width, yuy2Frame->height, (AVPixelFormat)yuy2Frame->format, gbrFrame->width, gbrFrame->height, (AVPixelFormat)gbrFrame->format, 4, null, null, null);
-            if (swctx == null)
+            gbr_swctx = ffmpeg.sws_getContext(yuy2Frame->width, yuy2Frame->height, (AVPixelFormat)yuy2Frame->format, gbrFrame->width, gbrFrame->height, (AVPixelFormat)gbrFrame->format, 4, null, null, null);
+            if (gbr_swctx == null)
+                Debug.Print("Error getting sws context!");
+
+            yuv_swctx = ffmpeg.sws_getContext(yuy2Frame->width, yuy2Frame->height, (AVPixelFormat)yuy2Frame->format, frame->width, frame->height, (AVPixelFormat)frame->format, 4, null, null, null);
+            if (gbr_swctx == null)
                 Debug.Print("Error getting sws context!");
         }
 
@@ -211,11 +271,11 @@ namespace HttpStream
 
             yuy2Frame->data[0] = pkt->data;
             // convert YUY2 to GBR
-            ret = ffmpeg.sws_scale(swctx, yuy2Frame->data, yuy2Frame->linesize, 0, yuy2Frame->height, gbrFrame->data, gbrFrame->linesize);
+            ret = ffmpeg.sws_scale(gbr_swctx, yuy2Frame->data, yuy2Frame->linesize, 0, yuy2Frame->height, gbrFrame->data, gbrFrame->linesize);
             if (ret < 0)
                 Debug.Print("Error during GBR scaling!");
             // convert YUY2 to YUV
-            ret = ffmpeg.sws_scale(swctx, yuy2Frame->data, yuy2Frame->linesize, 0, yuy2Frame->height, frame->data, frame->linesize);
+            ret = ffmpeg.sws_scale(yuv_swctx, yuy2Frame->data, yuy2Frame->linesize, 0, yuy2Frame->height, frame->data, frame->linesize);
             if (ret < 0)
                 Debug.Print("Error during YUV scaling!");
 
@@ -254,8 +314,75 @@ namespace HttpStream
             if (ret < 0)
                 Debug.Print("Error during encoding!");
 
+            //if (isStreaming)
+            if(MyAddress != "")
+                SendVideoFrame(enPkt);
+
             fixed (AVPacket** pPkt = &enPkt)
                 ffmpeg.av_packet_free(pPkt);
+        }
+
+        unsafe void DecodePacket()
+        {
+
+        }
+
+        unsafe void SendVideoFrame(AVPacket* enPacket)
+        {
+            byte[] byteArray = new byte[enPacket->size];
+            Marshal.Copy((IntPtr)enPacket->data, byteArray, 0, enPacket->size);
+
+            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            try
+            {
+                int num = s.SendTo(byteArray, new IPEndPoint(IPAddress.Parse(MyAddress), videoPort));
+            }
+            catch(SocketException ex)
+            {
+                Debug.Print(ex.Message);
+            }
+            return;
+        }
+
+        public void ListenForVideo()
+        {
+            if (videoListener == null)
+                videoListener = new UdpClient(videoPort);
+
+            videoListener.BeginReceive(new AsyncCallback(videoImgReceived), null);
+        }
+
+        unsafe private void videoImgReceived(IAsyncResult Ar)
+        {
+            int ret;
+            IPEndPoint masterEP = new IPEndPoint(IPAddress.Parse(MyAddress), videoPort);
+            byte[] array = videoListener.EndReceive(Ar, ref masterEP);
+
+            pkt = ffmpeg.av_packet_alloc();
+            pkt->size = array.Length;
+            fixed(byte* pArray = &array[0])
+                pkt->data = pArray;
+
+            ret = ffmpeg.avcodec_send_packet(c, pkt);
+            ret = ffmpeg.avcodec_receive_frame(c, frame);
+            if (ret == 0)
+            {
+                ret = ffmpeg.sws_scale(gbr_swctx, frame->data, frame->linesize, 0, frame->height, gbrFrame->data, gbrFrame->linesize);
+                if (ret < 0)
+                    Debug.Print("Error during GBR scaling!");
+
+                // copy GBR data into byte array from pointer
+                Marshal.Copy((IntPtr)gbrFrame->data[0], data, 0, vidHeight * vidWidth * 3);
+                // free the packet
+                fixed (AVPacket** pPkt = &pkt)
+                {
+                    ffmpeg.av_packet_free(pPkt);
+                }
+                img.Bytes = data;
+                VideoDisplay.Image = img;
+            }
+
+            ListenForVideo();
         }
 
         //public ObservableCollection<string> DeviceNames { get; set; }
@@ -315,6 +442,10 @@ namespace HttpStream
                 }
 
                 selectedDeviceName = value;
+
+                if (IsMaster)
+                    InitEncoder();
+
                 CameraInit();
 
                 //DsDevice[] _SystemCameras = DsDevice.GetDevicesOfCat(DirectShowLib.FilterCategory.VideoInputDevice);
@@ -410,6 +541,107 @@ namespace HttpStream
         }
 
         /// <summary>
+        /// The <see cref="IsMaster" /> property's name.
+        /// </summary>
+        public const string IsMasterPropertyName = "IsMaster";
+
+        private bool isMaster = false;
+
+        /// <summary>
+        /// Sets and gets the IsMaster property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public bool IsMaster
+        {
+            get
+            {
+                return isMaster;
+            }
+
+            set
+            {
+                if (isMaster == value)
+                {
+                    return;
+                }
+
+                isMaster = value;
+                RaisePropertyChanged(IsMasterPropertyName);
+            }
+        }
+
+        void GetAddresses()
+        {
+            IPHostEntry host;
+            host = Dns.GetHostEntry(Dns.GetHostName());
+            IPAddresses.Clear();
+            foreach (IPAddress ip in host.AddressList)
+            {
+                IPAddresses.Add(ip.ToString());
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="IPAddresses" /> property's name.
+        /// </summary>
+        public const string IPAddressesPropertyName = "IPAddresses";
+
+        private ObservableCollection<string> iPAddresses = new ObservableCollection<string>();
+
+        /// <summary>
+        /// Sets and gets the IPAddresses property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public ObservableCollection<string> IPAddresses
+        {
+            get
+            {
+                return iPAddresses;
+            }
+
+            set
+            {
+                if (iPAddresses == value)
+                {
+                    return;
+                }
+
+                iPAddresses = value;
+                RaisePropertyChanged(IPAddressesPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="MyAddress" /> property's name.
+        /// </summary>
+        public const string MyAddressPropertyName = "MyAddress";
+
+        private string myaddress = "";
+
+        /// <summary>
+        /// Sets and gets the MyAddress property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public string MyAddress
+        {
+            get
+            {
+                return myaddress;
+            }
+
+            set
+            {
+                if (myaddress == value)
+                {
+                    return;
+                }
+
+                myaddress = value;
+                RaisePropertyChanged(MyAddressPropertyName);
+            }
+        }
+
+        /// <summary>
         /// The <see cref="ConnectButtonText" /> property's name.
         /// </summary>
         public const string ConnectButtonTextPropertyName = "ConnectButtonText";
@@ -462,30 +694,40 @@ namespace HttpStream
                             ConnectButtonText = "Disconnect";
                             isRunning = true;
 
+                            if (!IsMaster)
+                                InitDecoder();
+
                             Task t = Task.Run(() =>
                             {
-                                while (isRunning)
-                                {
-                                    GrabFrames();
-                                    //Mat rawFrame = capture.QueryFrame();
-                                    //Image<Ycc, ushort> img = rawFrame.ToImage<Ycc, ushort>();
-                                    //VideoDisplay.Image = img;
-
-                                    //byte[] bytes = img.Bytes;
-
-                                    //var handles = new GCHandle[bytes.Length];
-                                    //byte*[] pBytes = new byte*[bytes.Length];
-
-                                    //for (int i = 0; i < bytes.Length; ++i)
-                                    //{
-                                    //    handles[i] = GCHandle.Alloc(bytes[i], GCHandleType.Pinned);
-                                    //    pBytes[i] = (byte*)handles[i].AddrOfPinnedObject();
-                                    //}
-
-                                    //frame->data.UpdateFrom(pBytes);
-                                    //EncodeFrame();
-                                }
+                                if (IsMaster)
+                                    while (isRunning)
+                                    {
+                                        GrabFrames();
+                                    }
+                                else
+                                    ListenForVideo();
                             });
+                        }
+                    }));
+            }
+        }
+
+        private RelayCommand<string> streamCommand;
+
+        /// <summary>
+        /// Gets the DetectCOMsCommand.
+        /// </summary>
+        unsafe public RelayCommand<string> StreamCommand
+        {
+            get
+            {
+                return startCommand
+                    ?? (startCommand = new RelayCommand<string>(
+                    p =>
+                    {
+                        if (isRunning)
+                        {
+                            isStreaming = !isStreaming;
                         }
                     }));
             }

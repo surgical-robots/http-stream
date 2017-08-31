@@ -13,13 +13,26 @@
                 <TextBlock Text="Video Source: " HorizontalAlignment="Right"/>
                 <ComboBox Name="DeviceNamesBox" ItemsSource="{Binding DeviceNames}" SelectedItem="{Binding SelectedDeviceName}" />
 
-                <TextBlock Text="Format: " HorizontalAlignment="Right"/>
-                <ComboBox Name="SettingNamesBox" ItemsSource="{Binding SettingNames}" SelectedIndex="{Binding SelectedSetting}"/>
+                <!--<TextBlock Text="Format: " HorizontalAlignment="Right"/>
+                <ComboBox Name="SettingNamesBox" ItemsSource="{Binding SettingNames}" SelectedIndex="{Binding SelectedSetting}"/>-->
             </UniformGrid>
+            
             <Button Content="{Binding ConnectButtonText}" Command="{Binding StartCommand}" />
+            
+            <UniformGrid Columns="4">
+                <TextBlock Text="Master? " HorizontalAlignment="Right"/>
+                <CheckBox IsChecked="{Binding IsMaster}" HorizontalAlignment="Left"/>
+
+                <TextBlock Text="My IP Address: " HorizontalAlignment="Right"/>
+                <ComboBox ItemsSource="{Binding IPAddresses}" SelectedItem="{Binding MyAddress}"/>
+            </UniformGrid>
+            
             <WindowsFormsHost>
                 <emgu:ImageBox x:Name="VideoDisplay" IsAccessible="True" />
             </WindowsFormsHost>
+
+            <TextBlock Text="{Binding FrameCounter}"/>
+            <!--<Button Content="Start/Stop Streaming" Command="{Binding StreamCommand}"/>-->
         </StackPanel>
     </Grid>
 </Window>
